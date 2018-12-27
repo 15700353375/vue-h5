@@ -1,0 +1,106 @@
+.minirefresh-scroll{
+  width: 100%;
+  height: 100%;
+}
+.technician-container{
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+
+  .tec-title{
+    text-align: center;
+    font-size: 28px;
+    color: #000;
+    line-height: 80px;
+  }
+
+  .tec-footer{
+    text-align: center;
+    font-size: 26px;
+    color: #666;
+    line-height: 80px;
+  }
+
+  .tec-item{
+    height: 113px;
+    width: calc(~"(100% - 180px)/5");
+    overflow: hidden;
+    margin-left: 30px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    background: #ddd;
+    float: left;
+    margin-top: 10px;
+  }
+
+  .list-item:nth-of-type(5n+0){
+    margin-right: 30px;
+  }
+
+  .tec-item-num{
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    font-size: 26px;
+    color: #fff;
+    background: #84dbb9;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .tec-item-num.success{
+    background: #84dbb9;
+  }
+  .tec-item-num.info{
+    background: #f53c4a;
+  }
+  .tec-item-num.warning{
+    background: #fc6025;
+  }
+
+  .tec-item .iconfont{
+    position: absolute;
+    right: 6px;
+    top: 10px;
+    font-size: 20px;
+    color: #fff;
+    z-index: 99;
+  }
+  .tec-item .iconfont.error{
+    color: #000;
+  }
+
+
+
+  .tec-item-type{
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    color: #fff;
+    background: #54c2a5;
+    text-align: center;
+    overflow: hidden;
+    font-size: 24px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .tec-item-type.success{
+    background: #54c2a5;
+  }
+  .tec-item-type.info{
+    background: #989898;
+  }
+  .tec-item-type.warning{
+    background: #fcbd9a;
+  }
+
+  .tec-item-type-left{
+    float: left;
+  }
+  .tec-item-type-right{
+    float: right;
+  }
+}

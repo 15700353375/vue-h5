@@ -1,7 +1,7 @@
 <!--
- * @Author:      cyzeng
- * @DateTime:    2017-06-16 23:09:45
- * @Description: 登录页面
+ * @Author:      changh
+ * @DateTime:    2018-12-25
+ * @Description: 主页面
  -->
 <template>
   <div class="clearfix container">
@@ -10,31 +10,13 @@
     <div class="swiper-container" >
       <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div id="minirefresh" class="minirefresh-wrap">
-                <div class="minirefresh-scroll">
-                  <div class="clearfix slide-items-main">
-                    <div id="inventoryChart" style="width: 100%;height:500px;" />
-                    <h2>cgvsdf</h2>
-                    <h2>cgvsdf</h2>
-                    <h2>cgvsdf</h2>
-                    <h2>cgvsdf</h2>
-                    <h2>cgvsdf</h2>
-                    <h2>cgvsdf</h2>
-                    <div id="inventoryChart2" style="width: 100%;height:500px;" />
-                  </div>
-                </div>
-            </div>
-
+            <echartsVue></echartsVue>
           </div>
           <div class="swiper-slide">
-            <div class="clearfix slide-items-main">
-              <h1 style="line-height:40px;" v-for="(item, index) in 15" :key='index'>房间状态房间状态</h1>
-            </div>
+            <room></room>
           </div>
-          <div class="swiper-slide slide-items-main">
-            <div class="clearfix" >
-              <h1 style="line-height:40px;" v-for="(item, index) in 20" :key='index'>技师状态</h1>
-            </div>
+          <div class="swiper-slide">
+            <technician></technician>
           </div>
       </div>
     </div>
@@ -53,6 +35,7 @@
   .swiper-container{
     flex: 1;
     width: 100%;
+    position: relative;
   }
 
   .slide-items-main{
@@ -71,6 +54,9 @@
   import { pieOptions } from '@Util/charts';
   import TopbarVue from '@Components/TopbarVue'
   import bottomBar from '@Components/bottomBar'
+  import echartsVue from '@Components/echartsVue'
+  import room from '@Components/room'
+  import technician from '@Components/technician'
   import MiniRefreshTools from 'minirefresh';
 
   export default {
@@ -168,10 +154,7 @@
           up: {
 
               callback: function() {
-                setTimeout(()=>{
-                  // 结束下拉刷新
-                  miniRefresh.endUpLoading(true);
-                },3000)
+                miniRefresh.endUpLoading(true);
               }
           }
       });
@@ -219,7 +202,10 @@
     },
     components:{
       bottomBar,
-      TopbarVue
+      TopbarVue,
+      echartsVue,
+      room,
+      technician
     }
   }
 </script>

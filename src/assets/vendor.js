@@ -14,5 +14,10 @@ import './css/main/main.less';
 
 
 import './css/components/TopBarVue.less';
+import './css/components/echartsVue.less';
+import './css/components/room.less';
+import './css/components/technician.less';
+import './css/components/report.less';
+import './css/components/myself.less';
 
 
