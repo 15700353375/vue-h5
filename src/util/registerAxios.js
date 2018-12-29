@@ -17,9 +17,10 @@ function validatePower(url){
   // 验证访问页面是否需要权限
   if (noTokenReq.indexOf(url) == -1) {
     // 验证浏览器sessionstorage缓存中是否存在token
-    let agentToken = sessionStorage.getItem("agentToken");
-    axios.defaults.headers.common['agentToken'] = agentToken;
-    return agentToken ? true : false;
+    let zzbToken = localStorage.getItem('zzb_token')
+    console.log(zzbToken)
+    axios.defaults.headers.common['token'] = zzbToken;
+    return zzbToken ? true : false;
   }else{
     return true;
   }
@@ -84,8 +85,11 @@ let post = function(url, params, btn){
                 })
 
   }else{
-    // 权限不足，跳转至登录页面
+    // 权限不足，跳转至小程序登陆
     this.$router.push({name: 'login'});
+
+
+
   }
 }
 

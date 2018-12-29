@@ -88,6 +88,20 @@
       }
     },
     mounted(){
+      // token失效时-强制跳转到绑定登录页面
+      wx.miniProgram.redirectTo({
+        url:'/pages/logs/logs',
+        success: function(){
+            console.log('success')
+        },
+        fail: function(){
+            console.log('fail');
+        },
+        complete:function(){
+            console.log('complete');
+        }
+
+      });
 
     },
     methods: {

@@ -19,6 +19,14 @@ export default [
     }
   },
   {
+    path: '/statistical:token',
+    name: 'statistical',
+    component: statistical,
+    meta: {
+      title: '即时信息'
+    }
+  },
+  {
     path: '/report',
     name: 'report',
     component: report,
