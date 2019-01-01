@@ -30,7 +30,7 @@
     height: 100%;
     text-align: center;
     float: left;
-    padding-top: 20px;
+    // padding-top: 10px;
     i{
       color: #666;
       font-size: 46px;

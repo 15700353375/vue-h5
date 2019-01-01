@@ -126,62 +126,16 @@
 <script>
   //加载相关依赖
   import { mapState } from 'vuex';
+  import axios from 'axios'
+  import {urls} from '@Util/axiosConfig';
   import { pieOptions } from '@Util/charts';
+  import MiniRefreshTools from 'minirefresh';
   export default {
     props: ['navData'],
     data() {
       return {
         echartsArr: [],
         pieOptions: pieOptions,
-        option: {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                // orient: 'horizontal',
-                x: 'left',
-                data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
-            color: [
-              '#59b7ff','#7fb8ff','#a4b8ff','#cbb5fe','#f1b2fb','#f9adc4','#ffa88c','#f2cb93','#e5ed9a','#c8eaa2','#aae6aa','#82cfd4'
-            ],
-            series: [
-                {
-                    name:'访问来源',
-                    type:'pie',
-                    radius: ['30%', '40%'],
-                    avoidLabelOverlap: false,
-                    // 是否开启动画
-                    hoverAnimation: true,
-                    hoverOffset: 5,
-                    labelLine: {
-                      show: true,
-                      length: 10,
-                      length2: 8,
-                    },
-                    label: {
-                      normal: {
-                        formatter: '{b}: {per|{d}%}  ',
-                        rich: {
-                          b: {
-                            fontSize: 16,
-                            lineHeight: 33
-                          },
-                          per: {
-                            color: '#eee',
-                            backgroundColor: '#334455',
-                            padding: [2, 2],
-                            borderRadius: 2
-                          }
-                        }
-                      }
-                    },
-                    data:[]
-                }
-            ]
-        },
 
         buyList: [
           {
@@ -230,14 +184,35 @@
       }
 
       let list = [
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:234, name:'联盟广告'},
-                        {value:135, name:'视频广告'},
-                        {value:1548, name:'搜索引擎'}
-                    ]
+                  {value:335, name:'直接访问'},
+                  {value:310, name:'邮件营销'},
+                  {value:234, name:'联盟广告'},
+                  {value:135, name:'视频广告'},
+                  {value:1548, name:'搜索引擎'}
+              ]
 
-      this.option.series[0].data = list
+      this.pieOptions.series[0].data = list
+
+      var miniRefresh = new MiniRefresh({
+          container: '#minirefresh',
+          down: {
+              callback: function() {
+                setTimeout(()=>{
+                  // 结束下拉刷新
+                  miniRefresh.endDownLoading();
+                },3000)
+              }
+          },
+          up: {
+
+              callback: function() {
+                miniRefresh.endUpLoading(true);
+              }
+          }
+      });
+
+      this.getData();
+
 
       this.drawChart1()
       this.drawChart2()
@@ -253,28 +228,25 @@
         this.$router.push({name: url})
       },
 
-      // 格式化拉取报损-分类占比
-      _formatRatioInfo(list) {
 
-        if(!list || !list.length ) return [];
 
-        let i = 0;
+      getData(){
+        // this.$ajaxGet(urls.in_theaters).then(res => {
+        //   if(res){
+        //     debugger;
+        //   }           
+        // })
 
-        list.forEach((value) => {
-
-          let color = '';
-
-          if(this.dataColors[i]){
-            color = this.dataColors[i++];
-          }else{
-            color = "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
-            this.dataColors.push(color);
-          }
-          value.color = color;
-
+        let parmas = {
+          username: 'changh3',
+          password: 'ch123456'
+        }
+         this.$ajaxPost(urls.LOGIN, parmas).then((res) =>{
+            if(res){              
+              debugger;
+            }
         });
 
-        return list;
       },
 
        // 柱状图分析
@@ -285,7 +257,7 @@
         // 基于准备好的dom，初始化echarts实例
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart'));
 
-        inventoryChart.setOption(this.option)
+        inventoryChart.setOption(this.pieOptions)
 
         this.echartsArr.push(inventoryChart);
 
@@ -299,7 +271,7 @@
         // 基于准备好的dom，初始化echarts实例
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart2'));
 
-        inventoryChart.setOption(this.option)
+        inventoryChart.setOption(this.pieOptions)
 
         this.echartsArr.push(inventoryChart);
 

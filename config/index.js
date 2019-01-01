@@ -21,6 +21,17 @@ module.exports = {
     //设置开发环境静态资源文件夹
     assetsSubDirectory: 'agentStatic',
     //设置开发环境文件引用路径
-    assetsPublicPath: './'
+    assetsPublicPath: './',
+    proxyTable: {
+      '/api': {
+        // target: 'http://192.168.0.16:80',
+        // target: "http://192.168.0.98:8003",
+        target: 'http://api.douban.com/v2',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
 }

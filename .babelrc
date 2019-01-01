@@ -3,5 +3,8 @@
     "es2015",
     "stage-3"
   ],
-  "plugins": ["transform-runtime"]
+  "plugins": [
+    "transform-runtime",
+    ["import", { "libraryName": "we-vue", "style": "style.css" }, "we-vue"]
+  ]
 }

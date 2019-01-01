@@ -148,7 +148,6 @@
     },
     mounted(){
       this.listData= this.listData.concat(this.listData)
-
     },
     computed: mapState({
       // 名字

@@ -57,7 +57,7 @@
   import echartsVue from '@Components/echartsVue'
   import room from '@Components/room'
   import technician from '@Components/technician'
-  import MiniRefreshTools from 'minirefresh';
+
 
   export default {
     data(){
@@ -93,24 +93,7 @@
         },
       })
 
-      var miniRefresh = new MiniRefresh({
-          container: '#minirefresh',
-          down: {
-              callback: function() {
-                setTimeout(()=>{
-                  // 结束下拉刷新
-                  miniRefresh.endDownLoading();
-                },3000)
-              }
-          },
-          up: {
-
-              callback: function() {
-                miniRefresh.endUpLoading(true);
-              }
-          }
-      });
-
+      
 
     },
     methods: {

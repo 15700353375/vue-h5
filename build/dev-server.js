@@ -24,11 +24,12 @@ var server = new webpackDevServer(compiler,{
     chunks: false,
     chunkModules: false
   },
-  host:"0.0.0.0",
+  host:"http://api.douban.com/v2",
   proxy: {
     '/api': {
       // target: 'http://192.168.0.16:80',
       // target: "http://192.168.0.98:8003",
+      target: 'http://api.douban.com/v2',
       changeOrigin: true,
       pathRewrite: {
         '^/api': ''

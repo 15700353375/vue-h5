@@ -1,10 +1,10 @@
 /*
- * @Author:      cyzeng
- * @DateTime:    2017-07-31 15:51:50
+ * @Author:      changh
+ * @DateTime:    2018
  * @Description: 请求路径
  */
 
-let base_url = '/agent/agent/web/';
+let base_url = 'http://t.yushu.im/v2/';
 
 if (process.env.NODE_ENV == 'production') {
   // 测试部使用的生产环境，上线时改为发布环境
@@ -12,7 +12,8 @@ if (process.env.NODE_ENV == 'production') {
 
 }else{
   // 开发环境
-  base_url = '/api/';
+  base_url = 'http://api.huixuebang.com/';
+  // base_url = 'http://t.yushu.im/v2/'
 }
 
 
@@ -22,22 +23,19 @@ export const baseUrl = base_url;
 export const urls = {
   BASE_URL: base_url,
   // 登录
-  LOGIN_LOGIN: 'login/login',
+  in_theaters: 'movie/in_theaters',
+
+  LOGIN: 'user-api/mlogin',
 
 };
 
 // 不需要token的请求
 export const noTokenReq = [
-  'login/login',
-  'public/captcha-img',
-  'public/captcha-sms',
-  'login/reset-passwd'
+
 ];
 
 // 不需要token的路由
 export const noTokenUrls = [
-  '/',
-  '/login',
-  '/forgetPasswd'
+
 ];
 

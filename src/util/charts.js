@@ -12,56 +12,53 @@ window.echarts = echarts;
 
 // 饼状图的基本配置项
 export const pieOptions = {
-  // 传入的色值
-  color: [],
-  // hover提示
-  tooltip: {
-    trigger: 'item',
-    formatter: "{b}: {c}%"
-  },
-  // 图例标记
-  legend: {
-    orient: 'horizontal',
-    bottom: 0,
-    padding: [20, 0, 0, 0],
-    itemWidth: 12,
-    itemHeight: 12,
-    // 关闭点击图例的效果
-    selectedMode: false,
-    // 传入的数据
-    data: []
-  },
-  series: [
-    {
-      type: 'pie',
-      radius: ['48%', '72%'],
-      // 关闭点击
-      avoidLabelOverlap: false,
-      // 关闭hover动画
-      hoverAnimation: false,
-      minAngle: 5,           　　 //最小的扇区角度（0 ~ 360），用于防止某个值过小导致扇区太小影响交互
-      avoidLabelOverlap: true,   //是否启用防止标签重叠策略
-      label: {
-        normal: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          show: false,
-          textStyle: {
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        // orient: 'horizontal',
+        x: 'left',
+        itemWidth: 14,
+        itemHeight: 14,
+        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+    },
+    color: [
+      '#59b7ff','#7fb8ff','#a4b8ff','#cbb5fe','#f1b2fb','#f9adc4','#ffa88c','#f2cb93','#e5ed9a','#c8eaa2','#aae6aa','#82cfd4'
+    ],
+    series: [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius: ['30%', '40%'],
+            avoidLabelOverlap: false,
+            // 是否开启动画
+            hoverAnimation: true,
+            hoverOffset: 5,
+            labelLine: {
+              show: true,
+              length: 10,
+              length2: 8,
+            },
+            label: {
+              normal: {
+                formatter: '{b}: {per|{d}%}  ',
+                rich: {
+                  b: {
+                    fontSize: 16,
+                    lineHeight: 33
+                  },
+                  per: {
+                    color: '#eee',
+                    backgroundColor: '#334455',
+                    padding: [2, 2],
+                    borderRadius: 2
+                  }
+                }
+              }
+            },
+            data:[]
         }
-      },
-      labelLine: {
-        normal:{
-          show: true,
-          length:5
-        }
-      },
-      // 传入的数据
-      data: []
-    }
-  ]
-};
+    ]
+}
