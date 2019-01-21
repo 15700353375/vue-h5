@@ -22,7 +22,7 @@ export const pieOptions = {
         x: 'left',
         itemWidth: 14,
         itemHeight: 14,
-        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        data:['微信支付','现金','会员卡','银行卡','团购']
     },
     color: [
       '#59b7ff','#7fb8ff','#a4b8ff','#cbb5fe','#f1b2fb','#f9adc4','#ffa88c','#f2cb93','#e5ed9a','#c8eaa2','#aae6aa','#82cfd4'
@@ -31,7 +31,7 @@ export const pieOptions = {
         {
             name:'访问来源',
             type:'pie',
-            radius: ['30%', '40%'],
+            radius: ['25%', '35%'],
             avoidLabelOverlap: false,
             // 是否开启动画
             hoverAnimation: true,
@@ -43,11 +43,12 @@ export const pieOptions = {
             },
             label: {
               normal: {
-                formatter: '{b}: {per|{d}%}  ',
+                // formatter: '{b}\n{per|{d}%}',
+                formatter: '{b}：{per|{d}%}',
                 rich: {
                   b: {
-                    fontSize: 16,
-                    lineHeight: 33
+                    fontSize: 12,
+                    lineHeight: 30
                   },
                   per: {
                     color: '#eee',

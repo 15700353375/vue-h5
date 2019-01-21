@@ -38,14 +38,15 @@
     .bottom-tabs-item-text{
       color: #666;
       font-size: 26px;
+      line-height: 26px;
     }
 
     &.active{
       i{
-        color: green;
+        color:#3b76b2;
       }
       .bottom-tabs-item-text{
-        color: green;
+        color:#3b76b2;
       }
     }
   }

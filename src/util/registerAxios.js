@@ -29,7 +29,7 @@ function validatePower(url){
 
 // 统一处理成功请求返回值
 function resolveSuccessRes(res){
-  if(res.data.code == 200){
+  if(res.status == 200){
     return res.data;
   }else{
     // 表示网络正常，服务器拒绝
@@ -93,13 +93,10 @@ let get = function(url, params, btn){
 
 
 // 初始化axios
-axios.defaults.baseURL = urls.BASE_URL;
+// axios.defaults.baseURL = urls.BASE_URL;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-// axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET';
 // axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'application/json';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'json';
 axios.defaults.timeout = 60000;
 
 

@@ -12,8 +12,8 @@ if (process.env.NODE_ENV == 'production') {
 
 }else{
   // 开发环境
-  base_url = 'http://api.huixuebang.com/';
-  // base_url = 'http://t.yushu.im/v2/'
+  // base_url = 'http://api.huixuebang.com/';
+  base_url = 'http://t.yushu.im/v2/'
 }
 
 

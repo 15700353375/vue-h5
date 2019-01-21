@@ -86,14 +86,12 @@
         loop: false, // 循环模式选项
         on: {
           slideChange: function (e) {
-            // debugger
-            console.log(this.activeIndex);
             that.currentData = this.activeIndex;
           },
         },
       })
 
-      
+
 
     },
     methods: {

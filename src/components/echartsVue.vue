@@ -13,7 +13,7 @@
               <span class='text-right'>2016-12-13 19:16:18 统计</span>
             </div>
             <div class='echarts-main clearfix'>
-              <div id="inventoryChart" style="width: 100%;height:300px;" />
+              <div id="inventoryChart" style="width: 100%;height:100%" />
               <div class="echarts-total clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>今日营业</div>
@@ -44,7 +44,10 @@
                         <div class='list-block-value' >￥ {{item.value}}</div>
                         <div class='list-block-percent' >{{item.percent}}</div>
                       </div>
-                      <div class='list-block-label' v-else>-</div>
+                      <div class='clearfix' v-else>
+                        <div class='list-block-label' ></div>
+                        <div class='list-block-label'> - </div>
+                      </div>
                 </div>
               </div>
               <div class='list-block-total'> 总计： <span class='total-value'>￥6546451</span> </div>
@@ -56,7 +59,7 @@
             </div>
 
             <div class='echarts-main clearfix'>
-              <div id="inventoryChart2" style="width: 100%;height:300px;" />
+              <div id="inventoryChart2" style="width: 100%;height:100%;" />
               <div class="echarts-total clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>今日营业</div>
@@ -87,7 +90,10 @@
                         <div class='list-block-value' >￥ {{item.value}}</div>
                         <div class='list-block-percent' >{{item.percent}}</div>
                       </div>
-                      <div class='list-block-label' v-else>-</div>
+                      <div class='clearfix' v-else>
+                        <div class='list-block-label' ></div>
+                        <div class='list-block-label' > - </div>
+                      </div>
                 </div>
               </div>
               <div class='list-block-total'> 总计： <span class='total-value'>￥6546451</span> </div>
@@ -107,7 +113,10 @@
                           <div class='list-block-value' >￥ {{item.value}}</div>
                           <div class='list-block-percent' >{{item.percent}}</div>
                         </div>
-                        <div class='list-block-label' v-else>-</div>
+                        <div class='clearfix' v-else>
+                        <div class='list-block-label' ></div>
+                        <div class='list-block-label' > - </div>
+                      </div>
                   </div>
                 </div>
                 <div class='list-block-total'> 收款合计： <span class='total-value'>￥6546451</span> </div>
@@ -183,12 +192,13 @@
         }
       }
 
+      ['微信支付','现金','会员卡','银行卡','团购']
       let list = [
-                  {value:335, name:'直接访问'},
-                  {value:310, name:'邮件营销'},
-                  {value:234, name:'联盟广告'},
-                  {value:135, name:'视频广告'},
-                  {value:1548, name:'搜索引擎'}
+                  {value:335, name:'微信支付'},
+                  {value:310, name:'现金'},
+                  {value:234, name:'会员卡'},
+                  {value:135, name:'银行卡'},
+                  {value:1548, name:'团购'}
               ]
 
       this.pieOptions.series[0].data = list
@@ -231,21 +241,11 @@
 
 
       getData(){
-        // this.$ajaxGet(urls.in_theaters).then(res => {
-        //   if(res){
-        //     debugger;
-        //   }           
-        // })
-
-        let parmas = {
-          username: 'changh3',
-          password: 'ch123456'
-        }
-         this.$ajaxPost(urls.LOGIN, parmas).then((res) =>{
-            if(res){              
-              debugger;
-            }
-        });
+        this.$ajaxGet('/api/movie/in_theaters').then(res => {
+          if(res){
+            // debugger;
+          }
+        })
 
       },
 

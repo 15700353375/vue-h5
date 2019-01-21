@@ -8,58 +8,27 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-// import VueCookie from 'vue-cookie';
 import storeMain from '@Src/store/storeMain';
 import routes from '@Src/routers';
 import App from '@Src/App';
 import Pace from 'pace';
 import moment from 'moment';
 import $ from "jquery";
-// import datePicker from 'vue-bootstrap-datetimepicker';
-// import Message from 'vue-multiple-message'
-// import regeisterVueStrap from '@Util/registerStrapCompoents';
-// import registerVeeCustomValidate from '@Util/registerVeeCustomValidate';
 import registerAxios from '@Util/registerAxios';
-import clickOutside from '@Util/clickOutside';
 import comUtil from '@Util/comUtil';
 import { noTokenUrls } from '@Util/axiosConfig'
 
 import 'we-vue/lib/style.css'
 import { Toast } from 'we-vue'
 
-// import MintUI from 'mint-ui'
-// import 'mint-ui/lib/style.css'
-// Vue.use(MintUI)
-
-
-// import '~vux/src/styles/reset.less';
-// import Vux from 'vux'
-// Vue.use(Vux)
-
-// 全局引入 loading/toast/alert
-// import { LoadingPlugin, ToastPlugin, AlertPlugin } from 'vux'
-// Vue.use(LoadingPlugin)
-// Vue.use(ToastPlugin)
-// Vue.use(AlertPlugin)
-
-// this.$vux.toast.show({
-//   type: 'text',
-//   position: 'middle',
-//   text: '请输入查询内容!'
-// });
-
 Vue.use(Vuex);
-// Vue.use(VueCookie);
 Vue.use(VueRouter);
-// Vue.use(Toast);
-// Vue.use(datePicker);
 
 Vue.prototype.Toast = Toast;
 
 // 引入Vuex配置文件
 const store = new Vuex.Store({
   modules: storeMain,
-  plugins: [comUtil.vuexReload]
 });
 
 // 引入路由

@@ -11,6 +11,7 @@ var compiler = webpack(webpackConfig);
 
 
 
+
 // var uri = 'http://localhost:' + port;
 var uri = 'http://localhost:' + config.dev.port;
 
@@ -24,7 +25,10 @@ var server = new webpackDevServer(compiler,{
     chunks: false,
     chunkModules: false
   },
-  host:"http://api.douban.com/v2",
+  host: '0.0.0.0',
+  port: '8003', //设置端口号
+  // 使用webpack-dev-server就可以直接proxy设置代理服务器
+  // 注意：使用代理服务器的时候内部的请求就直接使用/api/+接口地址
   proxy: {
     '/api': {
       // target: 'http://192.168.0.16:80',

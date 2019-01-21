@@ -29,7 +29,11 @@
               </div>
               <div class='center' :class='item.status == 1 ? "warning":"success"' v-if='item.status < 3' >{{item.satusText}}</div>
               <div class='mask' v-if='item.status == 5'>
-                <span class='mask-text'>{{item.timer}} <span>分钟</span></span>
+                <span class='mask-text'><countDown :endtime='item.timer'></countDown> <span>分钟</span></span>
+                <div class='mask-opacity'></div>
+              </div>
+              <div class='mask' v-if='item.status == 4'>
+                <span class='mask-text'><countAdd :endtime='item.timer'></countAdd> <span>分钟</span></span>
                 <div class='mask-opacity'></div>
               </div>
             </div>
@@ -52,11 +56,16 @@
 <script>
   //加载相关依赖
   import { mapState } from 'vuex';
+  import comUtil from '@Util/comUtil';
   import { pieOptions } from '@Util/charts';
+  import countDown from '@Components/countDown'
+  import countAdd from '@Components/countAdd'
+
   export default {
     props: ['navData'],
     data() {
       return {
+        comUtil: comUtil,
 
         selectArray: [{
           "id": "1",
@@ -125,8 +134,8 @@
           {
             id: 4,
             status: 4,
-            money: 556,
-            timer: 117,
+            money: 60,
+            timer: 12,
             no: '036',
             restTimer: '4m',
             roomNo: 'A05',
@@ -136,7 +145,7 @@
             id: 5,
             status: 5,
             money: 556,
-            timer: 117,
+            timer: 30,
             no: '036',
             restTimer: '4m',
             roomNo: 'A05',
@@ -147,7 +156,7 @@
       }
     },
     mounted(){
-      this.listData= this.listData.concat(this.listData)
+
     },
     computed: mapState({
       // 名字
@@ -159,9 +168,15 @@
 
 
 
+
+
+
+
+
     },
     components: {
-
+      countDown,
+      countAdd
     }
   }
 

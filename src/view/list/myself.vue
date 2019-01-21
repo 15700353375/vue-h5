@@ -7,7 +7,6 @@
   <div class="clearfix container">
 
     <div class="report-main">
-        <!--pages/personal/personal.wxml-->
         <div class='personal-container'>
           <div class='personal-info'>
             <div class='personal-img-box'>
