@@ -12,8 +12,8 @@ if (process.env.NODE_ENV == 'production') {
 
 }else{
   // 开发环境
-  // base_url = 'http://api.huixuebang.com/';
-  base_url = 'http://t.yushu.im/v2/'
+  base_url = 'http://qsyfw.gnway.cc:12345/';
+  // base_url = 'http://t.yushu.im/v2/'
 }
 
 
@@ -26,6 +26,12 @@ export const urls = {
   in_theaters: 'movie/in_theaters',
 
   LOGIN: 'user-api/mlogin',
+
+  getBillInfoWithoutFree: '/wechatMini/getBillInfoWithoutFree',
+  getBusinessBaseInfo: '/wechatMini/getBusinessBaseInfo',
+
+  
+
 
 };
 

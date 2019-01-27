@@ -62,7 +62,7 @@
   export default {
     data(){
       return{
-        currentData: 0,
+        currentData: 2,
 
         active: 1,
         show1: true,

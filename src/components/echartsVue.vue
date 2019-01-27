@@ -17,15 +17,19 @@
               <div class="echarts-total clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>今日营业</div>
-                  <div class='item-value'>￥89895</div>
+                  <div class='item-value color-info'>￥{{customerDataTotal}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥8895</div>
+                  <div class='item-value color-success'>￥{{customerData.paidMQty}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥895</div>
+                  <div class='item-value color-warning'>￥{{customerData.notPaidMQty}}</div>
+                </div>
+                <div class="echarts-total-item">
+                  <div class='item-label'>等待</div>
+                  <div class='item-value'>￥{{customerData.waitMQty}}</div>
                 </div>
               </div>
             </div>
@@ -146,6 +150,16 @@
         echartsArr: [],
         pieOptions: pieOptions,
 
+        customerData:{
+          "paidMQty":6,
+          "paidTQty":4,
+          "paidMoney":267.0,
+          "waitMQty":0,
+          "notPaidMQty":4,
+          "notPaidMoney":1391.615028655529010010
+        },
+
+
         buyList: [
           {
             label: '免单',
@@ -230,7 +244,9 @@
     computed: mapState({
       // 名字
       username: state => state.login.userInfo.username,
-
+      customerDataTotal(){
+        return this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
+      }
 
     }),
     methods: {
@@ -241,12 +257,28 @@
 
 
       getData(){
-        this.$ajaxGet('/api/movie/in_theaters').then(res => {
+        let params = {
+          holderId: '',
+          holderType: 1,
+          holderGroup: 1,
+        }
+        this.$ajaxPost(urls.getBillInfoWithoutFree, params).then(res => {
+          if(res){
+            // 
+            // debugger;
+          }
+        })
+      },
+
+      // 获取charts图一
+      getChartList(){
+        
+        this.$ajaxPost(urls.getBusinessBaseInfo).then(res => {
           if(res){
             // debugger;
           }
         })
-
+        
       },
 
        // 柱状图分析
