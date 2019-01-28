@@ -57,6 +57,8 @@ function resolveFailRes(status){
 
 // post请求
 let post = function(url, params, btn){
+  let sessionId = localStorage.getItem("sessionId");
+  params = {...params, sessionId:sessionId}
   let requestData = params ? params : {};
   // 验证权限
   // if(validatePower(url)){
@@ -93,7 +95,7 @@ let get = function(url, params, btn){
 
 
 // 初始化axios
-// axios.defaults.baseURL = urls.BASE_URL;
+axios.defaults.baseURL = urls.BASE_URL;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'json';

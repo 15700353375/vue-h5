@@ -26,20 +26,20 @@ var server = new webpackDevServer(compiler,{
     chunkModules: false
   },
   host: '0.0.0.0',
-  port: '8003', //设置端口号
+  port: '8003' //设置端口号
   // 使用webpack-dev-server就可以直接proxy设置代理服务器
   // 注意：使用代理服务器的时候内部的请求就直接使用/api/+接口地址
-  proxy: {
-    '/api': {
-      // target: 'http://192.168.0.16:80',
-      // target: "http://192.168.0.98:8003",
-      target: 'http://api.douban.com/v2',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': ''
-      }
-    }
-  }
+  // proxy: {
+  //   '/api': {
+  //     // target: 'http://192.168.0.16:80',
+  //     // target: "http://192.168.0.98:8003",
+  //     target: 'http://api.douban.com/v2',
+  //     changeOrigin: true,
+  //     pathRewrite: {
+  //       '^/api': ''
+  //     }
+  //   }
+  // }
 });
 
 server.listen(8003,'0.0.0.0',function(error){
