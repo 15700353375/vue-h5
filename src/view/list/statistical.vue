@@ -75,7 +75,7 @@
     created() {
       // 获取小程序传递过来的token
       // let current = this.$route.query.current;
-      let current = {"holderId":100,"wxRoleType":1,"storeName":"千思","holderType":1,"holdGroup":2,"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"07e230815bf14b3b9fca49774c93e270"}
+      let current = {"holderId":100,"wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":2,"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"522b64ae665f4379b2ee3c820aef4629"}
 
       localStorage.setItem('currentInfo', JSON.stringify(current))
 
@@ -83,7 +83,7 @@
     mounted(){
       let that = this;
       this.mySwiper = new Swiper ('.swiper-container', {
-        initialSlide: 0,
+        initialSlide: 2,
         direction: 'horizontal', // 垂直切换选项
         loop: false, // 循环模式选项
         on: {

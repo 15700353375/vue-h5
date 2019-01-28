@@ -23,10 +23,10 @@
   }
 
   .tec-item{
-    height: 113px;
-    width: calc(~"(100% - 180px)/5");
+    height: 150px;
+    width: calc(~"(100% - 100px)/4");
     overflow: hidden;
-    margin-left: 30px;
+    margin-left: 20px;
     position: relative;
     box-sizing: border-box;
     padding: 0;
@@ -34,10 +34,105 @@
     float: left;
     margin-top: 10px;
     border-radius: 6px;
+
+    .item-top{
+      height: 50px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 26px;
+      color: #fff;
+      line-height: 50px;
+      position: relative;
+      >div{
+        float: left;
+        width: 33.33%;
+        height: 100%;
+        text-align: center;
+      }
+      .item-top-left{
+        float: left;
+      }
+      .item-top-center{
+        float: left;
+      }
+      .item-top-right{
+        float: left;
+        text-align: center;
+        line-height: 50px;
+        .iconfont{
+          // position: absolute;
+          // right: 6px;
+          // top: 10px;
+          font-size: 30px;
+          color: #fff;
+          z-index: 99;
+        }
+      }
+    }
+
+    .item-center{
+      height: 50px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 30px;
+      color: #fff;
+      line-height: 50px;
+      text-align: center;
+      position: relative;
+    }
+
+
+    .item-bottom{
+      height: 50px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 26px;
+      color: #fff;
+      line-height: 50px;
+      position: relative;
+      >div{
+        float: left;
+        height: 100%;
+        text-align: center;
+      }
+      .item-bottom-left{
+        width: 25%;
+        float: left;
+      }
+      .item-bottom-center{
+        float: left;
+        width: 50%;
+
+        .item-bottom-center-span{
+          width: 100%;
+          padding: 3px 0;
+          display: inline-block;
+          line-height: 30px;
+          background: rgba(0, 0, 0, 0.3,);
+        }
+      }
+      .item-bottom-right{
+        width: 25%;
+        float: left;
+        text-align: center;
+        line-height: 50px;
+        .iconfont{
+          // position: absolute;
+          // right: 6px;
+          // bottom: 10px;
+          font-size: 30px;
+          color: #fff;
+          z-index: 99;
+        }
+      }
+    }
   }
 
-  .list-item:nth-of-type(5n+0){
-    margin-right: 30px;
+  .list-item:nth-of-type(4n+0){
+    margin-right: 20px;
   }
 
   .tec-item-num{
@@ -61,14 +156,7 @@
     background: #fc6025;
   }
 
-  .tec-item .iconfont{
-    position: absolute;
-    right: 6px;
-    top: 10px;
-    font-size: 20px;
-    color: #fff;
-    z-index: 99;
-  }
+
   .tec-item .iconfont.error{
     color: #000;
   }

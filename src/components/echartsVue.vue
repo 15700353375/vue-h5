@@ -78,57 +78,11 @@
             <div class='list-block-main clearfix'>
               <div class='clearfix'>
                 <div class='list-block'
-                      v-for="(item,index) in buyList"
+                      v-for="(item,index) in paymentMethods"
                       :key="index" >
-                      <div class='clearfix' v-if="item.label">
-                        <div class='list-block-label' > {{item.label}}</div>
-                        <div class='list-block-value' >￥ {{item.value}}</div>
-                        <div class='list-block-percent' >{{item.percent}}</div>
-                      </div>
-                      <div class='clearfix' v-else>
-                        <div class='list-block-label' ></div>
-                        <div class='list-block-label'> - </div>
-                      </div>
-                </div>
-              </div>
-              <div class='list-block-total'> 总计： <span class='total-value'>￥6546451</span> </div>
-            </div>
-
-            <div class='statistical-title'>
-              <span class='text-title'>营业信息</span>
-              <span class='text-right'>2016-12-13 19:16:18 统计</span>
-            </div>
-
-            <div class='echarts-main clearfix'>
-              <div id="inventoryChart2" style="width: 100%;height:100%;" />
-              <div class="echarts-total clearfix">
-                <div class="echarts-total-item">
-                  <div class='item-label'>今日营业</div>
-                  <div class='item-value'>￥89895</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥8895</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥895</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="statistical-title marginT-20">
-              <span class='text-title'>收款方式</span>
-            </div>
-
-            <div class='list-block-main clearfix'>
-              <div class='clearfix'>
-                <div class='list-block'
-                      v-for="(item,index) in buyList"
-                      :key="index" >
-                      <div class='clearfix' v-if="item.label">
-                        <div class='list-block-label' > {{item.label}}</div>
-                        <div class='list-block-value' >￥ {{item.value}}</div>
+                      <div class='clearfix' v-if="item.payName">
+                        <div class='list-block-label' > {{item.payName}}</div>
+                        <div class='list-block-value' >￥ {{item.moneySum}}</div>
                         <div class='list-block-percent' >{{item.percent}}</div>
                       </div>
                       <div class='clearfix' v-else>
@@ -137,8 +91,18 @@
                       </div>
                 </div>
               </div>
-              <div class='list-block-total'> 总计： <span class='total-value'>￥6546451</span> </div>
+              <div class='list-block-total'> 总计： <span class='total-value'>￥{{paymentTotalMoney}}</span> </div>
             </div>
+
+            <div class='statistical-title'>
+              <span class='text-title'>会员卡信息</span>
+            </div>
+
+            <div class='echarts-main clearfix marginB-20'>
+              <div id="inventoryChart2" style="width: 100%;height:100%;" />
+            </div>
+
+            
 
             <div class='statistical-title'>
               <span class='text-title'>收款合计</span>
@@ -147,11 +111,11 @@
               <div class='list-block-main clearfix'>
                 <div class='clearfix'>
                   <div class='list-block'
-                        v-for="(item,index) in buyList"
+                        v-for="(item,index) in collectionData"
                         :key="index" >
-                        <div class='clearfix' v-if="item.label">
-                          <div class='list-block-label' > {{item.label}}</div>
-                          <div class='list-block-value' >￥ {{item.value}}</div>
+                        <div class='clearfix' v-if="item.payName">
+                          <div class='list-block-label' > {{item.payName}}</div>
+                          <div class='list-block-value' >￥ {{item.moneySum}}</div>
                           <div class='list-block-percent' >{{item.percent}}</div>
                         </div>
                         <div class='clearfix' v-else>
@@ -160,7 +124,7 @@
                       </div>
                   </div>
                 </div>
-                <div class='list-block-total'> 收款合计： <span class='total-value'>￥6546451</span> </div>
+                <div class='list-block-total'> 收款合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
               </div>
             </div>
 
@@ -201,22 +165,19 @@
           notPaidTQty: 0,
 
           "paidMoney": 267.0,
-          "notPaidMoney": 1391.615028655529010010
+          "notPaidMoney": 1391.66
         },
 
         // 收款方式汇总
-        paymentMethods: [
-          {"moneyCount":1,"holderId":100,"moneySum":300,"payType":17,"payName":"cvs","payOrder":1},
-          {"moneyCount":1,"holderId":100,"moneySum":267,"payType":2,"payName":"会员卡","payOrder":25},
-          {"moneyCount":1,"holderId":100,"moneySum":1272,"payType":1,"payName":"现金","payOrder":777}
-        ],
+        paymentMethods: [],
+        paymentTotalMoney: 0,
 
 
         // 会员卡信息
         memberCardData: {
           "consumedTotal":267,// 消费总计
-          "cardLeftTotal":6824879.02,// 卡剩余
-          "cardLeftNetValue":6824879.02, //卡净值
+          "cardLeftTotal":68279.02,// 卡剩余
+          "cardLeftNetValue":68248.02, //卡净值
           "firstCount":1,  //新增会员
           "firstTotal":1000,
           "continuCount":2, //续费会员
@@ -230,6 +191,10 @@
           "rechargeMoneySum":3000,
           "rechargeCountSum":3
         },
+
+        // 收款合计
+        collectionData: [],
+        totalMoney: 0,
 
         buyList: [
           {
@@ -285,15 +250,7 @@
       this.currentInfo = JSON.parse(currentInfo)
 
 
-      let num = this.buyList.length % 4;
-      if (num) {
-        for (var i = 0; i < num; i++) {
-          this.buyList.push({
-            label: '',
-            value: ''
-          })
-        }
-      }
+      
 
       // ['微信支付','现金','会员卡','银行卡','团购']
       // let list = [
@@ -330,9 +287,14 @@
 
       this.getData();
 
+      this.getCollection()
+
       this.getChartList()
 
       this.getMemberCard()
+
+      // 收款合计信息
+      this.getCollectionData()
       // this.drawChart1()
       // this.drawChart2()
     },
@@ -349,7 +311,7 @@
           holderType: this.currentInfo.holderType,
           holdrGroup: this.currentInfo.holdGroup,
         }
-        this.$ajaxPost('/api/wechatMini/getBillInfoWithoutFree', params).then(res => {
+        this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {
           if(res){
             //
             // debugger;
@@ -359,16 +321,41 @@
 
       // 获取收款方式
       getCollection(){
-        let params = {
-          holderId: '',
-          holderType: 1,
-          holderGroup: 1,
-        }
-        this.$ajaxPost(urls.GETBILLINFOWITHFREE, params).then(res => {
-          if(res){
-            //
-            // debugger;
+        // let params = {
+        //   holderId: this.currentInfo.holderId,
+        //   holderType: this.currentInfo.holderType,
+        //   holdrGroup: this.currentInfo.holdGroup,
+        // }
+        // this.$ajaxPost('/api/wechatMini/getBillInfoWithFree', params).then(res => {
+        //   if(res){
+        //     //
+        //     // debugger;
+        //   }
+        // })
+
+        this.paymentMethods = [
+          {"moneyCount":1,"holderId":100,"moneySum":300,"payType":17,"payName":"cvs","payOrder":1},
+          {"moneyCount":1,"holderId":100,"moneySum":267,"payType":2,"payName":"会员卡","payOrder":25},
+          {"moneyCount":1,"holderId":100,"moneySum":1272,"payType":1,"payName":"现金","payOrder":777}
+        ]
+
+        this.paymentMethods.forEach(item => {
+          this.paymentTotalMoney += item.moneySum
+        })
+
+        let num = 4 - this.paymentMethods.length % 4;
+        if (num) {
+          for (var i = 0; i < num; i++) {
+            this.paymentMethods.push({
+              payName: '',
+              moneySum: ''
+            })
           }
+        }
+        
+
+        this.paymentMethods.forEach(item => {
+          item.percent = (item.moneySum/this.paymentTotalMoney).toFixed(4) * 100 + '%'
         })
       },
 
@@ -409,6 +396,46 @@
             ]
             this.drawChart2(list)
       },
+
+      // 收款合计
+      getCollectionData(){
+        // let params = {
+        //   holderId: this.currentInfo.holderId,
+        //   holderType: this.currentInfo.holderType,
+        //   holdrGroup: this.currentInfo.holdGroup,
+        // }
+        // this.$ajaxPost(urls.GETCASHFLOWSUMINFO, params).then(res => {
+        //   if(res){
+            
+        //   }
+        // })
+
+        this.collectionData = [
+          {"moneyCount":6,"holderId":100,"moneySum":4800,"payType":17,"payName":"cvs","payOrder":1},
+          {"moneyCount":2,"holderId":100,"moneySum":0,"payType":1,"payName":"现金","payOrder":777}
+        ]
+
+        this.collectionData.forEach(item => {
+          this.totalMoney += item.moneySum
+        })
+
+        let num = 4 - this.collectionData.length % 4;
+        if (num) {
+          for (var i = 0; i < num; i++) {
+            this.collectionData.push({
+              payName: '',
+              moneySum: ''
+            })
+          }
+        }
+        
+        
+
+        this.collectionData.forEach(item => {
+          item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+        })
+      },
+      
 
 
       // 获取charts图一

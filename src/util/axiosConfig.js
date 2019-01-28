@@ -12,7 +12,8 @@ if (process.env.NODE_ENV == 'production') {
 
 }else{
   // 开发环境
-  base_url = 'http://qsyfw.gnway.cc:12345/';
+  // base_url = 'http://qsyfw.gnway.cc:12345/';
+  base_url = '/api';
   // base_url = 'http://t.yushu.im/v2/'
 }
 
@@ -28,18 +29,24 @@ export const urls = {
   LOGIN: 'user-api/mlogin',
 
   // 获取客流量等统计数据
-  GETBILLINFOWITHOUTFREE: '/wechatMini/getBillInfoWithoutFree',
+  GETBILLINFOWITHOUTFREE: base_url + '/wechatMini/getBillInfoWithoutFree',
 
   // 获取支付方式饼图数据  饼图一
-  GETBUSINESSBASEINFO: '/wechatMini/getBusinessBaseInfo',
+  GETBUSINESSBASEINFO: base_url +  '/wechatMini/getBusinessBaseInfo',
 
   // 收款方式
-  GETBILLINFOWITHFREE: '/wechatMini/getBillInfoWithFree',
+  GETBILLINFOWITHFREE: base_url +  '/wechatMini/getBillInfoWithFree',
 
   // 会员卡信息
-  GETRECHARGESUMINFO: '/wechatMini/getRechargeSumInfo',
+  GETRECHARGESUMINFO: base_url +  '/wechatMini/getRechargeSumInfo',
+
+  // 收款合计
+  GETCASHFLOWSUMINFO: base_url +  '/wechatMini/getCashFlowSumInfo',
 
 
+
+  // 技师状态
+  GETTECHNICIANQUEUE: base_url +  '/wechatMini/getTechnicianQueue'
 
 
 
