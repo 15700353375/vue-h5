@@ -27,10 +27,22 @@ export const urls = {
 
   LOGIN: 'user-api/mlogin',
 
-  getBillInfoWithoutFree: '/wechatMini/getBillInfoWithoutFree',
-  getBusinessBaseInfo: '/wechatMini/getBusinessBaseInfo',
+  // 获取客流量等统计数据
+  GETBILLINFOWITHOUTFREE: '/wechatMini/getBillInfoWithoutFree',
 
-  
+  // 获取支付方式饼图数据  饼图一
+  GETBUSINESSBASEINFO: '/wechatMini/getBusinessBaseInfo',
+
+  // 收款方式
+  GETBILLINFOWITHFREE: '/wechatMini/getBillInfoWithFree',
+
+  // 会员卡信息
+  GETRECHARGESUMINFO: '/wechatMini/getRechargeSumInfo',
+
+
+
+
+
 
 
 };

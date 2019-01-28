@@ -29,11 +29,11 @@ function validatePower(url){
 
 // 统一处理成功请求返回值
 function resolveSuccessRes(res){
-  if(res.status == 200){
+  if(res.code === 1){
     return res.data;
   }else{
     // 表示网络正常，服务器拒绝
-    window.app.Toast.text(res.data.message);
+    window.app.Toast.text(res.msg);
     return res.data;
   }
 }
@@ -57,8 +57,9 @@ function resolveFailRes(status){
 
 // post请求
 let post = function(url, params, btn){
-  let sessionId = localStorage.getItem("sessionId");
-  params = {...params, sessionId:sessionId}
+  let currentInfo = localStorage.getItem('currentInfo')
+  currentInfo = JSON.parse(currentInfo)
+  params = {...params, sessionId: currentInfo.sessionId}
   let requestData = params ? params : {};
   // 验证权限
   // if(validatePower(url)){
@@ -95,7 +96,7 @@ let get = function(url, params, btn){
 
 
 // 初始化axios
-axios.defaults.baseURL = urls.BASE_URL;
+// axios.defaults.baseURL = urls.BASE_URL;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'json';

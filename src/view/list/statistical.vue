@@ -74,8 +74,10 @@
     },
     created() {
       // 获取小程序传递过来的token
-      let token = this.$route.query.token;
-      localStorage.setItem('zzb_token',token)
+      // let current = this.$route.query.current;
+      let current = {"holderId":100,"wxRoleType":1,"storeName":"千思","holderType":1,"holdGroup":2,"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"07e230815bf14b3b9fca49774c93e270"}
+
+      localStorage.setItem('currentInfo', JSON.stringify(current))
 
     },
     mounted(){

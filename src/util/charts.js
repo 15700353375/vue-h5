@@ -17,12 +17,13 @@ export const pieOptions = {
         formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
     legend: {
-        orient: 'vertical',
-        // orient: 'horizontal',
-        x: 'left',
-        itemWidth: 14,
-        itemHeight: 14,
-        data:['微信支付','现金','会员卡','银行卡','团购']
+      show: false,
+      orient: 'vertical',
+      // orient: 'horizontal',
+      x: 'left',
+      itemWidth: 14,
+      itemHeight: 14,
+      data:['微信支付','现金','会员卡','银行卡','团购']
     },
     color: [
       '#59b7ff','#7fb8ff','#a4b8ff','#cbb5fe','#f1b2fb','#f9adc4','#ffa88c','#f2cb93','#e5ed9a','#c8eaa2','#aae6aa','#82cfd4'
@@ -44,7 +45,7 @@ export const pieOptions = {
             label: {
               normal: {
                 // formatter: '{b}\n{per|{d}%}',
-                formatter: '{b}：{per|{d}%}',
+                formatter: '{b}：{c} {per|{d}%}',
                 rich: {
                   b: {
                     fontSize: 12,
