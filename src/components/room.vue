@@ -24,38 +24,52 @@
               <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
               <span v-if="item.roomOrder" class="item-top-right">￥{{item.roomOrder.totalGoodsAmount}} {{item.roomType == 2 ? '+' : ''}}</span>
             </div>
-            <div class='list-item-content clearfix'>
+            <div v-if="item.roomStatus > 2" class='list-item-content clearfix'>
 
               <div class="content-first">使用中 <button>更多</button></div>
-              <div class="content-second">
+              <div class="content-second color-error">
                 <div class="second-left">
                   <span class='iconfont icon-huiyuan'></span>
-                  567
+                  56
                 </div>
                 <div class="second-center">点钟</div>
                 <div class="second-right">等待中</div>
               </div>
-              <div class="content-second"></div>
-              <div class="content-second"></div>
+              <div class="content-second color-success">
+                <div class="second-left">
+                  <span class='iconfont icon-huiyuan'></span>
+                  56
+                </div>
+                <div class="second-center">点钟</div>
+                <div class="second-right">等待中</div>
+              </div>
+              <div class="content-second color-warning">
+                <div class="second-left">
+                  <span class='iconfont icon-huiyuan'></span>
+                  56
+                </div>
+                <div class="second-center">点钟</div>
+                <div class="second-right">等待中</div>
+              </div>
               <div class="content-bottom">
-                备注：5阿斯顿发生
+                备注：5阿斯顿发
               </div>
+              <div class="mask">
+                <div class="mask-opacity"></div>
+                <!-- <span class='mask-text iconfont icon-huiyuan'></span> -->
+                <span class="mask-text">48分钟</span>
+              </div>
+            </div>
 
-              <!-- <div v-if='item.status > 2' class='list-item-message' :class='item.status == 3 ? "success" : item.status == 4 ? "error" : "info"'>
-                <span class='iconfont icon-huiyuan'></span>
-                <span class='no'>{{item.no}}</span> 排
-                <span class='iconfont icon-shijian'></span>
-                <span class='timer'>{{item.restTimer}}</span>
+            <div v-if="item.roomStatus <= 2" class='list-item-content clearfix'>
+              <div class="kong-content clearfix">
+                <div class="icon-box">
+                  <span class='iconfont icon-huiyuan'></span>
+                </div>
+                <div class="kong-text">
+                  空闲中
+                </div>
               </div>
-              <div class='center' :class='item.status == 1 ? "warning":"success"' v-if='item.status < 3' >{{item.satusText}}</div>
-              <div class='mask' v-if='item.status == 5'>
-                <span class='mask-text'><countDown :endtime='item.timer'></countDown> <span>分钟</span></span>
-                <div class='mask-opacity'></div>
-              </div>
-              <div class='mask' v-if='item.status == 4'>
-                <span class='mask-text'><countAdd :endtime='item.timer'></countAdd> <span>分钟</span></span>
-                <div class='mask-opacity'></div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -125,7 +139,20 @@
             remark: "",
             roomId: 114,
             roomName: "退单重结",
-            roomStatus: "2",
+            // 1：停用 2：空闲中 5：使用中 8：已买单未离开9：需要打扫10：已预约11:房间暂停
+            roomStatus: 5,
+            roomType: "1",
+            roomWholeType: "1_8",
+            seatNum: 3,
+            sort: 9999
+          },
+          {
+            cancelHandleFlag: "1",
+            remark: "",
+            roomId: 114,
+            roomName: "退单重结",
+            // 1：停用 2：空闲中 5：使用中 8：已买单未离开9：需要打扫10：已预约11:房间暂停
+            roomStatus: 2,
             roomType: "1",
             roomWholeType: "1_8",
             seatNum: 3,
