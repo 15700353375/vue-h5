@@ -19,9 +19,29 @@
 
         <div class='clearfix list-main'>
           <div class='list-item' v-for='(item,index) in listData' :key='index'>
-            <div class='list-item-top'>{{item.roomNo}}</div>
+            <div class='list-item-top'>
+              {{item.roomName}}
+              <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
+              <span v-if="item.roomOrder" class="item-top-right">￥{{item.roomOrder.totalGoodsAmount}} {{item.roomType == 2 ? '+' : ''}}</span>
+            </div>
             <div class='list-item-content clearfix'>
-              <div v-if='item.status > 2' class='list-item-message' :class='item.status == 3 ? "success" : item.status == 4 ? "error" : "info"'>
+
+              <div class="content-first">使用中 <button>更多</button></div>
+              <div class="content-second">
+                <div class="second-left">
+                  <span class='iconfont icon-huiyuan'></span>
+                  567
+                </div>
+                <div class="second-center">点钟</div>
+                <div class="second-right">等待中</div>
+              </div>
+              <div class="content-second"></div>
+              <div class="content-second"></div>
+              <div class="content-bottom">
+                备注：5阿斯顿发生
+              </div>
+
+              <!-- <div v-if='item.status > 2' class='list-item-message' :class='item.status == 3 ? "success" : item.status == 4 ? "error" : "info"'>
                 <span class='iconfont icon-huiyuan'></span>
                 <span class='no'>{{item.no}}</span> 排
                 <span class='iconfont icon-shijian'></span>
@@ -35,9 +55,8 @@
               <div class='mask' v-if='item.status == 4'>
                 <span class='mask-text'><countAdd :endtime='item.timer'></countAdd> <span>分钟</span></span>
                 <div class='mask-opacity'></div>
-              </div>
+              </div> -->
             </div>
-            <div class='list-item-bottom'>消费:{{item.money}}元</div>
           </div>
         </div>
       </div>
@@ -60,7 +79,7 @@
   import { pieOptions } from '@Util/charts';
   import countDown from '@Components/countDown'
   import countAdd from '@Components/countAdd'
-
+  import {urls} from '@Util/axiosConfig';
   export default {
     props: ['navData'],
     data() {
@@ -102,62 +121,25 @@
 
         listData: [
           {
-            id: 1,
-            status: 1,
-            money: 556,
-            timer: 117,
-            no: '036',
-            restTimer: '4m',
-            roomNo: 'A05',
-            satusText: '空闲'
-          },
-          {
-            id: 2,
-            status: 2,
-            money: 556,
-            timer: 117,
-            no: '036',
-            restTimer: '4m',
-            roomNo: 'A05',
-            satusText: '已开房'
-          },
-          {
-            id: 3,
-            status: 3,
-            money: 556,
-            timer: 117,
-            no: '036',
-            restTimer: '4m',
-            roomNo: 'A05',
-            satusText: '已开房'
-          },
-          {
-            id: 4,
-            status: 4,
-            money: 60,
-            timer: 12,
-            no: '036',
-            restTimer: '4m',
-            roomNo: 'A05',
-            satusText: '已开房'
-          },
-          {
-            id: 5,
-            status: 5,
-            money: 556,
-            timer: 30,
-            no: '036',
-            restTimer: '4m',
-            roomNo: 'A05',
-            satusText: '已开房'
-          },
+            cancelHandleFlag: "1",
+            remark: "",
+            roomId: 114,
+            roomName: "退单重结",
+            roomStatus: "2",
+            roomType: "1",
+            roomWholeType: "1_8",
+            seatNum: 3,
+            sort: 9999
+          }
         ]
 
       }
     },
     mounted(){
+      let currentInfo = localStorage.getItem('currentInfo')
+      this.currentInfo = JSON.parse(currentInfo)
       // ‘58e6cdd7e4484df5952e2a7aa546346b’
-
+      // this.getRoomList();
     },
     computed: mapState({
       // 名字
@@ -166,6 +148,20 @@
 
     }),
     methods: {
+
+      // 获取技师列表
+      getRoomList(){
+        let params = {
+          holderId: this.currentInfo.holderId,
+          holderType: this.currentInfo.holderType,
+          holderGroup: this.currentInfo.holdGroup,
+        }
+        this.$ajaxPost(urls.GETROOMINFO, params).then(res => {
+          if(res){
+            this.listData = res.data;
+          }
+        })
+      },
 
 
 

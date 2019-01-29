@@ -29,12 +29,19 @@ function validatePower(url){
 
 // 统一处理成功请求返回值
 function resolveSuccessRes(res){
-  if(res.code === 1){
-    return res.data;
+  if(res.status == 200){
+    if(res.data.code == 1){
+      return res.data;
+    }else if(res.data.code == -1){
+      // sessionId失效 通知小程序
+    }else{
+      window.app.Toast.text(res.data.msg);
+    }
+
   }else{
     // 表示网络正常，服务器拒绝
-    window.app.Toast.text(res.msg);
-    return res.data;
+    window.app.Toast.text(res.statusText);
+    // return res.data;
   }
 }
 

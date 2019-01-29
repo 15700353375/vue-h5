@@ -23,4 +23,11 @@ export default {
     return new Number(money).toFixed(2);
   },
 
+  // 格式化为数字去掉无用的0
+  formatNumber (data) {
+    if (data != 0 && !data) return
+    return parseFloat(Number(data).toFixed(2))
+  },
+
+
 }

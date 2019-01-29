@@ -30,10 +30,22 @@
     position: relative;
     box-sizing: border-box;
     padding: 0;
-    background: #ddd;
+    background: #99a4b2;
     float: left;
     margin-top: 10px;
     border-radius: 6px;
+    &.item-bg1{
+      background: #fd5555;
+    }
+    &.item-bg2{
+      background: #55bfae;
+    }
+    &.item-bg3{
+      background: #eab71c;
+    }
+    &.item-bg4{
+      background: #fa9230;
+    }
 
     .item-top{
       height: 50px;
@@ -46,27 +58,32 @@
       position: relative;
       >div{
         float: left;
-        width: 33.33%;
         height: 100%;
         text-align: center;
       }
       .item-top-left{
+        width: 28%;
         float: left;
       }
       .item-top-center{
+        width: 44%;
         float: left;
       }
       .item-top-right{
+        width: 28%;
         float: left;
         text-align: center;
         line-height: 50px;
         .iconfont{
-          // position: absolute;
-          // right: 6px;
-          // top: 10px;
           font-size: 30px;
+          // color: #fff;
+
+        }
+        .iconfont.gengduomore12{
+          color: rgba(0, 0, 0, 0.2);
+        }
+        .iconfont.tianchongxing-{
           color: #fff;
-          z-index: 99;
         }
       }
     }
@@ -99,23 +116,24 @@
         text-align: center;
       }
       .item-bottom-left{
-        width: 25%;
+        width: 28%;
         float: left;
       }
       .item-bottom-center{
         float: left;
-        width: 50%;
+        width: 44%;
 
         .item-bottom-center-span{
           width: 100%;
           padding: 3px 0;
           display: inline-block;
           line-height: 30px;
-          background: rgba(0, 0, 0, 0.3,);
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 4px;
         }
       }
       .item-bottom-right{
-        width: 25%;
+        width: 28%;
         float: left;
         text-align: center;
         line-height: 50px;

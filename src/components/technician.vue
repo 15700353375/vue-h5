@@ -12,59 +12,79 @@
         <div class='tec-main clearfix'>
           <div class='tec-title'>保健师</div>
           <div class='tec-content clearfix'>
-            <div class='tec-item' v-for="(item,index) in listData" :key='index'>
+            <div class='tec-item' v-for="(item,index) in listData" :key='index' :class="'item-bg'+item.statusFlag">
               <div class="item-top">
                 <div class="item-top-left">
-                  男
+                  {{item.sex == 1 ? '女' : '男'}}
                 </div>
                 <div class="item-top-center">
-                  早
+                  {{item.workFlag == 2 ? '加' : item.sortsName}}
                 </div>
                 <div class="item-top-right">
-                  <span class='iconfont icon-huiyuan' :class="{'error': item.status == 3}"></span>
+                  <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span>
+                  <span v-else class='iconfont icon-tianchongxing-'></span>
                 </div>
               </div>
               <div class="item-center">
-                089
+                {{item.number}}
               </div>
 
               <div class="item-bottom">
                 <div class="item-bottom-left">
-                  8
+                  {{item.paizhong}}
                 </div>
                 <div class="item-bottom-center">
-                  <span class="item-bottom-center-span">暂停</span>
+                  <!-- 非上钟 -->
+                  <span v-if="item.statusFlag != 3" class="item-bottom-center-span">{{dealStatus(item.statusFlag)}}</span>
+                  <!-- 上钟  1:排钟，2:选钟，3:加钟，4:点钟-->
+                  <span v-else class="item-bottom-center-span">{{dealOper(item.oper)}}</span>
                 </div>
                 <div class="item-bottom-right">
-                  9
+                  {{item.dianzhong}}
                 </div>
               </div>
-              
-              <!-- <div class='tec-item-num' :class='item.status == 1 ? "success": item.status == 2 ? "warning": "info"'>015</div>
-              <div class='tec-item-type clearfix' :class='item.status == 1 ? "success": item.status == 2 ? "warning": "info"'>
-                <span class='tec-item-type-left'>0</span>
-                <span class='tec-item-type-center'>暂停</span>
-                <span class='tec-item-type-right'>0</span>
-              </div> -->
             </div>
           </div>
-          <div class='tec-footer'>空闲： 10 忙碌：45 预约： 30 暂停： 44</div>
+          <div class='tec-footer'>总数：{{dataInfo1.totalPersonNum}} 空闲：{{dataInfo1.freePersonNum}} 忙碌：{{dataInfo1.workingPersonNum}}</div>
         </div>
 
         <div class='tec-main clearfix'>
           <div class='tec-title'>足疗师</div>
           <div class='tec-content clearfix'>
-            <div class='tec-item' v-for="(item,index) in listData" :key='index'>
-              <span class='iconfont icon-huiyuan' :class="{'error': item.status == 3}"></span>
-              <div class='tec-item-num' :class='item.status == 1 ? "success": item.status == 2 ? "warning": "info"'>015</div>
-              <div class='tec-item-type clearfix' :class='item.status == 1 ? "success": item.status == 2 ? "warning": "info"'>
-                <span class='tec-item-type-left'>0</span>
-                <span class='tec-item-type-center'>暂停</span>
-                <span class='tec-item-type-right'>0</span>
+            <div class='tec-item' v-for="(item,index) in listData2" :key='index' :class="'item-bg'+item.statusFlag">
+              <div class="item-top">
+                <div class="item-top-left">
+                  {{item.sex == 1 ? '女' : '男'}}
+                </div>
+                <div class="item-top-center">
+                  {{item.workFlag == 2 ? '加' : item.sortsName}}
+                </div>
+                <div class="item-top-right">
+                  <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span>
+                  <span v-else class='iconfont icon-tianchongxing-'></span>
+                </div>
+              </div>
+              <div class="item-center">
+                {{item.number}}
+              </div>
+
+              <div class="item-bottom">
+                <div class="item-bottom-left">
+                  {{item.paizhong}}
+                </div>
+                <div class="item-bottom-center">
+                  <!-- 非上钟 -->
+                  <span v-if="item.statusFlag != 3" class="item-bottom-center-span">{{dealStatus(item.statusFlag)}}</span>
+                  <!-- 上钟  1:排钟，2:选钟，3:加钟，4:点钟-->
+                  <span v-else class="item-bottom-center-span">{{dealOper(item.oper)}}</span>
+                </div>
+                <div class="item-bottom-right">
+                  {{item.dianzhong}}
+                </div>
               </div>
             </div>
           </div>
-          <div class='tec-footer'>空闲： 10 忙碌：45 预约： 30 暂停： 44</div>
+          <div class='tec-footer'>总数：{{dataInfo2.totalPersonNum}} 空闲：{{dataInfo2.freePersonNum}} 忙碌：{{dataInfo2.workingPersonNum}}</div>
         </div>
       </div>
 
@@ -92,24 +112,21 @@
 
         currentInfo: {},
 
-        listData: [
-          {
-            sex: 2, //"1":女 , "2":男
-            sortsName: '早',// 显示班次(早或中或晚) 但如果是加班，就不显示早中晚啦。只显示“加”字
-            number: '089', //技师工号
-            paizhong: 2, // 排钟数量
-            dianzhong: 3, // 点钟数量
-            statusFlag: 1, //但上钟时就根据oper的状态来显示。只需要显示一个字（排，点，选，加）
-            oper: 2, //1:排钟，2:选钟，3:加钟，4:点钟
-            workFlag: 1, //"1":上班  "2":下班  "3"：加班
-            id: 1,
-            no: '023',
-            status: 1,
-            leftNo: 0,
-            rightNo: 0,
-            text: '空闲'
-          }
-        ]
+        dataInfo1:{
+          totalPersonNum: 0,
+          freePersonNum: 0,
+          workingPersonNum: 0
+        },
+
+        listData: [],
+
+        dataInfo2:{
+          totalPersonNum: 0,
+          freePersonNum: 0,
+          workingPersonNum: 0
+        },
+
+        listData2: []
 
       }
     },
@@ -117,8 +134,8 @@
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
 
-      this.listData= this.listData.concat(this.listData,this.listData)
-
+      // this.listData= this.listData.concat(this.listData,this.listData)
+      this.getTecList()
     },
     computed: mapState({
       // 名字
@@ -130,16 +147,45 @@
 
       // 获取技师列表
       getTecList(){
-        GETTECHNICIANQUEUE
         let params = {
           holderId: this.currentInfo.holderId,
           holderGroup: this.currentInfo.holdGroup,
         }
         this.$ajaxPost(urls.GETTECHNICIANQUEUE, params).then(res => {
           if(res){
-            
+            this.dataInfo1 = res.data[0].depart;
+            this.listData = res.data[0].ori_queue
+            this.dataInfo2 = res.data[1].depart;
+            this.listData2 = res.data[1].ori_queue
           }
         })
+      },
+
+      dealOper(oper){
+        oper = Number(oper)
+        // 1:排钟，2:选钟，3:加钟，4:点钟
+        let name = '';
+        switch (oper) {
+          case 1 : name = '排'; break;
+          case 2 : name = '选'; break;
+          case 3 : name = '加'; break;
+          case 4 : name = '点'; break;
+        }
+        return name
+      },
+
+      dealStatus(data){
+        data = Number(data)
+        // 1：暂停  2：空闲  3：上钟  4: 待上
+        let name = '';
+        switch (data) {
+          case 1 : name = '暂停'; break;
+          case 2 : name = '空闲'; break;
+          case 3 : name = '上钟'; break;
+          case 4 : name = '待上'; break;
+        }
+        console.log(11111111,data,name)
+        return name
       }
 
 

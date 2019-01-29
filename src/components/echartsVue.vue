@@ -10,7 +10,7 @@
       <div class="echarts-container">
         <div class="statistical-title">
               <span class='text-title'>营业信息</span>
-              <span class='text-right'>2016-12-13 19:16:18 统计</span>
+              <span class='text-right'>{{today}} 统计</span>
             </div>
             <!-- <div class="clearfix echartsData"> -->
               <div class='echarts-main clearfix'>
@@ -21,19 +21,19 @@
               <div class="echarts-total clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>浴足总客流</div>
-                  <div class='item-value color-info'>￥{{customerDataTotal}}</div>
+                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerDataTotal)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{customerData.paidMQty}}</div>
+                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMQty)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{customerData.notPaidMQty}}</div>
+                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMQty)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>等待</div>
-                  <div class='item-value'>￥{{customerData.waitMQty}}</div>
+                  <div class='item-value'>￥{{comUtil.formatNumber(customerData.waitMQty)}}</div>
                 </div>
               </div>
 
@@ -42,15 +42,15 @@
               <div v-if="holderType == 1" class="echarts-total echarts-total2 clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>棋牌总客流</div>
-                  <div class='item-value color-info'>￥{{customerDataTotal2}}</div>
+                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerDataTotal2)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{customerData.paidTQty}}</div>
+                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidTQty)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{customerData.notPaidTQty}}</div>
+                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidTQty)}}</div>
                 </div>
               </div>
 
@@ -58,15 +58,15 @@
               <div class="echarts-total echarts-total2 clearfix">
                 <div class="echarts-total-item">
                   <div class='item-label'>今日营业额</div>
-                  <div class='item-value color-info'>￥{{customerTotalMoney}}</div>
+                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerTotalMoney)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{customerData.paidMoney}}</div>
+                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMoney)}}</div>
                 </div>
                 <div class="echarts-total-item">
                   <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{customerData.notPaidMoney}}</div>
+                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMoney)}}</div>
                 </div>
               </div>
             <!-- </div> -->
@@ -102,7 +102,7 @@
               <div id="inventoryChart2" style="width: 100%;height:100%;" />
             </div>
 
-            
+
 
             <div class='statistical-title'>
               <span class='text-title'>收款合计</span>
@@ -141,6 +141,7 @@
   //加载相关依赖
   import { mapState } from 'vuex';
   import axios from 'axios'
+  import comUtil from '@Util/comUtil';
   import {urls} from '@Util/axiosConfig';
   import { pieOptions } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
@@ -148,9 +149,12 @@
     props: ['navData'],
     data() {
       return {
+        comUtil: comUtil,
         currentInfo: {},
         echartsArr: [],
         pieOptions: pieOptions,
+
+        today: null,
 
         // 小程序传递过来的参数
         holderType: 0,
@@ -196,39 +200,6 @@
         collectionData: [],
         totalMoney: 0,
 
-        buyList: [
-          {
-            label: '免单',
-            percent: '30%',
-            value: 3455,
-          },
-          {
-            label: '支付宝',
-            percent: '30%',
-            value: 8954
-          },
-          {
-            label: '微信',
-            percent: '30%',
-            value: 6754
-          },
-          {
-            label: '现金',
-            percent: '30%',
-            value: 347
-          },
-          {
-            label: '抹零',
-            percent: '30%',
-            value: 47
-          },
-          {
-            label: '银行卡',
-            percent: '30%',
-            value: 347
-          },
-        ]
-
       }
     },
     computed: mapState({
@@ -246,22 +217,11 @@
 
     }),
     mounted(){
+
+      this.today = Moment().format('YYYY-MM-DD HH:mm:ss')
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
 
-
-      
-
-      // ['微信支付','现金','会员卡','银行卡','团购']
-      // let list = [
-      //             {value:335, name:'微信支付'},
-      //             {value:310, name:'现金'},
-      //             {value:234, name:'会员卡'},
-      //             {value:135, name:'银行卡'},
-      //             {value:1548, name:'团购'}
-      //         ]
-
-      // this.pieOptions.series[0].data = list
 
       var miniRefresh = new MiniRefresh({
           container: '#minirefresh',
@@ -281,9 +241,7 @@
           }
       });
 
-      // this.$ajaxGet('/api/movie/in_theaters').then( res => {
-      //   debugger
-      // })
+
 
       this.getData();
 
@@ -295,8 +253,7 @@
 
       // 收款合计信息
       this.getCollectionData()
-      // this.drawChart1()
-      // this.drawChart2()
+
     },
     methods: {
       goPage(url){
@@ -304,161 +261,135 @@
       },
 
 
-
+      // 统计数据
       getData(){
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
-          holdrGroup: this.currentInfo.holdGroup,
+          holderGroup: this.currentInfo.holdGroup,
         }
-        this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {
+        this.$ajaxPost(urls.GETBUSINESSBASEINFO, params).then(res => {
           if(res){
-            //
-            // debugger;
+            this.customerData = res.data;
           }
         })
       },
 
       // 获取收款方式
       getCollection(){
-        // let params = {
-        //   holderId: this.currentInfo.holderId,
-        //   holderType: this.currentInfo.holderType,
-        //   holdrGroup: this.currentInfo.holdGroup,
-        // }
-        // this.$ajaxPost('/api/wechatMini/getBillInfoWithFree', params).then(res => {
-        //   if(res){
-        //     //
-        //     // debugger;
-        //   }
-        // })
+        let params = {
+          holderId: this.currentInfo.holderId,
+          holderType: this.currentInfo.holderType,
+          holderGroup: this.currentInfo.holdGroup,
+        }
+        this.$ajaxPost(urls.GETBILLINFOWITHFREE, params).then(res => {
+          if(res){
+            this.paymentMethods = res.data;
 
-        this.paymentMethods = [
-          {"moneyCount":1,"holderId":100,"moneySum":300,"payType":17,"payName":"cvs","payOrder":1},
-          {"moneyCount":1,"holderId":100,"moneySum":267,"payType":2,"payName":"会员卡","payOrder":25},
-          {"moneyCount":1,"holderId":100,"moneySum":1272,"payType":1,"payName":"现金","payOrder":777}
-        ]
+            this.paymentMethods.forEach(item => {
+              this.paymentTotalMoney += item.moneySum
+            })
 
-        this.paymentMethods.forEach(item => {
-          this.paymentTotalMoney += item.moneySum
-        })
+            let num = 4 - this.paymentMethods.length % 4;
+            if (num) {
+              for (var i = 0; i < num; i++) {
+                this.paymentMethods.push({
+                  payName: '',
+                  moneySum: ''
+                })
+              }
+            }
 
-        let num = 4 - this.paymentMethods.length % 4;
-        if (num) {
-          for (var i = 0; i < num; i++) {
-            this.paymentMethods.push({
-              payName: '',
-              moneySum: ''
+            this.paymentMethods.forEach(item => {
+              item.percent = (item.moneySum/this.paymentTotalMoney).toFixed(4) * 100 + '%'
             })
           }
-        }
-        
-
-        this.paymentMethods.forEach(item => {
-          item.percent = (item.moneySum/this.paymentTotalMoney).toFixed(4) * 100 + '%'
         })
+
+
       },
 
       // 获取会员卡信息 饼图 统计
       getMemberCard(){
-        // let params = {
-        //   holderId: '',
-        //   holderType: 1,
-        //   holderGroup: 1,
-        // }
-        // this.$ajaxPost(urls.GETRECHARGESUMINFO, params).then(res => {
-        //   if(res){
-        //    let data = this.memberCardData
-        //     let list = [
-        //       {
-        //         name: '卡剩余',
-        //         value: data.cardLeftTotal
-        //       },
-        //       {
-        //         name: '卡净值',
-        //         value: data.cardLeftNetValue
-        //       }
-        //     ]
-        //     this.drawChart2(list)
-        //   }
-        // })
-
-        let data = this.memberCardData
+        let params = {
+          holderId: this.currentInfo.holderId,
+          holderType: this.currentInfo.holderType,
+          holderGroup: this.currentInfo.holdGroup,
+        }
+        this.$ajaxPost(urls.GETRECHARGESUMINFO, params).then(res => {
+          if(res){
+           let data = res.data
             let list = [
               {
                 name: '卡剩余',
-                value: data.cardLeftTotal
+                value: comUtil.formatNumber(data.cardLeftTotal)
               },
               {
                 name: '卡净值',
-                value: data.cardLeftNetValue
+                value: comUtil.formatNumber(data.cardLeftNetValue)
               }
             ]
             this.drawChart2(list)
+          }
+        })
       },
 
       // 收款合计
       getCollectionData(){
-        // let params = {
-        //   holderId: this.currentInfo.holderId,
-        //   holderType: this.currentInfo.holderType,
-        //   holdrGroup: this.currentInfo.holdGroup,
-        // }
-        // this.$ajaxPost(urls.GETCASHFLOWSUMINFO, params).then(res => {
-        //   if(res){
-            
-        //   }
-        // })
+        let params = {
+          holderId: this.currentInfo.holderId,
+          holderType: this.currentInfo.holderType,
+          holderGroup: this.currentInfo.holdGroup,
+        }
+        this.$ajaxPost(urls.GETCASHFLOWSUMINFO, params).then(res => {
+          if(res){
+            this.collectionData = res.data;
+            this.collectionData.forEach(item => {
+              this.totalMoney += item.moneySum
+            })
 
-        this.collectionData = [
-          {"moneyCount":6,"holderId":100,"moneySum":4800,"payType":17,"payName":"cvs","payOrder":1},
-          {"moneyCount":2,"holderId":100,"moneySum":0,"payType":1,"payName":"现金","payOrder":777}
-        ]
+            let num = 4 - this.collectionData.length % 4;
+            if (num) {
+              for (var i = 0; i < num; i++) {
+                this.collectionData.push({
+                  payName: '',
+                  moneySum: ''
+                })
+              }
+            }
 
-        this.collectionData.forEach(item => {
-          this.totalMoney += item.moneySum
-        })
-
-        let num = 4 - this.collectionData.length % 4;
-        if (num) {
-          for (var i = 0; i < num; i++) {
-            this.collectionData.push({
-              payName: '',
-              moneySum: ''
+            this.collectionData.forEach(item => {
+              item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
             })
           }
-        }
-        
-        
-
-        this.collectionData.forEach(item => {
-          item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
         })
+
       },
-      
+
 
 
       // 获取charts图一
       getChartList(){
 
-        // this.$ajaxPost(urls.GETBUSINESSBASEINFO).then(res => {
-        //   if(res){
-        //     let data = this.dealChartData1(res)
-        //     this.drawChart1(data)
-        //   }
-        // })
+        let params = {
+          holderId: this.currentInfo.holderId,
+          holderType: this.currentInfo.holderType,
+          holderGroup: this.currentInfo.holdGroup,
+        }
 
-        let data = this.dealChartData1()
-        this.drawChart1(data)
+        this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {
+          if(res){
+            let data = this.dealChartData1(res)
+            this.drawChart1(data)
+          }
+        })
 
       },
 
       dealChartData1(data){
-        data =[
-          {"moneyCount":1,"holderId":100,"moneySum":300,"payType":17,"payName":"微信","payOrder":1},
-          {"moneyCount":1,"holderId":100,"moneySum":267,"payType":2,"payName":"会员卡","payOrder":25},
-          {"moneyCount":1,"holderId":100,"moneySum":1272,"payType":1,"payName":"现金","payOrder":777}
-        ]
+        if(!data || !data.length){
+          return
+        }
         let list = [];
         data.forEach(item => {
           list.push({

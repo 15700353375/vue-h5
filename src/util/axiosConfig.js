@@ -29,10 +29,11 @@ export const urls = {
   LOGIN: 'user-api/mlogin',
 
   // 获取客流量等统计数据
-  GETBILLINFOWITHOUTFREE: base_url + '/wechatMini/getBillInfoWithoutFree',
+  GETBUSINESSBASEINFO: base_url +  '/wechatMini/getBusinessBaseInfo',
+
 
   // 获取支付方式饼图数据  饼图一
-  GETBUSINESSBASEINFO: base_url +  '/wechatMini/getBusinessBaseInfo',
+  GETBILLINFOWITHOUTFREE: base_url + '/wechatMini/getBillInfoWithoutFree',
 
   // 收款方式
   GETBILLINFOWITHFREE: base_url +  '/wechatMini/getBillInfoWithFree',
@@ -43,6 +44,9 @@ export const urls = {
   // 收款合计
   GETCASHFLOWSUMINFO: base_url +  '/wechatMini/getCashFlowSumInfo',
 
+  // 房间状态信息
+  GETROOMSTATUSINFO: base_url +  '/wechatMini/getRoomStatusInfo',
+  GETROOMINFO: base_url +  '/wechatMini/getRoomInfo',
 
 
   // 技师状态
