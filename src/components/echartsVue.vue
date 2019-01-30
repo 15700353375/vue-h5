@@ -15,66 +15,72 @@
             <!-- <div class="clearfix echartsData"> -->
               <div class='echarts-main clearfix'>
                 <div id="inventoryChart" style="width: 100%;height: 100%;" />
-              <div id="inventoryChartfunnel" style="position:absolute;right:0;top: 0px;width: 60px;height: 100%" />
-
               </div>
 
-
-              <!-- 营业额 -->
-              <div class="echarts-total echarts-total2 clearfix">
-                <div class="echarts-total-item">
-                  <div class='item-label'>今日营业额</div>
-                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerTotalMoney)}}</div>
+              <div class="show-total clearfix">
+                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
+                <div class="show-main">
+                  <div class="show-mian-item color-success" :style="{width: customerData.paidMoney_percent}"></div>
+                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidMoney_percent}"></div>
                 </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMoney)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMoney)}}</div>
-                </div>
-              </div>
-
-              <!-- 浴足客流量 -->
-              <div class="echarts-total clearfix">
-                <div class="echarts-total-item">
-                  <div class='item-label'>浴足总客流</div>
-                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerDataTotal)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMQty)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMQty)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>等待</div>
-                  <div class='item-value'>￥{{comUtil.formatNumber(customerData.waitMQty)}}</div>
+                <div class="show-content clearfix">
+                  <div class="show-content-item">
+                    <span class="show-label color-success"></span>
+                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMoney)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-error"></span>
+                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMoney)}}</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- 棋牌客流量 -->
-              <!-- holderType = 1 时，才有棋牌客流 -->
-              <div v-if="holderType == 1" class="echarts-total echarts-total2 clearfix">
-                <div class="echarts-total-item">
-                  <div class='item-label'>棋牌总客流</div>
-                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerDataTotal2)}}</div>
+              <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
+                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
+                <div class="show-main">
+                  <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
+                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
+                  <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
                 </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidTQty)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidTQty)}}</div>
+                <div class="show-content clearfix">
+                  <div class="show-content-item">
+                    <span class="show-label color-success"></span>
+                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-error"></span>
+                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-info"></span>
+                    <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
+                  </div>
                 </div>
               </div>
 
+              <div v-if="currentInfo.holderType == 2" class="show-total clearfix">
+                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal2)}}人</div>
+                <div class="show-main">
+                  <div class="show-mian-item color-success" :style="{width: customerData.paidTQty_percent}"></div>
+                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidTQty_percent}"></div>
+                  <div class="show-mian-item color-info" :style="{width: customerData.waitTQty_percent}"></div>
+                </div>
+                <div class="show-content clearfix">
+                  <div class="show-content-item">
+                    <span class="show-label color-success"></span>
+                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidTQty)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-error"></span>
+                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidTQty)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-info"></span>
+                    <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitTQty)}}</span>
+                  </div>
+                </div>
+              </div>
 
-            <!-- </div> -->
 
             <div class="statistical-title marginT-20">
               <span class='text-title'>收款方式</span>
@@ -106,9 +112,27 @@
               <span class='text-title'>会员卡信息</span>
             </div>
 
-            <div class='echarts-main clearfix marginB-20'>
+            <div class='echarts-main clearfix'>
               <div id="inventoryChart2" style="width: 100%;height:100%;" />
             </div>
+
+            <div class="show-total clearfix marginB-20">
+                <div class="total-title">会员量：{{comUtil.formatNumber(memberCardData.total)}}人</div>
+                <div class="show-main">
+                  <div class="show-mian-item color-success" :style="{width: memberCardData.firstCount_percent}"></div>
+                  <div class="show-mian-item color-error" :style="{width: memberCardData.continuCount_percent}"></div>
+                </div>
+                <div class="show-content clearfix">
+                  <div class="show-content-item">
+                    <span class="show-label color-success"></span>
+                    <span class="show-value">续费会员: {{comUtil.formatNumber(memberCardData.firstCount)}}</span>
+                  </div>
+                  <div class="show-content-item">
+                    <span class="show-label color-error"></span>
+                    <span class="show-value">新增会员: {{comUtil.formatNumber(memberCardData.continuCount)}}</span>
+                  </div>
+                </div>
+              </div>
 
 
 
@@ -157,7 +181,7 @@
   import { pieOptions, funnelOption } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
   export default {
-    props: ['navData'],
+    props: ['currentData'],
     data() {
       return {
         comUtil: comUtil,
@@ -173,15 +197,16 @@
         // 客流量
         customerData:{
           // 浴足
-          "paidMQty": 6,
-          "notPaidMQty": 4,
-          "waitMQty": 0,
+          paidMQty: 0,
+          notPaidMQty: 0,
+          waitMQty: 0,
           // 棋牌
-          "paidTQty": 4,
+          paidTQty: 0,
           notPaidTQty: 0,
+          waitTQty: 0,
 
-          "paidMoney": 267.0,
-          "notPaidMoney": 1391.66
+          paidMoney: 0,
+          notPaidMoney: 0
         },
 
         // 收款方式汇总
@@ -190,23 +215,7 @@
 
 
         // 会员卡信息
-        memberCardData: {
-          "consumedTotal":267,// 消费总计
-          "cardLeftTotal":68279.02,// 卡剩余
-          "cardLeftNetValue":68248.02, //卡净值
-          "firstCount":1,  //新增会员
-          "firstTotal":1000,
-          "continuCount":2, //续费会员
-          "continuTotal":2000,
-          "redFlushAndrefundCount":0,
-          "redFlushAndrefundTotal":0,
-          "sumGiftTotal":0,
-          "rechargeMoneyDaily":0,
-          "rechargeCountDaily":0,
-          "showDailyFlag":"0",
-          "rechargeMoneySum":3000,
-          "rechargeCountSum":3
-        },
+        memberCardData: {},
 
         // 收款合计
         collectionData: [],
@@ -217,28 +226,34 @@
     computed: mapState({
       // 名字
       username: state => state.login.userInfo.username,
-      customerDataTotal(){
-        return this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
-      },
-      customerDataTotal2(){
-        return this.customerData.paidTQty+this.customerData.notPaidTQty
-      },
-      customerTotalMoney(){
-        return this.customerData.paidMoney+this.customerData.notPaidMoney
-      }
-
     }),
+    watch:{
+      currentData(newVal,oldVal){
+        console.log(oldVal,newVal)
+        if(newVal == 0){
+          this.refresh();
+
+        }
+      }
+    },
+    created(){
+      
+      let currentInfo = localStorage.getItem('currentInfo')
+      this.currentInfo = JSON.parse(currentInfo)
+      console.log(this.currentInfo)
+      this.refresh();
+    },
     mounted(){
 
       this.today = Moment().format('YYYY-MM-DD HH:mm:ss')
-      let currentInfo = localStorage.getItem('currentInfo')
-      this.currentInfo = JSON.parse(currentInfo)
-
+      
+      let that = this;
 
       var miniRefresh = new MiniRefresh({
           container: '#minirefresh',
           down: {
               callback: function() {
+                that.refresh();
                 setTimeout(()=>{
                   // 结束下拉刷新
                   miniRefresh.endDownLoading();
@@ -246,44 +261,24 @@
               }
           },
           up: {
-
               callback: function() {
                 miniRefresh.endUpLoading(true);
               }
           }
       });
-
-
-
-      this.getData();
-
-      this.getCollection()
-
-      this.getChartList()
-
-      this.getMemberCard()
-
-      // 收款合计信息
-      this.getCollectionData()
-
-
-
-      if (!document.querySelector('#inventoryChartfunnel')) {
-          return
-        }
-        // 基于准备好的dom，初始化echarts实例
-        let inventoryChart = echarts.init(document.querySelector('#inventoryChartfunnel'));
-
-        let breakageChartoption = this.funnelOption
-
-        inventoryChart.setOption(breakageChartoption)
-
-        this.echartsArr.push(inventoryChart);
-
     },
     methods: {
-      goPage(url){
-        this.$router.push({name: url})
+      refresh(){
+        this.getData();
+
+        this.getCollection()
+
+        this.getChartList()
+
+        this.getMemberCard()
+
+        // 收款合计信息
+        this.getCollectionData()
       },
 
 
@@ -297,8 +292,25 @@
         this.$ajaxPost(urls.GETBUSINESSBASEINFO, params).then(res => {
           if(res){
             this.customerData = res.data;
+            this.dealTotalData();
           }
         })
+      },
+
+      dealTotalData(){
+        this.customerData['customerTotalMoney'] = this.customerData.paidMoney+this.customerData.notPaidMoney
+        this.customerData['paidMoney_percent'] = comUtil.formatNumber(this.customerData.paidMoney/this.customerData.customerTotalMoney * 100) +'%';
+        this.customerData['notPaidMoney_percent'] = comUtil.formatNumber(this.customerData.notPaidMoney/this.customerData.customerTotalMoney * 100) +'%';
+
+        this.customerData['customerDataTotal'] = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
+        this.customerData['paidMQty_percent'] = comUtil.formatNumber(this.customerData.paidMQty/this.customerData.customerDataTotal * 100) +'%';
+        this.customerData['notPaidMQty_percent'] = comUtil.formatNumber(this.customerData.notPaidMQty/this.customerData.customerDataTotal * 100) +'%';
+        this.customerData['waitMQty_percent'] = comUtil.formatNumber(this.customerData.waitMQty/this.customerData.customerDataTotal * 100) +'%';
+
+        this.customerData['customerDataTotal2'] = this.customerData.paidTQty+this.customerData.notPaidTQty
+        this.customerData['paidTQty_percent'] = comUtil.formatNumber(this.customerData.paidTQty/this.customerData.customerDataTotal2 * 100) +'%';
+        this.customerData['notPaidTQty_percent'] = comUtil.formatNumber(this.customerData.notPaidTQty/this.customerData.customerDataTotal2 * 100) +'%';
+        this.customerData['waitTQty_percent'] = comUtil.formatNumber(this.customerData.waitTQty/this.customerData.customerDataTotal2 * 100) +'%';
       },
 
       // 获取收款方式
@@ -356,9 +368,18 @@
                 value: comUtil.formatNumber(data.cardLeftNetValue)
               }
             ]
+
+            this.dealMemberData(res.data);
             this.drawChart2(list)
           }
         })
+      },
+
+      dealMemberData(data){
+        this.memberCardData = data;
+        this.memberCardData['total'] = data.firstCount+data.continuCount
+        this.memberCardData['firstCount_percent'] = comUtil.formatNumber(data.firstCount/this.memberCardData.total * 100) +'%';
+        this.memberCardData['continuCount_percent'] = comUtil.formatNumber(data.continuCount/this.customerData.total * 100) +'%';
       },
 
       // 收款合计

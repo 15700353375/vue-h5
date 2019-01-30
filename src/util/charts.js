@@ -57,8 +57,8 @@ export const pieOptions = {
             hoverOffset: 5,
             labelLine: {
               show: true,
-              length: 10,
-              length2: 8,
+              length: 15,
+              length2: 15,
             },
             label: {
               normal: {

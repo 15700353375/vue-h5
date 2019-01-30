@@ -10,13 +10,13 @@
     <div class="swiper-container" >
       <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <echartsVue></echartsVue>
+            <echartsVue :currentData='currentData'></echartsVue>
           </div>
           <div class="swiper-slide">
-            <!-- <room></room> -->
+            <room :currentData='currentData'></room>
           </div>
           <div class="swiper-slide">
-            <technician></technician>
+            <technician :currentData='currentData'></technician>
           </div>
       </div>
     </div>
@@ -72,11 +72,19 @@
         mySwiper: null,
       }
     },
+    beforeCreate(){
+      let current = this.$route.query.current;
+      console.log(current)
+
+      localStorage.setItem('currentInfo', JSON.stringify(current))
+    },
     created() {
       // 获取小程序传递过来的token
-      // let current = this.$route.query.current;
-      let current = {"holderId":"100","wxRoleType":"1","storeName":"千思","holderType":"1",
-      "holdGroup":"2","address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"7cc391f32ef741618f7d323693fe1dbd"}
+      let current = this.$route.query.current;
+      console.log(current)
+      // let current = {"holderId":100,"wxRoleType":"1","storeName":"千思","holderType":1,"holdGroup":2,
+      // "address":"成都市武侯区复城国际T4#1603",
+      // "fphone":"","sessionId":"26a48ecb22a442ca90c63d11d8efe630"}
 
       localStorage.setItem('currentInfo', JSON.stringify(current))
 

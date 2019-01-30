@@ -105,8 +105,9 @@
   import { mapState } from 'vuex';
   import axios from 'axios'
   import {urls} from '@Util/axiosConfig';
+  import MiniRefreshTools from 'minirefresh';
   export default {
-    props: ['navData'],
+    props: ['currentData'],
     data() {
       return {
 
@@ -130,19 +131,40 @@
 
       }
     },
-    mounted(){
+    watch:{
+      currentData(newVal,oldVal){
+        if(newVal == 2){
+          this.getTecList();
+        }
+      }
+    },
+    created(){
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
 
-      // this.listData= this.listData.concat(this.listData,this.listData)
-      this.getTecList()
+      this.getTecList();
     },
-    computed: mapState({
-      // 名字
-      username: state => state.login.userInfo.username,
+    mounted(){
+      let that = this;
+      var miniRefresh = new MiniRefresh({
+          container: '#minirefresh',
+          down: {
+              callback: function() {
+                that.getTecList();
+                setTimeout(()=>{
+                  // 结束下拉刷新
+                  miniRefresh.endDownLoading();
+                },3000)
+              }
+          },
+          up: {
+              callback: function() {
+                miniRefresh.endUpLoading(true);
+              }
+          }
+      });
+    },
 
-
-    }),
     methods: {
 
       // 获取技师列表

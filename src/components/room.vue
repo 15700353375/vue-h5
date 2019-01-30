@@ -123,8 +123,9 @@
   import countDown from '@Components/countDown'
   import countAdd from '@Components/countAdd'
   import {urls} from '@Util/axiosConfig';
+  import MiniRefreshTools from 'minirefresh';
   export default {
-    props: ['navData'],
+    props: ['currentData'],
     data() {
       return {
         comUtil: comUtil,
@@ -185,11 +186,38 @@
 
       }
     },
-    mounted(){
+    watch:{
+      currentData(newVal,oldVal){
+        if(newVal == 1){
+          this.getRoomList();
+        }
+      }
+    },
+    created(){
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
 
       this.getRoomList();
+    },
+    mounted(){
+      let that = this;
+      var miniRefresh = new MiniRefresh({
+          container: '#minirefresh',
+          down: {
+              callback: function() {
+                that.getRoomList();
+                setTimeout(()=>{
+                  // 结束下拉刷新
+                  miniRefresh.endDownLoading();
+                },3000)
+              }
+          },
+          up: {
+              callback: function() {
+                miniRefresh.endUpLoading(true);
+              }
+          }
+      });
     },
     computed: mapState({
       // 名字

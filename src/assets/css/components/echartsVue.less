@@ -139,3 +139,66 @@
     float: right;
   }
 }
+
+
+.show-total{
+  background: #fff;
+  .total-title{
+    text-align: center;
+    font-size: 28px;
+    color: #000;
+  }
+
+  .show-main{
+    width: 80%;
+    height: 40px;
+    background: #ddd;
+    margin: 10px auto;
+    .show-mian-item{
+      height: 100%;
+      float: left;
+      
+      &.color-success{
+        background: #81d654;
+      }
+      &.color-error{
+        background: #db3a26;
+      }
+      &.color-info{
+        background: #489ef9;
+      }
+    }
+  }
+
+  .show-content{
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    .show-content-item{
+      display: inline-block;
+      line-height: 40px;
+      .show-label{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        vertical-align:middle;
+        &.color-success{
+          background: #81d654;
+        }
+        &.color-error{
+          background: #db3a26;
+        }
+        &.color-info{
+          background: #489ef9;
+        }
+      }
+      .show-value{
+        vertical-align:middle;
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+      }
+    }
+  }
+}

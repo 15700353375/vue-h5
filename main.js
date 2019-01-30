@@ -53,7 +53,6 @@ window.Moment = moment;
 window.app = app;
 
 
-
 // 路由跳转之前，检测是否有token
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
