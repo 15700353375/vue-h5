@@ -154,9 +154,9 @@
         this.$ajaxPost(urls.GETTECHNICIANQUEUE, params).then(res => {
           if(res){
             this.dataInfo1 = res.data[0].depart;
-            this.listData = res.data[0].ori_queue
+            this.listData = res.data[0].all_queue
             this.dataInfo2 = res.data[1].depart;
-            this.listData2 = res.data[1].ori_queue
+            this.listData2 = res.data[1].all_queue
           }
         })
       },

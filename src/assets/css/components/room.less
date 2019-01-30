@@ -22,6 +22,7 @@
         border-radius: 5px;
         border: 1px solid #ddd;
         background: #fff;
+        font-size: 26px;
       }
     }
 
@@ -34,20 +35,20 @@
     }
 
     .list-item{
-      width: calc(~"(100% - 80px)/3");
+      width: calc(~"(100% - 40px)/3");
       height: 240px;
       border-radius: 10px;
       box-sizing: border-box;
       float: left;
-      margin-top: 20px;
+      margin-top: 10px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      margin-left: 20px;
+      margin-left: 10px;
       .list-item-top{
         height: 50px;
         width: 100%;
-        background: #50add8;
+        background: #56c1b1;
         color: #fff;
         text-align: left;
         line-height: 50px;
@@ -56,6 +57,43 @@
         box-sizing: border-box;
         .item-top-right{
           float: right;
+        }
+
+        &.active1{
+          background: #5079ff;
+        }
+        &.active2{
+          background: #11ad44;
+        }
+        &.active3{
+          background: #ba7dff;
+        }
+        &.active4{
+          background: #3e5fa2;
+        }
+        &.active5{
+          background: #ff7171;
+        }
+        &.active6{
+          background: #f9c804;
+        }
+        &.active7{
+          background: #f99404;
+        }
+        &.active8{
+          background: #62d407;
+        }
+        &.active9{
+          background: #ff457a;
+        }
+        &.active10{
+          background: #12c0df;
+        }
+        &.active11{
+          background: #7c53e2;
+        }
+        &.active12{
+          background: #6facff;
         }
       }
       .list-item-content{
@@ -123,10 +161,16 @@
           }
         }
         .content-bottom{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: #fff;
           text-align: center;
           font-size: 18px;
           color: #666;
           height: 40px;
+          overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
         }
 
 
@@ -134,9 +178,9 @@
           .icon-box{
             height: 90px;
             text-align: center;
-            .iconfont{
-              font-size: 76px;
-              color: #cef0ea;
+            img{
+              height: 70px;
+              margin-top: 15px;
             }
           }
           .kong-text{
@@ -164,7 +208,7 @@
           background: #333;
           opacity: 0.7;
         }
-    
+
         .mask-text{
           position: absolute;
           top: 0;
@@ -173,15 +217,38 @@
           color: #fff;
           width: 100%;
           height: 100%;
-          line-height: 180px;
+
           text-align: center;
           font-size: 30px;
+          &.mask-text-text{
+            line-height: 180px;
+            font-size: 40px;
+            .unit{
+              font-size: 14px;
+            }
+          }
           &.iconfont{
             font-size: 100px;
           }
+          .img-box{
+            height: 120px;
+            img{
+              margin: auto;
+              height: 80px;
+              margin-top: 30px;
+            }
+          }
+          .texts{
+            position: relative;
+            overflow: hidden;
+            height: 40px;
+            font-size: 26px;
+            color: #fff;
+          }
+
         }
       }
-    
+
       }
 
 

@@ -15,6 +15,25 @@
             <!-- <div class="clearfix echartsData"> -->
               <div class='echarts-main clearfix'>
                 <div id="inventoryChart" style="width: 100%;height: 100%;" />
+              <div id="inventoryChartfunnel" style="position:absolute;right:0;top: 0px;width: 60px;height: 100%" />
+
+              </div>
+
+
+              <!-- 营业额 -->
+              <div class="echarts-total echarts-total2 clearfix">
+                <div class="echarts-total-item">
+                  <div class='item-label'>今日营业额</div>
+                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerTotalMoney)}}</div>
+                </div>
+                <div class="echarts-total-item">
+                  <div class='item-label'>已买单</div>
+                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMoney)}}</div>
+                </div>
+                <div class="echarts-total-item">
+                  <div class='item-label'>未买单</div>
+                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMoney)}}</div>
+                </div>
               </div>
 
               <!-- 浴足客流量 -->
@@ -54,35 +73,21 @@
                 </div>
               </div>
 
-              <!-- 营业额 -->
-              <div class="echarts-total echarts-total2 clearfix">
-                <div class="echarts-total-item">
-                  <div class='item-label'>今日营业额</div>
-                  <div class='item-value color-info'>￥{{comUtil.formatNumber(customerTotalMoney)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>已买单</div>
-                  <div class='item-value color-success'>￥{{comUtil.formatNumber(customerData.paidMoney)}}</div>
-                </div>
-                <div class="echarts-total-item">
-                  <div class='item-label'>未买单</div>
-                  <div class='item-value color-warning'>￥{{comUtil.formatNumber(customerData.notPaidMoney)}}</div>
-                </div>
-              </div>
+
             <!-- </div> -->
 
             <div class="statistical-title marginT-20">
               <span class='text-title'>收款方式</span>
             </div>
 
-            <div class='list-block-main clearfix'>
+            <div v-if="paymentMethods && paymentMethods.length" class='list-block-main clearfix'>
               <div class='clearfix'>
                 <div class='list-block'
                       v-for="(item,index) in paymentMethods"
                       :key="index" >
                       <div class='clearfix' v-if="item.payName">
                         <div class='list-block-label' > {{item.payName}}</div>
-                        <div class='list-block-value' >￥ {{item.moneySum}}</div>
+                        <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
                         <div class='list-block-percent' >{{item.percent}}</div>
                       </div>
                       <div class='clearfix' v-else>
@@ -92,6 +97,9 @@
                 </div>
               </div>
               <div class='list-block-total'> 总计： <span class='total-value'>￥{{paymentTotalMoney}}</span> </div>
+            </div>
+            <div v-else class='list-block-main clearfix'>
+              <div class="noData">暂无数据</div>
             </div>
 
             <div class='statistical-title'>
@@ -108,14 +116,14 @@
               <span class='text-title'>收款合计</span>
             </div>
             <div class='oper-block-box clearfix'>
-              <div class='list-block-main clearfix'>
+              <div v-if="collectionData && collectionData.length" class='list-block-main clearfix'>
                 <div class='clearfix'>
                   <div class='list-block'
                         v-for="(item,index) in collectionData"
                         :key="index" >
                         <div class='clearfix' v-if="item.payName">
                           <div class='list-block-label' > {{item.payName}}</div>
-                          <div class='list-block-value' >￥ {{item.moneySum}}</div>
+                          <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
                           <div class='list-block-percent' >{{item.percent}}</div>
                         </div>
                         <div class='clearfix' v-else>
@@ -125,6 +133,9 @@
                   </div>
                 </div>
                 <div class='list-block-total'> 收款合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
+              </div>
+              <div v-else class='list-block-main clearfix'>
+                <div class="noData">暂无数据</div>
               </div>
             </div>
 
@@ -143,7 +154,7 @@
   import axios from 'axios'
   import comUtil from '@Util/comUtil';
   import {urls} from '@Util/axiosConfig';
-  import { pieOptions } from '@Util/charts';
+  import { pieOptions, funnelOption } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
   export default {
     props: ['navData'],
@@ -153,6 +164,7 @@
         currentInfo: {},
         echartsArr: [],
         pieOptions: pieOptions,
+        funnelOption: funnelOption,
 
         today: null,
 
@@ -254,6 +266,20 @@
       // 收款合计信息
       this.getCollectionData()
 
+
+
+      if (!document.querySelector('#inventoryChartfunnel')) {
+          return
+        }
+        // 基于准备好的dom，初始化echarts实例
+        let inventoryChart = echarts.init(document.querySelector('#inventoryChartfunnel'));
+
+        let breakageChartoption = this.funnelOption
+
+        inventoryChart.setOption(breakageChartoption)
+
+        this.echartsArr.push(inventoryChart);
+
     },
     methods: {
       goPage(url){
@@ -285,28 +311,29 @@
         this.$ajaxPost(urls.GETBILLINFOWITHFREE, params).then(res => {
           if(res){
             this.paymentMethods = res.data;
-
-            this.paymentMethods.forEach(item => {
-              this.paymentTotalMoney += item.moneySum
-            })
-
-            let num = 4 - this.paymentMethods.length % 4;
-            if (num) {
-              for (var i = 0; i < num; i++) {
-                this.paymentMethods.push({
-                  payName: '',
-                  moneySum: ''
-                })
-              }
+            if(this.paymentMethods && this.paymentMethods.length){
+              this.dealCollectionData();
             }
-
-            this.paymentMethods.forEach(item => {
-              item.percent = (item.moneySum/this.paymentTotalMoney).toFixed(4) * 100 + '%'
-            })
           }
         })
+      },
+      dealCollectionData(){
+        this.paymentMethods.forEach(item => {
+          this.paymentTotalMoney += item.moneySum
+        })
 
-
+        let num = 4 - this.paymentMethods.length % 4;
+        if (num) {
+          for (var i = 0; i < num; i++) {
+            this.paymentMethods.push({
+              payName: '',
+              moneySum: ''
+            })
+          }
+        }
+        this.paymentMethods.forEach(item => {
+          item.percent = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
+        })
       },
 
       // 获取会员卡信息 饼图 统计
@@ -344,26 +371,31 @@
         this.$ajaxPost(urls.GETCASHFLOWSUMINFO, params).then(res => {
           if(res){
             this.collectionData = res.data;
-            this.collectionData.forEach(item => {
-              this.totalMoney += item.moneySum
-            })
-
-            let num = 4 - this.collectionData.length % 4;
-            if (num) {
-              for (var i = 0; i < num; i++) {
-                this.collectionData.push({
-                  payName: '',
-                  moneySum: ''
-                })
-              }
+            if(this.collectionData && this.collectionData.length){
+              this.dealCollectionData2()
             }
 
-            this.collectionData.forEach(item => {
-              item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
-            })
           }
         })
+      },
+      dealCollectionData2(){
+        this.collectionData.forEach(item => {
+          this.totalMoney += item.moneySum
+        })
 
+        let num = 4 - this.collectionData.length % 4;
+        if (num) {
+          for (var i = 0; i < num; i++) {
+            this.collectionData.push({
+              payName: '',
+              moneySum: ''
+            })
+          }
+        }
+
+        this.collectionData.forEach(item => {
+          item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+        })
       },
 
 
@@ -379,7 +411,7 @@
 
         this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {
           if(res){
-            let data = this.dealChartData1(res)
+            let data = this.dealChartData1(res.data)
             this.drawChart1(data)
           }
         })
@@ -410,8 +442,20 @@
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart'));
 
         let breakageChartoption = this.pieOptions
-
-        breakageChartoption.series[0].data = list
+        if(!list || !list.length){
+          breakageChartoption.series[0].data = [
+            {
+              name: '今日营业',
+              value: 0
+            }
+          ]
+          breakageChartoption.series[0].label = {
+            show: false
+          }
+        }else{
+          breakageChartoption.title.show = false;
+          breakageChartoption.series[0].data = list
+        }
 
         inventoryChart.setOption(breakageChartoption)
 
@@ -429,7 +473,20 @@
 
         let breakageChartoption = this.pieOptions
 
-        breakageChartoption.series[0].data = list
+        if(!list || !list.length){
+          breakageChartoption.series[0].data = [
+            {
+              name: '今日营业',
+              value: 0
+            }
+          ]
+          breakageChartoption.series[0].label = {
+            show: false
+          }
+        }else{
+          breakageChartoption.title.show = false;
+          breakageChartoption.series[0].data = list
+        }
 
         inventoryChart.setOption(breakageChartoption)
 

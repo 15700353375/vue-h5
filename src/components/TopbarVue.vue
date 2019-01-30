@@ -6,6 +6,7 @@
 
 <template>
   <div class="topBar">
+    <div class="displayNone">{{currentDataChange}}</div>
     <div class="topbar-item" v-for="(item,index) in classify" :class="{'active': curTab == item.id}" :key='index' @click="classifyClick(item.id)">{{item.name}}</div>
   </div>
 </template>
@@ -62,17 +63,17 @@
 
       }
     },
-    watch: {
-      currentData(newVal,oldVal){
-        this.curTab = newVal;
-      }
+
+    mounted(){
+      this.curTab = this.currentData;
     },
-    mounted(){},
     computed: mapState({
       // 名字
       username: state => state.login.userInfo.username,
 
-
+      currentDataChange(){
+        this.curTab = this.currentData;
+      }
     }),
     methods: {
 

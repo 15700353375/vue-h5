@@ -10,13 +10,13 @@
     <div class="swiper-container" >
       <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <!-- <echartsVue></echartsVue> -->
+            <echartsVue></echartsVue>
           </div>
           <div class="swiper-slide">
-            <room></room>
+            <!-- <room></room> -->
           </div>
           <div class="swiper-slide">
-            <!-- <technician></technician> -->
+            <technician></technician>
           </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
   export default {
     data(){
       return{
-        currentData: 1,
+        currentData: 0,
 
         active: 1,
         show1: true,
@@ -76,7 +76,7 @@
       // 获取小程序传递过来的token
       // let current = this.$route.query.current;
       let current = {"holderId":"100","wxRoleType":"1","storeName":"千思","holderType":"1",
-      "holdGroup":"2","address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"8ca99f691b99440fa8f5ee6d0663628c"}
+      "holdGroup":"2","address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"7cc391f32ef741618f7d323693fe1dbd"}
 
       localStorage.setItem('currentInfo', JSON.stringify(current))
 
@@ -84,7 +84,7 @@
     mounted(){
       let that = this;
       this.mySwiper = new Swiper ('.swiper-container', {
-        initialSlide: 1,
+        initialSlide: 0,
         direction: 'horizontal', // 垂直切换选项
         loop: false, // 循环模式选项
         on: {
