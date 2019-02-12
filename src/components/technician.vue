@@ -5,7 +5,7 @@
  -->
 
 <template>
-  <div id="minirefresh" class="minirefresh-wrap">
+  <div id="minirefresh3" class="minirefresh-wrap">
     <div class="minirefresh-scroll">
 
       <div class='technician-container'>
@@ -147,7 +147,7 @@
     mounted(){
       let that = this;
       var miniRefresh = new MiniRefresh({
-          container: '#minirefresh',
+          container: '#minirefresh3',
           down: {
               callback: function() {
                 that.getTecList();

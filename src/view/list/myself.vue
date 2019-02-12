@@ -10,10 +10,10 @@
         <div class='personal-container'>
           <div class='personal-info'>
             <div class='personal-img-box'>
-              <img src="agentStatic/img/11.jpg" alt="">
+              <img :src="userInfo.avatarUrl" alt="">
             </div>
             <div class='personal-content'>
-              <div class='personal-name'>古天乐</div>
+              <div class='personal-name'>{{userInfo.nickName}}</div>
               <div class='personal-desc'>您的付费体验还剩下 <span>0</span> 天</div>
               <div class='personal-type'>管理者</div>
               <div class='personal-btn' type="default">续费</div>
@@ -45,7 +45,7 @@
           <div class='funciton-content'>
             <div class='function-item'>
               有效期至
-              <span class='right-vision'>2019.01.01</span>
+              <span class='right-vision'>2019.12.12</span>
             </div>
             <div class='function-item'>
               当前版本
@@ -82,30 +82,19 @@
   export default {
     data(){
       return{
-
+        userInfo: null
 
       }
     },
+    created(){
+      let userInfo = localStorage.getItem('userInfo')
+      this.userInfo = JSON.parse(userInfo)
+    },
     mounted(){
-      // token失效时-强制跳转到绑定登录页面
-      wx.miniProgram.redirectTo({
-        url:'/pages/logs/logs',
-        success: function(){
-            console.log('success')
-        },
-        fail: function(){
-            console.log('fail');
-        },
-        complete:function(){
-            console.log('complete');
-        }
 
-      });
 
     },
     methods: {
-
-
 
     },
     components:{

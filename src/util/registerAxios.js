@@ -17,8 +17,9 @@ function validatePower(url){
   // 验证访问页面是否需要权限
   if (noTokenReq.indexOf(url) == -1) {
     // 验证浏览器sessionstorage缓存中是否存在token
-    let zzbToken = localStorage.getItem('zzb_token')
-    console.log(zzbToken)
+    let currentInfo = localStorage.getItem('currentInfo')
+    console.log(currentInfo)
+    let zzbToken = currentInfo.sessionId
     axios.defaults.headers.common['token'] = zzbToken;
     return zzbToken ? true : false;
   }else{
@@ -34,6 +35,7 @@ function resolveSuccessRes(res){
       return res.data;
     }else if(res.data.code == -1){
       // sessionId失效 通知小程序
+
     }else{
       window.app.Toast.text(res.data.msg);
     }
@@ -66,10 +68,14 @@ function resolveFailRes(status){
 let post = function(url, params, btn){
   let currentInfo = localStorage.getItem('currentInfo')
   currentInfo = JSON.parse(currentInfo)
-  params = {...params, sessionId: currentInfo.sessionId}
-  let requestData = params ? params : {};
+  let sessionId = null
+  if(currentInfo){
+    sessionId = currentInfo.sessionId
+  }
   // 验证权限
-  // if(validatePower(url)){
+  if(sessionId){
+    params = {...params, sessionId: sessionId}
+    let requestData = params ? params : {};
     // qs.stringify(requestData)
     return axios.post(url, requestData)
                 .then( (res) => {
@@ -77,11 +83,24 @@ let post = function(url, params, btn){
                 }).catch((error)=>{
                   resolveFailRes(error.response.status);
                 })
-
-  // }else{
-  //   // 权限不足，跳转至小程序登陆
-  //   this.$router.push({name: 'login'});
-  // }
+  }else{
+    // 权限不足，跳转至小程序登陆
+    // this.$router.push({name: 'login'});
+    window.app.Toast.text('sessionId失效，请重新登录');
+    // token失效时-强制跳转到绑定登录页面
+    wx.miniProgram.redirectTo({
+      url:'/pages/login/login',
+      success: function(){
+          console.log('success')
+      },
+      fail: function(){
+          console.log('fail');
+      },
+      complete:function(){
+          console.log('complete');
+      }
+    });
+  }
 }
 
 // get请求

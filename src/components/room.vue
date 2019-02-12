@@ -5,7 +5,7 @@
  -->
 
 <template>
-  <div id="minirefresh" class="minirefresh-wrap">
+  <div id="minirefresh2" class="minirefresh-wrap">
     <div class="minirefresh-scroll">
       <div class='room-container'>
         <div class='clearfix select-main'>
@@ -189,6 +189,8 @@
     watch:{
       currentData(newVal,oldVal){
         if(newVal == 1){
+          this.select1 = null;
+          this.select2 = null;
           this.getRoomList();
         }
       }
@@ -202,7 +204,7 @@
     mounted(){
       let that = this;
       var miniRefresh = new MiniRefresh({
-          container: '#minirefresh',
+          container: '#minirefresh2',
           down: {
               callback: function() {
                 that.getRoomList();

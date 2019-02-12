@@ -5,168 +5,165 @@
  -->
 
 <template>
-<div id="minirefresh" class="minirefresh-wrap">
-    <div class="minirefresh-scroll">
-      <div class="echarts-container">
-        <div class="statistical-title">
-              <span class='text-title'>营业信息</span>
-              <span class='text-right'>{{today}} 统计</span>
-            </div>
-            <!-- <div class="clearfix echartsData"> -->
-              <div class='echarts-main clearfix'>
-                <div id="inventoryChart" style="width: 100%;height: 100%;" />
-              </div>
+<div id="minirefresh1" class="minirefresh-wrap">
+  <div class="minirefresh-scroll">
+    <div class="echarts-container">
+      <div class="statistical-title">
+        <span class='text-title'>营业信息</span>
+        <span class='text-right'>{{today}} 统计</span>
+      </div>
+      <!-- <div class="clearfix echartsData"> -->
+      <div class='echarts-main clearfix'>
+        <div id="inventoryChart" style="width: 100%;height: 100%;" />
+      </div>
 
-              <div class="show-total clearfix">
-                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
-                <div class="show-main">
-                  <div class="show-mian-item color-success" :style="{width: customerData.paidMoney_percent}"></div>
-                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidMoney_percent}"></div>
-                </div>
-                <div class="show-content clearfix">
-                  <div class="show-content-item">
-                    <span class="show-label color-success"></span>
-                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMoney)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-error"></span>
-                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMoney)}}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
-                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
-                <div class="show-main">
-                  <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
-                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
-                  <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
-                </div>
-                <div class="show-content clearfix">
-                  <div class="show-content-item">
-                    <span class="show-label color-success"></span>
-                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-error"></span>
-                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-info"></span>
-                    <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div v-if="currentInfo.holderType == 2" class="show-total clearfix">
-                <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal2)}}人</div>
-                <div class="show-main">
-                  <div class="show-mian-item color-success" :style="{width: customerData.paidTQty_percent}"></div>
-                  <div class="show-mian-item color-error" :style="{width: customerData.notPaidTQty_percent}"></div>
-                  <div class="show-mian-item color-info" :style="{width: customerData.waitTQty_percent}"></div>
-                </div>
-                <div class="show-content clearfix">
-                  <div class="show-content-item">
-                    <span class="show-label color-success"></span>
-                    <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidTQty)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-error"></span>
-                    <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidTQty)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-info"></span>
-                    <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitTQty)}}</span>
-                  </div>
-                </div>
-              </div>
-
-
-            <div class="statistical-title marginT-20">
-              <span class='text-title'>收款方式</span>
-            </div>
-
-            <div v-if="paymentMethods && paymentMethods.length" class='list-block-main clearfix'>
-              <div class='clearfix'>
-                <div class='list-block'
-                      v-for="(item,index) in paymentMethods"
-                      :key="index" >
-                      <div class='clearfix' v-if="item.payName">
-                        <div class='list-block-label' > {{item.payName}}</div>
-                        <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
-                        <div class='list-block-percent' >{{item.percent}}</div>
-                      </div>
-                      <div class='clearfix' v-else>
-                        <div class='list-block-label' ></div>
-                        <div class='list-block-label' > - </div>
-                      </div>
-                </div>
-              </div>
-              <div class='list-block-total'> 总计： <span class='total-value'>￥{{paymentTotalMoney}}</span> </div>
-            </div>
-            <div v-else class='list-block-main clearfix'>
-              <div class="noData">暂无数据</div>
-            </div>
-
-            <div class='statistical-title'>
-              <span class='text-title'>会员卡信息</span>
-            </div>
-
-            <div class='echarts-main clearfix'>
-              <div id="inventoryChart2" style="width: 100%;height:100%;" />
-            </div>
-
-            <div class="show-total clearfix marginB-20">
-                <div class="total-title">会员量：{{comUtil.formatNumber(memberCardData.total)}}人</div>
-                <div class="show-main">
-                  <div class="show-mian-item color-success" :style="{width: memberCardData.firstCount_percent}"></div>
-                  <div class="show-mian-item color-error" :style="{width: memberCardData.continuCount_percent}"></div>
-                </div>
-                <div class="show-content clearfix">
-                  <div class="show-content-item">
-                    <span class="show-label color-success"></span>
-                    <span class="show-value">续费会员: {{comUtil.formatNumber(memberCardData.firstCount)}}</span>
-                  </div>
-                  <div class="show-content-item">
-                    <span class="show-label color-error"></span>
-                    <span class="show-value">新增会员: {{comUtil.formatNumber(memberCardData.continuCount)}}</span>
-                  </div>
-                </div>
-              </div>
-
-
-
-            <div class='statistical-title'>
-              <span class='text-title'>收款合计</span>
-            </div>
-            <div class='oper-block-box clearfix'>
-              <div v-if="collectionData && collectionData.length" class='list-block-main clearfix'>
-                <div class='clearfix'>
-                  <div class='list-block'
-                        v-for="(item,index) in collectionData"
-                        :key="index" >
-                        <div class='clearfix' v-if="item.payName">
-                          <div class='list-block-label' > {{item.payName}}</div>
-                          <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
-                          <div class='list-block-percent' >{{item.percent}}</div>
-                        </div>
-                        <div class='clearfix' v-else>
-                        <div class='list-block-label' ></div>
-                        <div class='list-block-label' > - </div>
-                      </div>
-                  </div>
-                </div>
-                <div class='list-block-total'> 收款合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
-              </div>
-              <div v-else class='list-block-main clearfix'>
-                <div class="noData">暂无数据</div>
-              </div>
-            </div>
-
+      <div class="show-total clearfix">
+        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
+        <div class="show-main">
+          <div class="show-mian-item color-success" :style="{width: customerData.paidMoney_percent}"></div>
+          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMoney_percent}"></div>
+        </div>
+        <div class="show-content clearfix">
+          <div class="show-content-item">
+            <span class="show-label color-success"></span>
+            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMoney)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-error"></span>
+            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMoney)}}</span>
           </div>
         </div>
-</div>
+      </div>
 
+      <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
+        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
+        <div class="show-main">
+          <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
+          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
+          <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
+        </div>
+        <div class="show-content clearfix">
+          <div class="show-content-item">
+            <span class="show-label color-success"></span>
+            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-error"></span>
+            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-info"></span>
+            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="currentInfo.holderType == 2" class="show-total clearfix">
+        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal2)}}人</div>
+        <div class="show-main">
+          <div class="show-mian-item color-success" :style="{width: customerData.paidTQty_percent}"></div>
+          <div class="show-mian-item color-error" :style="{width: customerData.notPaidTQty_percent}"></div>
+          <div class="show-mian-item color-info" :style="{width: customerData.waitTQty_percent}"></div>
+        </div>
+        <div class="show-content clearfix">
+          <div class="show-content-item">
+            <span class="show-label color-success"></span>
+            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidTQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-error"></span>
+            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidTQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-info"></span>
+            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitTQty)}}</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="statistical-title marginT-20">
+        <span class='text-title'>收款方式</span>
+      </div>
+
+      <div v-if="paymentMethods && paymentMethods.length" class='list-block-main clearfix'>
+        <div class='clearfix'>
+          <div class='list-block'
+                v-for="(item,index) in paymentMethods"
+                :key="index" >
+                <div class='clearfix' v-if="item.payName">
+                  <div class='list-block-label' > {{item.payName}}</div>
+                  <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
+                  <div class='list-block-percent' >{{item.percent}}</div>
+                </div>
+                <div class='clearfix' v-else>
+                  <div class='list-block-label' ></div>
+                  <div class='list-block-label' > - </div>
+                </div>
+          </div>
+        </div>
+        <div class='list-block-total'> 总计： <span class='total-value'>￥{{paymentTotalMoney}}</span> </div>
+      </div>
+      <div v-else class='list-block-main clearfix'>
+        <div class="noData">暂无数据</div>
+      </div>
+
+      <div class='statistical-title'>
+        <span class='text-title'>会员卡信息</span>
+      </div>
+
+      <div class='echarts-main clearfix'>
+        <div id="inventoryChart2" style="width: 100%;height:100%;" />
+      </div>
+
+      <div class="show-total clearfix marginB-20">
+        <div class="total-title">会员量：{{comUtil.formatNumber(memberCardData.total)}}人</div>
+        <div class="show-main">
+          <div class="show-mian-item color-success" :style="{width: memberCardData.firstCount_percent}"></div>
+          <div class="show-mian-item color-error" :style="{width: memberCardData.continuCount_percent}"></div>
+        </div>
+        <div class="show-content clearfix">
+          <div class="show-content-item">
+            <span class="show-label color-success"></span>
+            <span class="show-value">续费会员: {{comUtil.formatNumber(memberCardData.firstCount)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-error"></span>
+            <span class="show-value">新增会员: {{comUtil.formatNumber(memberCardData.continuCount)}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class='statistical-title'>
+        <span class='text-title'>收款合计</span>
+      </div>
+      <div class='oper-block-box clearfix'>
+        <div v-if="collectionData && collectionData.length" class='list-block-main clearfix'>
+          <div class='clearfix'>
+            <div class='list-block'
+                  v-for="(item,index) in collectionData"
+                  :key="index" >
+                  <div class='clearfix' v-if="item.payName">
+                    <div class='list-block-label' > {{item.payName}}</div>
+                    <div class='list-block-value' >￥ {{comUtil.formatNumber(item.moneySum)}}</div>
+                    <div class='list-block-percent' >{{item.percent}}</div>
+                  </div>
+                  <div class='clearfix' v-else>
+                  <div class='list-block-label' ></div>
+                  <div class='list-block-label' > - </div>
+                </div>
+            </div>
+          </div>
+          <div class='list-block-total'> 收款合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
+        </div>
+        <div v-else class='list-block-main clearfix'>
+          <div class="noData">暂无数据</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 </template>
 
 
@@ -187,7 +184,8 @@
         comUtil: comUtil,
         currentInfo: {},
         echartsArr: [],
-        pieOptions: pieOptions,
+        pieOptions1: comUtil.clone(pieOptions),
+        pieOptions2: comUtil.clone(pieOptions),
         funnelOption: funnelOption,
 
         today: null,
@@ -237,7 +235,7 @@
       }
     },
     created(){
-      
+
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
       console.log(this.currentInfo)
@@ -246,11 +244,11 @@
     mounted(){
 
       this.today = Moment().format('YYYY-MM-DD HH:mm:ss')
-      
+
       let that = this;
 
       var miniRefresh = new MiniRefresh({
-          container: '#minirefresh',
+          container: '#minirefresh1',
           down: {
               callback: function() {
                 that.refresh();
@@ -462,7 +460,7 @@
         // 基于准备好的dom，初始化echarts实例
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart'));
 
-        let breakageChartoption = this.pieOptions
+        let breakageChartoption = this.pieOptions1
         if(!list || !list.length){
           breakageChartoption.series[0].data = [
             {
@@ -472,6 +470,11 @@
           ]
           breakageChartoption.series[0].label = {
             show: false
+          }
+          breakageChartoption.series[0].labelLine = {
+            normal: {
+              show: false
+            }
           }
         }else{
           breakageChartoption.title.show = false;
@@ -492,7 +495,7 @@
         // 基于准备好的dom，初始化echarts实例
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart2'));
 
-        let breakageChartoption = this.pieOptions
+        let breakageChartoption = this.pieOptions2
 
         if(!list || !list.length){
           breakageChartoption.series[0].data = [

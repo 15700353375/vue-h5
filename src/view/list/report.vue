@@ -118,7 +118,7 @@
     },
     mounted(){
 
-      window.app.Toast.text('请求发生重定向，请联系工作人员');
+      // window.app.Toast.text('请求发生重定向，请联系工作人员');
 
     },
     methods: {

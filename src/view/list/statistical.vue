@@ -63,30 +63,22 @@
     data(){
       return{
         currentData: 0,
-
-        active: 1,
-        show1: true,
-        text1: '阿斯顿发斯蒂芬',
-        show: false,
-
         mySwiper: null,
       }
     },
     beforeCreate(){
-      let current = this.$route.query.current;
-      console.log(current)
 
-      localStorage.setItem('currentInfo', JSON.stringify(current))
     },
     created() {
-      // 获取小程序传递过来的token
       let current = this.$route.query.current;
-      console.log(current)
-      // let current = {"holderId":100,"wxRoleType":"1","storeName":"千思","holderType":1,"holdGroup":2,
-      // "address":"成都市武侯区复城国际T4#1603",
-      // "fphone":"","sessionId":"26a48ecb22a442ca90c63d11d8efe630"}
-
-      localStorage.setItem('currentInfo', JSON.stringify(current))
+      let userInfo = this.$route.query.userInfo;
+      console.log(current,userInfo)
+      if(current && userInfo){
+        localStorage.setItem('currentInfo', current)
+        localStorage.setItem('userInfo', userInfo)
+      }
+      // current = {"holderId":'100',"wxRoleType":'1',"storeName":"千思","holderType":'1',"holdGroup":'2',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"d54e6848fccb449a9d4fc2c07633b0c6"}
+      // current = JSON.stringify(current)
 
     },
     mounted(){
