@@ -12,17 +12,19 @@
         <div class='tec-main clearfix'>
           <div class='tec-title'>保健师</div>
           <div class='tec-content clearfix'>
-            <div class='tec-item' v-for="(item,index) in listData" :key='index' :class="'item-bg'+item.statusFlag">
+            <div class='tec-item' v-for="(item,index) in listData" :key='index'
+            :class="item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
+            <!-- 下钟后暂停会多一个暂停标记,字段finishWorkWillPauseFlag:1 -->
               <div class="item-top">
                 <div class="item-top-left">
                   {{item.sex == 1 ? '女' : '男'}}
                 </div>
                 <div class="item-top-center">
-                  {{item.workFlag == 2 ? '加' : item.sortsName}}
+                  {{item.workFlag == 3 ? '加' : item.sortsName}}
                 </div>
                 <div class="item-top-right">
-                  <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span>
-                  <span v-else class='iconfont icon-tianchongxing-'></span>
+                  <!-- <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span> -->
+                  <span v-if="item.finishWorkWillPauseFlag == 1" class='iconfont icon-tianchongxing-'></span>
                 </div>
               </div>
               <div class="item-center">
@@ -51,7 +53,8 @@
         <div class='tec-main clearfix'>
           <div class='tec-title'>足疗师</div>
           <div class='tec-content clearfix'>
-            <div class='tec-item' v-for="(item,index) in listData2" :key='index' :class="'item-bg'+item.statusFlag">
+            <div class='tec-item' v-for="(item,index) in listData2" :key='index'
+            :class="item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
               <div class="item-top">
                 <div class="item-top-left">
                   {{item.sex == 1 ? '女' : '男'}}
@@ -60,8 +63,8 @@
                   {{item.workFlag == 2 ? '加' : item.sortsName}}
                 </div>
                 <div class="item-top-right">
-                  <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span>
-                  <span v-else class='iconfont icon-tianchongxing-'></span>
+                  <!-- <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span> -->
+                  <span v-if="item.finishWorkWillPauseFlag == 1" class='iconfont icon-tianchongxing-'></span>
                 </div>
               </div>
               <div class="item-center">
@@ -206,11 +209,8 @@
           case 3 : name = '上钟'; break;
           case 4 : name = '待上'; break;
         }
-        console.log(11111111,data,name)
         return name
       }
-
-
 
     },
     components: {

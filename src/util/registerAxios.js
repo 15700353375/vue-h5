@@ -12,21 +12,23 @@ import {
   noTokenReq
 } from '@Util/axiosConfig'
 
-// 验证权限
-function validatePower(url){
-  // 验证访问页面是否需要权限
-  if (noTokenReq.indexOf(url) == -1) {
-    // 验证浏览器sessionstorage缓存中是否存在token
-    let currentInfo = localStorage.getItem('currentInfo')
-    console.log(currentInfo)
-    let zzbToken = currentInfo.sessionId
-    axios.defaults.headers.common['token'] = zzbToken;
-    return zzbToken ? true : false;
-  }else{
-    return true;
-  }
+// 强制退出的操作
+function getOut () {
+  window.app.Toast.text('sessionId失效，请重新登录');
+  // token失效时-强制跳转到绑定登录页面
+  wx.miniProgram.redirectTo({
+    url:'/pages/login/login',
+    success: function(){
+        console.log('success')
+    },
+    fail: function(){
+        console.log('fail');
+    },
+    complete:function(){
+        console.log('complete');
+    }
+  });
 }
-
 
 // 统一处理成功请求返回值
 function resolveSuccessRes(res){
@@ -35,11 +37,10 @@ function resolveSuccessRes(res){
       return res.data;
     }else if(res.data.code == -1){
       // sessionId失效 通知小程序
-
+      getOut()
     }else{
       window.app.Toast.text(res.data.msg);
     }
-
   }else{
     // 表示网络正常，服务器拒绝
     window.app.Toast.text(res.statusText);
@@ -85,21 +86,7 @@ let post = function(url, params, btn){
                 })
   }else{
     // 权限不足，跳转至小程序登陆
-    // this.$router.push({name: 'login'});
-    window.app.Toast.text('sessionId失效，请重新登录');
-    // token失效时-强制跳转到绑定登录页面
-    wx.miniProgram.redirectTo({
-      url:'/pages/login/login',
-      success: function(){
-          console.log('success')
-      },
-      fail: function(){
-          console.log('fail');
-      },
-      complete:function(){
-          console.log('complete');
-      }
-    });
+    getOut()
   }
 }
 
@@ -119,6 +106,8 @@ let get = function(url, params, btn){
   //   this.$router.push({name: 'login'});
   // }
 }
+
+
 
 
 // 初始化axios

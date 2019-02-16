@@ -18,7 +18,7 @@
       </div>
 
       <div class="show-total clearfix">
-        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
+        <div class="total-title">总客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
         <div class="show-main">
           <div class="show-mian-item color-success" :style="{width: customerData.paidMoney_percent}"></div>
           <div class="show-mian-item color-error" :style="{width: customerData.notPaidMoney_percent}"></div>
@@ -35,30 +35,7 @@
         </div>
       </div>
 
-      <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
-        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
-        <div class="show-main">
-          <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
-          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
-          <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
-        </div>
-        <div class="show-content clearfix">
-          <div class="show-content-item">
-            <span class="show-label color-success"></span>
-            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-error"></span>
-            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-info"></span>
-            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="currentInfo.holderType == 2" class="show-total clearfix">
+      <div class="show-total clearfix">
         <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal2)}}人</div>
         <div class="show-main">
           <div class="show-mian-item color-success" :style="{width: customerData.paidTQty_percent}"></div>
@@ -80,6 +57,30 @@
           </div>
         </div>
       </div>
+
+      <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
+        <div class="total-title">棋牌客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
+        <div class="show-main">
+          <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
+          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
+          <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
+        </div>
+        <div class="show-content clearfix">
+          <div class="show-content-item">
+            <span class="show-label color-success"></span>
+            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-error"></span>
+            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
+          </div>
+          <div class="show-content-item">
+            <span class="show-label color-info"></span>
+            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
+          </div>
+        </div>
+      </div>
+
 
 
       <div class="statistical-title marginT-20">
@@ -177,6 +178,7 @@
   import {urls} from '@Util/axiosConfig';
   import { pieOptions, funnelOption } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
+import { setTimeout } from 'timers';
   export default {
     props: ['currentData'],
     data() {
@@ -192,6 +194,7 @@
 
         // 小程序传递过来的参数
         holderType: 0,
+
         // 客流量
         customerData:{
           // 浴足
@@ -202,7 +205,7 @@
           paidTQty: 0,
           notPaidTQty: 0,
           waitTQty: 0,
-
+          // 支付
           paidMoney: 0,
           notPaidMoney: 0
         },
@@ -227,10 +230,8 @@
     }),
     watch:{
       currentData(newVal,oldVal){
-        console.log(oldVal,newVal)
         if(newVal == 0){
           this.refresh();
-
         }
       }
     },
@@ -238,7 +239,6 @@
 
       let currentInfo = localStorage.getItem('currentInfo')
       this.currentInfo = JSON.parse(currentInfo)
-      console.log(this.currentInfo)
       this.refresh();
     },
     mounted(){
@@ -341,9 +341,12 @@
             })
           }
         }
-        this.paymentMethods.forEach(item => {
-          item.percent = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
-        })
+        setTimeout(()=>{
+          this.paymentMethods.forEach(item => {
+            item.percent = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
+          })
+        },60)
+
       },
 
       // 获取会员卡信息 饼图 统计
@@ -393,7 +396,6 @@
             if(this.collectionData && this.collectionData.length){
               this.dealCollectionData2()
             }
-
           }
         })
       },
@@ -412,9 +414,12 @@
           }
         }
 
-        this.collectionData.forEach(item => {
-          item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
-        })
+        setTimeout(()=>{
+          this.collectionData.forEach(item => {
+            item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+          })
+        },60)
+
       },
 
 

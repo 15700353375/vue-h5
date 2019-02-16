@@ -1,6 +1,6 @@
 /**
- * @Author:      cyzeng
- * @DateTime:    2017-06-16 22:07:55
+ * @Author:      changh
+ * @DateTime:    2019-01-16 22:07:55
  * @Description: main.js
  */
 
@@ -11,12 +11,9 @@ import VueRouter from 'vue-router';
 import storeMain from '@Src/store/storeMain';
 import routes from '@Src/routers';
 import App from '@Src/App';
-import Pace from 'pace';
 import moment from 'moment';
 import $ from "jquery";
 import registerAxios from '@Util/registerAxios';
-import comUtil from '@Util/comUtil';
-import { noTokenUrls } from '@Util/axiosConfig'
 
 import 'we-vue/lib/style.css'
 import { Toast } from 'we-vue'
@@ -58,16 +55,5 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title;
   }
-  if (noTokenUrls.indexOf(to.path) == -1) {
-    // 跳转需要token的路由,检测session是否有token
-    let token = sessionStorage.getItem("agentToken");
-    if(token){
-      next();
-    }else{
-      // next({ path: '/' });
-      next();
-    }
-  }else{
-    next();
-  }
+  next();
 })

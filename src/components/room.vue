@@ -19,6 +19,8 @@
 
         <div class='clearfix list-main'>
           <div class='list-item' v-for='(item,index) in listData' :key='index'>
+
+            <!-- 顶部 -->
             <div v-if="dealClass(item.roomStatus)" class='list-item-top' :class="dealClass(item.roomStatus) ? 'active'+item.roomOrder.billBatch : ''">
                {{item.roomOrder.billBatch}} {{item.roomName}}
               <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
@@ -27,6 +29,8 @@
             <div v-else class='list-item-top'>
               {{item.roomName}}
             </div>
+
+
             <div v-if="item.roomStatus == 5" class='list-item-content clearfix'>
 
               <div class="content-first">使用中</div>
@@ -34,7 +38,7 @@
                 <!-- 当字段status为待上钟状态(1)和正在上钟状态(2)时，如果字段isTimeout显示为true,表示技师超时，该行背景变为红色，正常情况下显示绿色 -->
                 <template v-if="index < 3">
                   <div class="second-left" :class="statusColor(item.status,item.isTimeout)">
-                    <span class='fa ' :class="child.sex == 1 ? 'fa-male': 'fa-female'"></span>
+                    <span class='fa' :class="child.sex == 1 ? 'fa-male': 'fa-female'"></span>
                     {{child.number}}
                   </div>
                   <div class="second-center">{{child.statusName}}</div>

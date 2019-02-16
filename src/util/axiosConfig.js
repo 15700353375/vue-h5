@@ -8,7 +8,7 @@ let base_url = 'http://t.yushu.im/v2/';
 
 if (process.env.NODE_ENV == 'production') {
   // 测试部使用的生产环境，上线时改为发布环境
-  base_url = '/agent/agent/web/';
+  base_url = 'http://qsyfw.gnway.cc:12345';
 
 }else{
   // 开发环境
@@ -58,13 +58,4 @@ export const urls = {
 
 };
 
-// 不需要token的请求
-export const noTokenReq = [
-
-];
-
-// 不需要token的路由
-export const noTokenUrls = [
-
-];
 
