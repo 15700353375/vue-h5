@@ -101,6 +101,26 @@
       line-height: 50px;
       text-align: center;
       position: relative;
+
+      .noWork{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        span{
+          color: rgba(0, 0, 0, 0.3);
+          font-weight: 800;
+          font-size: 40px;
+          &:first-child{
+            float: left;
+            margin-left: 10px;
+          }
+          &:last-child{
+            float: right;
+            margin-right: 10px;
+          }
+        }
+      }
     }
 
 

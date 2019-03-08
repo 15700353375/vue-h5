@@ -87,6 +87,22 @@
         </div>
       </div>
 
+      <div class='report-block clearfix'>
+        <div class="statistical-title">
+          <span class='text-title'>拓客营销</span>
+        </div>
+        <div class='report-content clearfix'>
+          <div class='report-item'>
+            <div class='report-item-icon bg-success'><span class='iconfont icon-quan'></span></div>
+            <div class='report-item-text'>电子券</div>
+          </div>
+          <div class='report-item'>
+            <div class='report-item-icon bg-info'><span class='iconfont icon-duanxin'></span></div>
+            <div class='report-item-text'>短信群发</div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <bottomBar></bottomBar>
   </div>

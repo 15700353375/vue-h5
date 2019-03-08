@@ -296,9 +296,9 @@ import { setTimeout } from 'timers';
       },
 
       dealTotalData(){
-        this.customerData['customerTotalMoney'] = this.customerData.paidMoney+this.customerData.notPaidMoney
-        this.customerData['paidMoney_percent'] = comUtil.formatNumber(this.customerData.paidMoney/this.customerData.customerTotalMoney * 100) +'%';
-        this.customerData['notPaidMoney_percent'] = comUtil.formatNumber(this.customerData.notPaidMoney/this.customerData.customerTotalMoney * 100) +'%';
+        this.customerData['customerTotalMoney'] = this.customerData.paidty+this.customerData.notPaidty
+        this.customerData['paidMoney_percent'] = comUtil.formatNumber(this.customerData.paidty/this.customerData.customerTotalMoney * 100) +'%';
+        this.customerData['notPaidMoney_percent'] = comUtil.formatNumber(this.customerData.notPaidty/this.customerData.customerTotalMoney * 100) +'%';
 
         this.customerData['customerDataTotal'] = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
         this.customerData['paidMQty_percent'] = comUtil.formatNumber(this.customerData.paidMQty/this.customerData.customerDataTotal * 100) +'%';
@@ -329,10 +329,10 @@ import { setTimeout } from 'timers';
       },
       dealCollectionData(){
         this.paymentMethods.forEach(item => {
-          this.paymentTotalMoney += item.moneySum
+          this.paymentTotalMoney += Number(item.moneySum)
         })
-
-        let num = 4 - this.paymentMethods.length % 4;
+        let remainder = this.paymentMethods.length % 4;
+        let num = remainder ?  4 - remainder : 0;
         if (num) {
           for (var i = 0; i < num; i++) {
             this.paymentMethods.push({
@@ -341,9 +341,12 @@ import { setTimeout } from 'timers';
             })
           }
         }
+
         setTimeout(()=>{
-          this.paymentMethods.forEach(item => {
-            item.percent = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
+          this.paymentMethods.forEach((item,index) => {
+            let obj = this.paymentMethods[index]
+            obj['percent'] = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
+            this.$set(this.paymentMethods, index, obj);
           })
         },60)
 
@@ -371,7 +374,9 @@ import { setTimeout } from 'timers';
             ]
 
             this.dealMemberData(res.data);
-            this.drawChart2(list)
+            this.$nextTick(()=>{
+              this.drawChart2(list)
+            })
           }
         })
       },
@@ -401,10 +406,11 @@ import { setTimeout } from 'timers';
       },
       dealCollectionData2(){
         this.collectionData.forEach(item => {
-          this.totalMoney += item.moneySum
+          this.totalMoney += Number(item.moneySum)
         })
 
-        let num = 4 - this.collectionData.length % 4;
+        let remainder = this.collectionData.length % 4;
+        let num = remainder ?  4 - remainder : 0;
         if (num) {
           for (var i = 0; i < num; i++) {
             this.collectionData.push({
@@ -415,8 +421,10 @@ import { setTimeout } from 'timers';
         }
 
         setTimeout(()=>{
-          this.collectionData.forEach(item => {
-            item.percent = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+          this.collectionData.forEach((item,index) => {
+            let obj = this.collectionData[index]
+            obj['percent'] = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+            this.$set(this.collectionData, index, obj);
           })
         },60)
 
@@ -436,7 +444,9 @@ import { setTimeout } from 'timers';
         this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {
           if(res){
             let data = this.dealChartData1(res.data)
-            this.drawChart1(data)
+            this.$nextTick(()=>{
+              this.drawChart1(data)
+            })
           }
         })
 

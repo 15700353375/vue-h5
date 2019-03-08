@@ -4,7 +4,7 @@
  * @Description: 请求路径
  */
 
-let base_url = 'http://t.yushu.im/v2/';
+let base_url = 'http://qsyfw.gnway.cc:12345';
 
 if (process.env.NODE_ENV == 'production') {
   // 测试部使用的生产环境，上线时改为发布环境
@@ -14,7 +14,6 @@ if (process.env.NODE_ENV == 'production') {
   // 开发环境
   // base_url = 'http://qsyfw.gnway.cc:12345/';
   base_url = '/api';
-  // base_url = 'http://t.yushu.im/v2/'
 }
 
 

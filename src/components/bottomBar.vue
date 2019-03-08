@@ -26,7 +26,7 @@
   box-sizing: border-box;
   border-top: 1px solid #ddd;
   .bottom-tabs-item{
-    width: 25%;
+    width: 33.33%;
     height: 100%;
     text-align: center;
     float: left;
@@ -77,12 +77,12 @@
             url: 'report',
             id: 2
           },
-          {
-            icon: 'icon-guanli',
-            name: '经营管理',
-            url: 'manager',
-            id: 3
-          },
+          // {
+          //   icon: 'icon-guanli',
+          //   name: '经营管理',
+          //   url: 'manager',
+          //   id: 3
+          // },
           {
             icon: 'icon-tubiaolunkuo-',
             name: '我的',

@@ -21,8 +21,8 @@
           <div class='list-item' v-for='(item,index) in listData' :key='index'>
 
             <!-- 顶部 -->
-            <div v-if="dealClass(item.roomStatus)" class='list-item-top' :class="dealClass(item.roomStatus) ? 'active'+item.roomOrder.billBatch : ''">
-               {{item.roomOrder.billBatch}} {{item.roomName}}
+            <div v-if="dealClass(item.roomStatus,item)" class='list-item-top' :class="dealClass(item.roomStatus, item) ? 'active'+item.roomOrder.billBatch : ''">
+               {{item.roomOrder.billBatch || ''}} {{item.roomName}}
               <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
               <span v-if="item.roomOrder" class="item-top-right">￥{{item.roomOrder.totalGoodsAmount || 0}}{{item.roomType == 2 ? '+' : ''}}</span>
             </div>
@@ -57,7 +57,7 @@
                 <span v-else class="mask-text mask-text-text">{{item.restMinute}}<span class="unit">分钟</span></span>
               </div>
 
-              <div class="mask" v-if="item.roomStatus == 11">
+              <div class="mask" v-if="item.roomStatus == '11'">
                 <div class="mask-text">
                   <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
                   <div class="texts">暂停使用</div>
@@ -101,6 +101,13 @@
                 </div>
                 <div class="kong-text" v-if="item.roomStatus == 1">
                   房间停用
+                </div>
+              </div>
+              <div class="mask" v-if="item.roomStatus == '11'">
+                <div class="mask-opacity"></div>
+                <div class="mask-text">
+                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="texts">暂停使用</div>
                 </div>
               </div>
             </div>
@@ -183,8 +190,8 @@
           }
         ],
 
-        select1: null,
-        select2: null,
+        select1: '0',
+        select2: '0',
 
         listData: []
 
@@ -193,8 +200,8 @@
     watch:{
       currentData(newVal,oldVal){
         if(newVal == 1){
-          this.select1 = null;
-          this.select2 = null;
+          this.select1 = '0';
+          this.select2 = '0';
           this.getRoomList();
         }
       }
@@ -255,7 +262,9 @@
         }
         this.$ajaxPost(urls.GETROOMINFO, params).then(res => {
           if(res){
+            res.data[0]['roomStatus'] = '11'
             this.allData = this.dealData(res.data);
+            console.log(this.allData)
             this.listData = comUtil.clone(this.allData)
           }
         })
@@ -263,7 +272,7 @@
       // 处理时间
       dealData(list){
         if(!list || !list.length) return;
-        list.forEach(item => {
+        list.forEach((item,index) => {
           item.restDay = this.transformTime(item.restMinute)
         })
         return list;
@@ -281,10 +290,10 @@
       },
 
       // 顶部颜色
-      dealClass(status){
-        // 是在roomStatus为3,5,11,12时才存在
+      dealClass(status, item){
+        // 是在roomStatus为3,5,11,12时才存在  此时仍然存在没有批次号，billBatch
         let flag = false;
-        if(status == 3 || status == 5 || status == 11 ||  status == 12){
+        if((status == 3 || status == 5 || status == 11 ||  status == 12) && item.roomOrder && item.roomOrder.billBatch){
           flag = true
         }else{
           flag = false;

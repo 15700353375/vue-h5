@@ -29,6 +29,11 @@
               </div>
               <div class="item-center">
                 {{item.number}}
+                <!-- 当workFlag =2 并且statusFlag = 3 or 4   下班 -->
+                <div class="noWork" v-if="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4)">
+                 <span>下</span>
+                 <span>班</span>
+                </div>
               </div>
 
               <div class="item-bottom">
@@ -47,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>总数：{{dataInfo1.totalPersonNum}} 空闲：{{dataInfo1.freePersonNum}} 忙碌：{{dataInfo1.workingPersonNum}}</div>
+          <div class='tec-footer'>总数：{{dataInfo1.totalPersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;空闲：{{dataInfo1.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}</div>
         </div>
 
         <div class='tec-main clearfix'>
@@ -87,7 +92,7 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>总数：{{dataInfo2.totalPersonNum}} 空闲：{{dataInfo2.freePersonNum}} 忙碌：{{dataInfo2.workingPersonNum}}</div>
+          <div class='tec-footer'>总数：{{dataInfo2.totalPersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;空闲：{{dataInfo2.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}</div>
         </div>
       </div>
 
@@ -122,7 +127,13 @@
           workingPersonNum: 0
         },
 
-        listData: [],
+        listData: [{
+          sex: 1,
+          workFlag: 2,
+          statusFlag:3,
+          number: '234',
+          oper: '2'
+        }],
 
         dataInfo2:{
           totalPersonNum: 0,
