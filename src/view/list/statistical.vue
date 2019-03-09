@@ -70,9 +70,14 @@
 
     },
     created() {
-      let current = this.$route.query.current;
-      let userInfo = this.$route.query.userInfo;
+      // let current = this.$route.query.current;
+      // let userInfo = this.$route.query.userInfo;
+
+      let current = {"holderId":"100","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":"2","address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"dc1bd3a16a1747e492011d3c07dc28ed"}
+      let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
       console.log(current,userInfo)
+      current = JSON.stringify(current)
+      userInfo = JSON.stringify(userInfo)
       if(current && userInfo){
         localStorage.setItem('currentInfo', current)
         localStorage.setItem('userInfo', userInfo)

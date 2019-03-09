@@ -10,10 +10,12 @@
 
       <div class='technician-container'>
         <div class='tec-main clearfix'>
-          <div class='tec-title'>保健师</div>
+          <div class='tec-title'>
+            <span>保健师（{{dataInfo1.totalPersonNum || 0}}人）</span>
+          </div>
           <div class='tec-content clearfix'>
             <div class='tec-item' v-for="(item,index) in listData" :key='index'
-            :class="item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
+            :class="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4) ? 'item-bg5' : item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
             <!-- 下钟后暂停会多一个暂停标记,字段finishWorkWillPauseFlag:1 -->
               <div class="item-top">
                 <div class="item-top-left">
@@ -52,20 +54,22 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>总数：{{dataInfo1.totalPersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;空闲：{{dataInfo1.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}</div>
+          <div class='tec-footer'>空闲：{{dataInfo1.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}</div>
         </div>
 
         <div class='tec-main clearfix'>
-          <div class='tec-title'>足疗师</div>
+          <div class='tec-title'>
+            <span>足疗师（{{dataInfo2.totalPersonNum || 0}}人）</span>
+          </div>
           <div class='tec-content clearfix'>
             <div class='tec-item' v-for="(item,index) in listData2" :key='index'
-            :class="item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
+            :class="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4) ? 'item-bg5' : item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
               <div class="item-top">
                 <div class="item-top-left">
                   {{item.sex == 1 ? '女' : '男'}}
                 </div>
                 <div class="item-top-center">
-                  {{item.workFlag == 2 ? '加' : item.sortsName}}
+                  {{item.workFlag == 3 ? '加' : item.sortsName}}
                 </div>
                 <div class="item-top-right">
                   <!-- <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span> -->
@@ -74,6 +78,11 @@
               </div>
               <div class="item-center">
                 {{item.number}}
+                 <!-- 当workFlag =2 并且statusFlag = 3 or 4   下班 -->
+                <div class="noWork" v-if="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4)">
+                 <span>下</span>
+                 <span>班</span>
+                </div>
               </div>
 
               <div class="item-bottom">
@@ -92,7 +101,7 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>总数：{{dataInfo2.totalPersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;空闲：{{dataInfo2.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}</div>
+          <div class='tec-footer'>空闲：{{dataInfo2.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}</div>
         </div>
       </div>
 

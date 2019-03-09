@@ -14,73 +14,66 @@
       </div>
       <!-- <div class="clearfix echartsData"> -->
       <div class='echarts-main clearfix'>
-        <div id="inventoryChart" style="width: 100%;height: 100%;" />
-      </div>
+        <div class="echarts-content">
+          <div id="inventoryChart" style="width: 100%;height: 100%;" />
+        </div>
 
-      <div class="show-total clearfix">
-        <div class="total-title">总客流量：{{comUtil.formatNumber(customerData.customerTotalMoney)}}人</div>
-        <div class="show-main">
-          <div class="show-mian-item color-success" :style="{width: customerData.paidMoney_percent}"></div>
-          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMoney_percent}"></div>
-        </div>
-        <div class="show-content clearfix">
-          <div class="show-content-item">
-            <span class="show-label color-success"></span>
-            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMoney)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-error"></span>
-            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMoney)}}</span>
-          </div>
-        </div>
-      </div>
+        <!-- 浴足 -->
+        <div class="show-total clearfix">
 
-      <div class="show-total clearfix">
-        <div class="total-title">浴足客流量：{{comUtil.formatNumber(customerData.customerDataTotal2)}}人</div>
-        <div class="show-main">
-          <div class="show-mian-item color-success" :style="{width: customerData.paidTQty_percent}"></div>
-          <div class="show-mian-item color-error" :style="{width: customerData.notPaidTQty_percent}"></div>
-          <div class="show-mian-item color-info" :style="{width: customerData.waitTQty_percent}"></div>
-        </div>
-        <div class="show-content clearfix">
-          <div class="show-content-item">
-            <span class="show-label color-success"></span>
-            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidTQty)}}</span>
+          <div class="show-content clearfix">
+            <div class="show-content-item">
+              <span class="show-label color-success"></span>
+              <span class="show-value">已买单</span>
+            </div>
+            <div class="show-content-item">
+              <span class="show-label color-error"></span>
+              <span class="show-value">未买单</span>
+            </div>
+            <div class="show-content-item">
+              <span class="show-label color-info"></span>
+              <span class="show-value">等待</span>
+            </div>
           </div>
-          <div class="show-content-item">
-            <span class="show-label color-error"></span>
-            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidTQty)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-info"></span>
-            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitTQty)}}</span>
-          </div>
-        </div>
-      </div>
+          <div class="clearfix show-main-main">
+            <div class="show-main">
+                <div v-if="customerData.paidMQty"
+                    class="show-mian-item color-success"
+                    :style="{height: customerData.paidMQty_percent}">
+                    <span>{{customerData.paidMQty}}</span>
+                </div>
+                <div v-if="customerData.notPaidMQty"
+                    class="show-mian-item color-error"
+                    :style="{height: customerData.notPaidMQty_percent}">
 
-      <div v-if="currentInfo.holderType == 1" class="show-total clearfix">
-        <div class="total-title">棋牌客流量：{{comUtil.formatNumber(customerData.customerDataTotal)}}人</div>
-        <div class="show-main">
-          <div class="show-mian-item color-success" :style="{width: customerData.paidMQty_percent}"></div>
-          <div class="show-mian-item color-error" :style="{width: customerData.notPaidMQty_percent}"></div>
-          <div class="show-mian-item color-info" :style="{width: customerData.waitMQty_percent}"></div>
-        </div>
-        <div class="show-content clearfix">
-          <div class="show-content-item">
-            <span class="show-label color-success"></span>
-            <span class="show-value">已买单: {{comUtil.formatNumber(customerData.paidMQty)}}</span>
+                    <span>{{customerData.notPaidMQty}}</span>
+                </div>
+                <div v-if="customerData.waitMQty"
+                    class="show-mian-item color-info"
+                    :style="{height: customerData.waitMQty_percent}">
+                    <span>{{customerData.waitMQty}}</span>
+                </div>
+            </div>
           </div>
-          <div class="show-content-item">
-            <span class="show-label color-error"></span>
-            <span class="show-value">未买单: {{comUtil.formatNumber(customerData.notPaidMQty)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-info"></span>
-            <span class="show-value">等待: {{comUtil.formatNumber(customerData.waitMQty)}}</span>
-          </div>
+
+          <div class="total-title">浴足{{parseInt(customerData.customerDataTotal) || 0}}人</div>
         </div>
       </div>
 
+      <div class="echarts-total">
+        <div class="echarts-total-item">
+          <div class="item-label">今日营业</div>
+          <div class="item-value"> ￥{{parseInt(Number(customerData.paidMoney) + Number(customerData.notPaidMoney)) || 0}}</div>
+        </div>
+        <div class="echarts-total-item">
+          <div class="item-label">已买单</div>
+          <div class="item-value item-value-success"> ￥{{parseInt(customerData.paidMoney) || 0}}</div>
+        </div>
+        <div class="echarts-total-item">
+          <div class="item-label">未买单</div>
+          <div class="item-value item-value-warning"> ￥{{parseInt(customerData.notPaidMoney) || 0}}</div>
+        </div>
+      </div>
 
 
       <div class="statistical-title marginT-20">
@@ -113,25 +106,41 @@
         <span class='text-title'>会员卡信息</span>
       </div>
 
-      <div class='echarts-main clearfix'>
-        <div id="inventoryChart2" style="width: 100%;height:100%;" />
-      </div>
+      <div class='echarts-main clearfix echarts-main2'>
+        <!-- 会员 -->
+        <div class="show-total clearfix show-total2">
 
-      <div class="show-total clearfix marginB-20">
-        <div class="total-title">会员量：{{comUtil.formatNumber(memberCardData.total)}}人</div>
-        <div class="show-main">
-          <div class="show-mian-item color-success" :style="{width: memberCardData.firstCount_percent}"></div>
-          <div class="show-mian-item color-error" :style="{width: memberCardData.continuCount_percent}"></div>
+          <div class="show-content clearfix">
+            <div class="show-content-item">
+              <span class="show-label color-error"></span>
+              <span class="show-value">新增会员</span>
+            </div>
+            <div class="show-content-item">
+              <span class="show-label color-info"></span>
+              <span class="show-value">续费会员</span>
+            </div>
+          </div>
+          <div class="clearfix show-main-main">
+            <div class="show-main">
+                <div v-if="memberCardData.firstCount"
+                    class="show-mian-item color-error"
+                    :style="{height: memberCardData.firstCount_percent}">
+
+                    <span>{{memberCardData.firstCount}}</span>
+                </div>
+                <div v-if="memberCardData.continuCount"
+                    class="show-mian-item color-info"
+                    :style="{height: memberCardData.continuCount_percent}">
+                    <span>{{memberCardData.continuCount}}</span>
+                </div>
+            </div>
+          </div>
+
+          <div class="total-title">新增/续费</div>
         </div>
-        <div class="show-content clearfix">
-          <div class="show-content-item">
-            <span class="show-label color-success"></span>
-            <span class="show-value">续费会员: {{comUtil.formatNumber(memberCardData.firstCount)}}</span>
-          </div>
-          <div class="show-content-item">
-            <span class="show-label color-error"></span>
-            <span class="show-value">新增会员: {{comUtil.formatNumber(memberCardData.continuCount)}}</span>
-          </div>
+
+        <div class="echarts-content">
+          <div id="inventoryChart2" style="width: 100%;height:100%;" />
         </div>
       </div>
 
@@ -176,7 +185,7 @@
   import axios from 'axios'
   import comUtil from '@Util/comUtil';
   import {urls} from '@Util/axiosConfig';
-  import { pieOptions, funnelOption } from '@Util/charts';
+  import { pieOptions, pieOptions2 } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
 import { setTimeout } from 'timers';
   export default {
@@ -187,8 +196,7 @@ import { setTimeout } from 'timers';
         currentInfo: {},
         echartsArr: [],
         pieOptions1: comUtil.clone(pieOptions),
-        pieOptions2: comUtil.clone(pieOptions),
-        funnelOption: funnelOption,
+        pieOptions2: pieOptions2,
 
         today: null,
 
@@ -201,6 +209,10 @@ import { setTimeout } from 'timers';
           paidMQty: 0,
           notPaidMQty: 0,
           waitMQty: 0,
+
+          paidMQty_percent: 0,
+          notPaidMQty_percent: 0,
+          waitMQty_percent: 0,
           // 棋牌
           paidTQty: 0,
           notPaidTQty: 0,
@@ -290,25 +302,23 @@ import { setTimeout } from 'timers';
         this.$ajaxPost(urls.GETBUSINESSBASEINFO, params).then(res => {
           if(res){
             this.customerData = res.data;
-            this.dealTotalData();
+            this.$nextTick(()=>{
+              this.dealTotalData();
+            })
           }
         })
       },
 
       dealTotalData(){
-        this.customerData['customerTotalMoney'] = this.customerData.paidty+this.customerData.notPaidty
-        this.customerData['paidMoney_percent'] = comUtil.formatNumber(this.customerData.paidty/this.customerData.customerTotalMoney * 100) +'%';
-        this.customerData['notPaidMoney_percent'] = comUtil.formatNumber(this.customerData.notPaidty/this.customerData.customerTotalMoney * 100) +'%';
+        let total = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
+        let paidMQty_percent = comUtil.formatNumber(this.customerData.paidMQty/total * 100) +'%';
+        let notPaidMQty_percent = comUtil.formatNumber(this.customerData.notPaidMQty/total * 100) +'%';
+        let waitMQty_percent = comUtil.formatNumber(this.customerData.waitMQty/total * 100) +'%';
 
-        this.customerData['customerDataTotal'] = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
-        this.customerData['paidMQty_percent'] = comUtil.formatNumber(this.customerData.paidMQty/this.customerData.customerDataTotal * 100) +'%';
-        this.customerData['notPaidMQty_percent'] = comUtil.formatNumber(this.customerData.notPaidMQty/this.customerData.customerDataTotal * 100) +'%';
-        this.customerData['waitMQty_percent'] = comUtil.formatNumber(this.customerData.waitMQty/this.customerData.customerDataTotal * 100) +'%';
-
-        this.customerData['customerDataTotal2'] = this.customerData.paidTQty+this.customerData.notPaidTQty
-        this.customerData['paidTQty_percent'] = comUtil.formatNumber(this.customerData.paidTQty/this.customerData.customerDataTotal2 * 100) +'%';
-        this.customerData['notPaidTQty_percent'] = comUtil.formatNumber(this.customerData.notPaidTQty/this.customerData.customerDataTotal2 * 100) +'%';
-        this.customerData['waitTQty_percent'] = comUtil.formatNumber(this.customerData.waitTQty/this.customerData.customerDataTotal2 * 100) +'%';
+        this.$set(this.customerData, 'customerDataTotal', total)
+        this.$set(this.customerData, 'paidMQty_percent', paidMQty_percent)
+        this.$set(this.customerData, 'notPaidMQty_percent', notPaidMQty_percent)
+        this.$set(this.customerData, 'waitMQty_percent', waitMQty_percent)
       },
 
       // 获取收款方式
@@ -328,6 +338,7 @@ import { setTimeout } from 'timers';
         })
       },
       dealCollectionData(){
+        this.paymentTotalMoney = 0;
         this.paymentMethods.forEach(item => {
           this.paymentTotalMoney += Number(item.moneySum)
         })
@@ -383,9 +394,12 @@ import { setTimeout } from 'timers';
 
       dealMemberData(data){
         this.memberCardData = data;
-        this.memberCardData['total'] = data.firstCount+data.continuCount
-        this.memberCardData['firstCount_percent'] = comUtil.formatNumber(data.firstCount/this.memberCardData.total * 100) +'%';
-        this.memberCardData['continuCount_percent'] = comUtil.formatNumber(data.continuCount/this.customerData.total * 100) +'%';
+        let total = data.firstCount+data.continuCount
+        let firstCount_percent = comUtil.formatNumber(data.firstCount/total * 100) +'%';
+        let continuCount_percent = comUtil.formatNumber(data.continuCount/total * 100) +'%';
+        this.$set(this.memberCardData, 'total', total)
+        this.$set(this.memberCardData, 'firstCount_percent', firstCount_percent)
+        this.$set(this.memberCardData, 'continuCount_percent', continuCount_percent)
       },
 
       // 收款合计
@@ -405,6 +419,7 @@ import { setTimeout } from 'timers';
         })
       },
       dealCollectionData2(){
+        this.totalMoney = 0;
         this.collectionData.forEach(item => {
           this.totalMoney += Number(item.moneySum)
         })
@@ -453,16 +468,38 @@ import { setTimeout } from 'timers';
       },
 
       dealChartData1(data){
-        if(!data || !data.length){
-          return
-        }
-        let list = [];
-        data.forEach(item => {
-          list.push({
-            name: item.payName,
-            value: item.moneySum
-          })
-        });
+        // if(!data || !data.length){
+        //   return
+        // }
+        // let list = [];
+        // data.forEach(item => {
+        //   list.push({
+        //     name: item.payName,
+        //     value: item.moneySum
+        //   })
+        // });
+        let list = [
+          {
+            name: '微信支付',
+            value: 345
+          },
+          {
+            name: '现金',
+            value: 500
+          },
+          {
+            name: '团购',
+            value: 231
+          },
+          {
+            name: '会员卡',
+            value: 789
+          },
+          {
+            name: '免单',
+            value: 1
+          },
+        ]
 
         return list
       },
@@ -483,17 +520,9 @@ import { setTimeout } from 'timers';
               value: 0
             }
           ]
-          breakageChartoption.series[0].label = {
-            show: false
-          }
-          breakageChartoption.series[0].labelLine = {
-            normal: {
-              show: false
-            }
-          }
         }else{
-          breakageChartoption.title.show = false;
-          breakageChartoption.series[0].data = list
+          breakageChartoption.series[0].data = [];
+          breakageChartoption.series[1].data = list
         }
 
         inventoryChart.setOption(breakageChartoption)
@@ -511,21 +540,9 @@ import { setTimeout } from 'timers';
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart2'));
 
         let breakageChartoption = this.pieOptions2
-
-        if(!list || !list.length){
-          breakageChartoption.series[0].data = [
-            {
-              name: '今日营业',
-              value: 0
-            }
-          ]
-          breakageChartoption.series[0].label = {
-            show: false
-          }
-        }else{
-          breakageChartoption.title.show = false;
-          breakageChartoption.series[0].data = list
-        }
+        let cardLeftTotal = parseInt(this.memberCardData.cardLeftTotal) || 0
+        breakageChartoption.series[0].data = [{value: cardLeftTotal, name:'卡余额'}]
+        breakageChartoption.series[1].data = list
 
         inventoryChart.setOption(breakageChartoption)
 

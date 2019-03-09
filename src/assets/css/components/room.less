@@ -3,18 +3,22 @@
   height: 100%;
 }
   .room-container{
+    // height: calc(~"100% - 72px");
     height: 100%;
     width: 100%;
     overflow-y: hidden;
     position: relative;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     background: #eff0f5;
     .select-main{
       height: 72px;
       width: 100%;
       background: #fff;
-
+      position: absolute;
+      top: 0px;
+      left: 0;
+      z-index: 999;
       select{
         width: 50%;
         float: left;
@@ -26,12 +30,27 @@
       }
     }
 
+    .room-container_main{
+      height: calc(~"100% - 72px");
+      margin-top: 72px;
+      position: relative;
+      background: #eff0f5;
+    }
+
+    #minirefresh2{
+
+      // top: 72px;
+    }
+
 
     .list-main{
-      flex: 1;
+      height: 100%;
+      // flex: 1;
       width: 100%;
       overflow-y: auto;
       padding-bottom: 20px;
+      box-sizing: border-box;
+      background: #f1f1f1;
     }
 
     .list-item{
@@ -58,7 +77,9 @@
         .item-top-right{
           float: right;
         }
-
+        &.active0{
+          background: #6facff;
+        }
         &.active1{
           background: #5079ff;
         }
@@ -92,9 +113,7 @@
         &.active11{
           background: #7c53e2;
         }
-        &.active12{
-          background: #6facff;
-        }
+
       }
       .list-item-content{
         flex: 1;
@@ -129,7 +148,7 @@
           height: 35px;
           >div{
             font-size: 16px;
-            text-align: center;
+            text-align: left;
             width: 33%;
             float: left;
           }
@@ -137,8 +156,11 @@
             width: 33%;
             float: left;
             line-height: 35px;
+            padding-left: 4px;
+            box-sizing: border-box;
             .iconfont{
               font-size: 15px;
+              width: 15px;
             }
           }
           .second-right{

@@ -7,12 +7,28 @@
   width: 100%;
   overflow-y: auto;
   position: relative;
+  background:#f1f1f1;
+
+  .tec-main{
+    background: #fff;
+    margin: 15px 10px;
+    box-sizing: border-box;
+  }
 
   .tec-title{
     text-align: center;
     font-size: 28px;
     color: #000;
     line-height: 80px;
+
+    span{
+      // background: #5bd0b5;
+      // background: rgba(0, 137, 123, 0.19);
+      // border: 2px solid #489ef9;
+      // background: #58626c;
+      // border-radius: 8px;
+      // padding: 4px 10px;
+    }
   }
 
   .tec-footer{
@@ -24,15 +40,15 @@
 
   .tec-item{
     height: 150px;
-    width: calc(~"(100% - 100px)/4");
+    width: calc(~"(100% - 75px)/4");
     overflow: hidden;
-    margin-left: 20px;
+    margin-left: 15px;
     position: relative;
     box-sizing: border-box;
     padding: 0;
     background: #99a4b2;
     float: left;
-    margin-top: 10px;
+    margin-top: 15px;
     border-radius: 6px;
     &.item-bg1{
       background: #99a4b2;
@@ -108,8 +124,8 @@
         left: 0;
         top: 0;
         span{
-          color: rgba(0, 0, 0, 0.3);
-          font-weight: 800;
+          color: rgba(0, 0, 0, 0.2);
+          font-weight: 900;
           font-size: 40px;
           &:first-child{
             float: left;
