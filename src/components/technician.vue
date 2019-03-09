@@ -127,13 +127,7 @@
           workingPersonNum: 0
         },
 
-        listData: [{
-          sex: 1,
-          workFlag: 2,
-          statusFlag:3,
-          number: '234',
-          oper: '2'
-        }],
+        listData: [],
 
         dataInfo2:{
           totalPersonNum: 0,
