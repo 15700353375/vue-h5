@@ -229,7 +229,7 @@
                 setTimeout(()=>{
                   // 结束下拉刷新
                   miniRefresh.endDownLoading();
-                },3000)
+                },2000)
               }
           },
           up: {

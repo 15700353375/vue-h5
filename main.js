@@ -15,13 +15,16 @@ import moment from 'moment';
 import $ from "jquery";
 import registerAxios from '@Util/registerAxios';
 
-import 'we-vue/lib/style.css'
-import { Toast } from 'we-vue'
+// import 'we-vue/lib/style.css'
+// import { Toast } from 'we-vue'
 
+// import { AlertPlugin } from 'vux'
 Vue.use(Vuex);
 Vue.use(VueRouter);
+// Vue.use(AlertPlugin)
+// Vue.use(ToastPlugin)
 
-Vue.prototype.Toast = Toast;
+// Vue.prototype.Toast = Toast;
 
 // 引入Vuex配置文件
 const store = new Vuex.Store({

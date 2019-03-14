@@ -12,7 +12,6 @@
         <span class='text-title'>营业信息</span>
         <span class='text-right'>{{today}} 统计</span>
       </div>
-      <!-- <div class="clearfix echartsData"> -->
       <div class='echarts-main clearfix'>
         <div class="echarts-content">
           <div id="inventoryChart" style="width: 100%;height: 100%;" />
@@ -187,7 +186,7 @@
   import {urls} from '@Util/axiosConfig';
   import { pieOptions, pieOptions2 } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
-import { setTimeout } from 'timers';
+// import { setTimeout } from 'timers';
   export default {
     props: ['currentData'],
     data() {
@@ -234,6 +233,8 @@ import { setTimeout } from 'timers';
         collectionData: [],
         totalMoney: 0,
 
+        pickerValue: null
+
       }
     },
     computed: mapState({
@@ -267,7 +268,7 @@ import { setTimeout } from 'timers';
                 setTimeout(()=>{
                   // 结束下拉刷新
                   miniRefresh.endDownLoading();
-                },3000)
+                },2000)
               }
           },
           up: {
@@ -375,12 +376,12 @@ import { setTimeout } from 'timers';
            let data = res.data
             let list = [
               {
-                name: '卡剩余',
-                value: comUtil.formatNumber(data.cardLeftTotal)
+                name: '今日卡消',
+                value: comUtil.formatNumber(data.consumedTotal)
               },
               {
-                name: '卡净值',
-                value: comUtil.formatNumber(data.cardLeftNetValue)
+                name: '今日充卡',
+                value: comUtil.formatNumber(data.rechargeMoneySum)
               }
             ]
 
@@ -468,38 +469,16 @@ import { setTimeout } from 'timers';
       },
 
       dealChartData1(data){
-        // if(!data || !data.length){
-        //   return
-        // }
-        // let list = [];
-        // data.forEach(item => {
-        //   list.push({
-        //     name: item.payName,
-        //     value: item.moneySum
-        //   })
-        // });
-        let list = [
-          {
-            name: '微信支付',
-            value: 345
-          },
-          {
-            name: '现金',
-            value: 500
-          },
-          {
-            name: '团购',
-            value: 231
-          },
-          {
-            name: '会员卡',
-            value: 789
-          },
-          {
-            name: '免单',
-            value: 1
-          },
-        ]
+        if(!data || !data.length){
+          return
+        }
+        let list = [];
+        data.forEach(item => {
+          list.push({
+            name: item.payName,
+            value: item.moneySum
+          })
+        });
 
         return list
       },

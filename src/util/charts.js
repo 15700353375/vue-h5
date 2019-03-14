@@ -12,35 +12,6 @@ window.echarts = echarts;
 
 // 饼状图的基本配置项
 export const pieOptions = {
-    // title: {
-    //   show: true,
-    //   text: '今日营业',
-    //   top: '43%',
-    //   left: 'center',
-    //   textStyle: {
-    //     color: '#8392A7',
-    //     fontWeight: 'lighter',
-    //     fontSize: 15,
-    //   },
-    //   itemGap: 10,
-    //   subtext: '0.00',
-    //   subtextStyle: {
-    //     color: '#5ab7fd',
-    //     fontWeight: 'bold',
-    //     fontSize: 15,
-    //   },
-    // },
-    // title: {
-    //     text: '总资产',
-    //     subtext: '20000.00',
-    //     x: 'center',
-    //     y: 'center',
-    //     textStyle: {
-    //       color: '#8392A7',
-    //       fontWeight: 'lighter',
-    //       fontSize: 15,
-    //     },
-    // },
     tooltip: {
         trigger: 'item',
         formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -48,7 +19,6 @@ export const pieOptions = {
     legend: {
       show: false,
       orient: 'vertical',
-      // orient: 'horizontal',
       x: 'left',
       itemWidth: 14,
       itemHeight: 14,
@@ -56,7 +26,6 @@ export const pieOptions = {
     color: [
       '#59b7ff','#a4b8ff','#f1b2fb','#ffa88c','#e5ed9a','#aae6aa','#82cfd4'
     ],
-
     series: [
         {
           type:'pie',
@@ -78,7 +47,7 @@ export const pieOptions = {
                     per: {
                       color: '#fff',
                       fontSize: 16,
-                      padding: [6, 0, 0, 0],
+                      padding: [10, 0, 0, 0],
                     }
                   }
               }
@@ -197,7 +166,8 @@ export const pieOptions2 = {
           },
           label: {
             normal: {
-              formatter: '{b}: {per|{d}%}',
+              // formatter: '{b}: {per|{d}%}',
+              formatter: '{b}: {c} ({per|{d}%)}',
               rich: {
                 b: {
                   fontSize: 12,

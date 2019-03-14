@@ -11,7 +11,7 @@
       <div class='technician-container'>
         <div class='tec-main clearfix'>
           <div class='tec-title'>
-            <span>保健师（{{dataInfo1.totalPersonNum || 0}}人）</span>
+            <span>保健师（总计：{{dataInfo1.totalPersonNum || 0}}人）</span>
           </div>
           <div class='tec-content clearfix'>
             <div class='tec-item' v-for="(item,index) in listData" :key='index'
@@ -54,12 +54,12 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>空闲：{{dataInfo1.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}</div>
+          <div class='tec-footer'>空闲：{{dataInfo1.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}人</div>
         </div>
 
         <div class='tec-main clearfix'>
           <div class='tec-title'>
-            <span>足疗师（{{dataInfo2.totalPersonNum || 0}}人）</span>
+            <span>足疗师（总计：{{dataInfo2.totalPersonNum || 0}}人）</span>
           </div>
           <div class='tec-content clearfix'>
             <div class='tec-item' v-for="(item,index) in listData2" :key='index'
@@ -101,7 +101,7 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>空闲：{{dataInfo2.freePersonNum}}&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}</div>
+          <div class='tec-footer'>空闲：{{dataInfo2.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}人</div>
         </div>
       </div>
 
@@ -171,7 +171,7 @@
                 setTimeout(()=>{
                   // 结束下拉刷新
                   miniRefresh.endDownLoading();
-                },3000)
+                },2000)
               }
           },
           up: {

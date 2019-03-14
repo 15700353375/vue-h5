@@ -6,14 +6,15 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 //路径为文件夹，自动引入index文件
 var config = require('../config');
 var utils = require('./utils')
-
+// const vuxLoader = require('vux-loader')
 
 //设置变量
 var ROOT_PATH = path.resolve(__dirname,'../');
 var SRC_PATH = path.resolve(ROOT_PATH,'src');
 
 
-module.exports = {
+module.exports  = {
+  context: path.resolve(__dirname, '../'),
   devtool: '#source-map',
   //打包入口 也可直接用文件夹名字，默认找index.js
   entry: {
@@ -55,7 +56,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json','.less','.scss'],
+    extensions: ['.js', '.vue', '.json','.less'],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
       '@Src': SRC_PATH,
@@ -76,3 +77,10 @@ module.exports = {
     })
   ]
 }
+
+// module.exports = vuxLoader.merge(webpackConfig, {
+//   options: {},
+//   plugins: [{
+//     name: 'vux-ui'
+//   }]
+// })

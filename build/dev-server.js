@@ -33,7 +33,8 @@ var server = new webpackDevServer(compiler,{
     '/api': {
       // target: 'http://192.168.0.16:80',
       // target: "http://192.168.0.98:8003",
-      target: 'http://qsyfw.gnway.cc:12345/',
+      // target: 'http://qsyfw.gnway.cc:12345/',
+      target: 'https://szy.kiloxy.com',
       changeOrigin: true,
       pathRewrite: {
         '^/api': ''
