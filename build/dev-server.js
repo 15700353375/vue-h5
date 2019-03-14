@@ -18,6 +18,7 @@ var uri = 'http://localhost:' + config.dev.port;
 var server = new webpackDevServer(compiler,{
   hot: true,
   inline: true,
+  disableHostCheck: true,
   stats: {
     colors: true,
     modules: false,
