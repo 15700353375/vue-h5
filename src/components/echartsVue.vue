@@ -8,6 +8,18 @@
 <div id="minirefresh1" class="minirefresh-wrap">
   <div class="minirefresh-scroll">
     <div class="echarts-container">
+
+      <div class="clearfix filterMain">
+        <a :class="{'active' : searchCurrent == 1}" @click="searchTab(1)">今天</a>
+        <a :class="{'active' : searchCurrent == 2}" @click="searchTab(2)">最近一周</a>
+        <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">近一月</a>
+        <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">自定义</a>
+        <div class="custom" v-if="searchCurrent == 4">
+          <input id='datePicker' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
+          <input id='datePicker2' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
+          <button>确定</button>
+        </div>
+      </div>
       <div class="statistical-title">
         <span class='text-title'>营业信息</span>
         <span class='text-right'>{{today}} 统计</span>
@@ -232,7 +244,10 @@
         collectionData: [],
         totalMoney: 0,
 
-        pickerValue: null
+        searchCurrent: null,
+
+        startTime: '',
+        endTime: ''
 
       }
     },
@@ -289,6 +304,47 @@
 
         // 收款合计信息
         this.getCollectionData()
+      },
+
+      searchTab(tab){
+        this.searchCurrent = tab;
+      },
+
+      startTimeClick(){
+        let that = this;
+        // 示例1：
+        this.$weui.datePicker({
+            start: 1990,
+            end: 2000,
+            defaultValue: [1991, 6, 9],
+            onChange: function(result){
+                console.log(result);
+            },
+            onConfirm: function(result){
+
+                that.startTime = result[0].label+result[1].label+result[2].label
+                console.log(that.startTime);
+
+            },
+            id: 'datePicker'
+        });
+      },
+      endTimeClick(){
+        let that = this;
+        // 示例1：
+        this.$weui.datePicker({
+            start: 1990,
+            end: 2000,
+            defaultValue: [1991, 6, 9],
+            onChange: function(result){
+                console.log(result);
+            },
+            onConfirm: function(result){
+                console.log(result);
+                that.endTime = result[0].label+result[1].label+result[2].label
+            },
+            id: 'datePicker2'
+        });
       },
 
       // 统计数据
