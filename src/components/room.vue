@@ -16,104 +16,103 @@
     </select>
   </div>
 
-    <div class="room-container_main">
-      <div id="minirefresh2" class="minirefresh-wrap">
-        <div class="minirefresh-scroll">
+  <div class="room-container_main">
+    <div id="minirefresh2" class="minirefresh-wrap">
+      <div class="minirefresh-scroll">
 
-          <div class='clearfix list-main'>
-            <div class='list-item' v-for='(item,index) in listData' :key='index'>
+        <div class='clearfix list-main'>
+          <div class='list-item' v-for='(item,index) in listData' :key='index'>
 
-              <!-- 顶部 -->
-              <div v-if="dealClass(item.roomStatus,item)" class='list-item-top' :class="dealClass(item.roomStatus, item) ? 'active'+(item.roomOrder.billBatch%10) : ''">
-                {{item.roomOrder.billBatch || ''}} {{item.roomName}}
-                <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
-                <span v-if="item.roomOrder" class="item-top-right">￥{{item.roomOrder.totalGoodsAmount || 0}}{{item.roomType == 2 ? '+' : ''}}</span>
+            <!-- 顶部 -->
+            <div v-if="dealClass(item.roomStatus,item)" class='list-item-top' :class="dealClass(item.roomStatus, item) ? 'active'+(item.roomOrder.billBatch%10) : ''">
+              {{item.roomOrder.billBatch || ''}} {{item.roomName}}
+              <!-- 字段：roomOrder.totalGoodsAmount,如果roomType字段值为2时，在钱后面显示+号，其他情况不显示+号 -->
+              <span v-if="item.roomOrder" class="item-top-right">￥{{item.roomOrder.totalGoodsAmount || 0}}{{item.roomType == 2 ? '+' : ''}}</span>
+            </div>
+            <div v-else class='list-item-top'>
+              {{item.roomName}}
+            </div>
+
+
+            <div v-if="item.roomStatus == 5 || item.roomStatus == 11" class='list-item-content clearfix'>
+
+              <div class="content-first">使用中</div>
+              <div class="content-second " v-for="(child,index) in item.cashierShowTechnicianInfoList" :key="index" :class="statusColor(child.status,child.isTimeout)">
+                <!-- 当字段status为待上钟状态(1)和正在上钟状态(2)时，如果字段isTimeout显示为true,表示技师超时，该行背景变为红色，正常情况下显示绿色 -->
+                <template>
+                  <div class="second-left">
+                    <span v-if="child.sex != 3" class='fa' :class="child.sex == 1 ? 'fa-female' : 'fa-male'"></span>
+                    <span v-else class='fa'></span>
+                    {{child.number}}
+                  </div>
+                  <div class="second-center">{{child.statusName}}</div>
+                  <div class="second-right">{{child.timing}}</div>
+                </template>
               </div>
-              <div v-else class='list-item-top'>
-                {{item.roomName}}
-              </div>
-
-
-              <div v-if="item.roomStatus == 5 || item.roomStatus == 11" class='list-item-content clearfix'>
-
-                <div class="content-first">使用中</div>
-                <div class="content-second " v-for="(child,index) in item.cashierShowTechnicianInfoList" :key="index" :class="statusColor(child.status,child.isTimeout)">
-                  <!-- 当字段status为待上钟状态(1)和正在上钟状态(2)时，如果字段isTimeout显示为true,表示技师超时，该行背景变为红色，正常情况下显示绿色 -->
-                  <template>
-                    <div class="second-left">
-                      <span v-if="child.sex != 3" class='fa' :class="child.sex == 1 ? 'fa-female' : 'fa-male'"></span>
-                      <span v-else class='fa'></span>
-                      {{child.number}}
-                    </div>
-                    <div class="second-center">{{child.statusName}}</div>
-                    <div class="second-right">{{child.timing}}</div>
-                  </template>
-                </div>
-                <!-- 字段：remark,房间备注。roomStatus是使用中(5)，房间暂停(11)，已结账未离开(8)，需要打扫(9)时，如果有备注，需要显示，对于已结账未离开(8)和需要打扫(9)状态-->
-                <div class="content-bottom" v-if="item.roomStatus == 5 || item.roomStatus == 11">
-                  <span v-if="item.remark">备注:{{item.remark}}</span>
-                </div>
-
-                <!-- 字段restMinute，所有技师均完成服务，客人休息分钟数遮层显示，如果字段restMinute有值，就显示该遮层，如果休息时间分钟数大于24小时，需要前端逻辑处理把分钟数改为天数 -->
-                <div class="mask" v-if="item.restMinute && item.roomStatus != 11">
-                  <div class="mask-opacity"></div>
-                  <span v-if="item.restDay" class="mask-text mask-text-text">{{item.restDay}}<span class="unit">天</span></span>
-                  <span v-else class="mask-text mask-text-text">{{item.restMinute}}<span class="unit">分钟</span></span>
-                </div>
-
-                <div class="mask" v-if="item.roomStatus == '11'">
-                  <div class="mask-opacity"></div>
-                  <div class="mask-text">
-                    <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
-                    <div class="texts">暂停使用</div>
-                  </div>
-                </div>
-                <!-- <div class="mask">
-                  <div class="mask-opacity"></div>
-                  <span class='mask-text iconfont icon-huiyuan'></span>
-                  <div class="mask-text">
-                    <div class="img-box"><img src="agentstatic/img/continueBtn.png" alt=""></div>
-                    <div class="texts">继续使用</div>
-                  </div>
-                  <div class="mask-text">
-                    <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
-                    <div class="texts">暂停使用</div>
-                  </div>
-                  <span class="mask-text mask-text-text">48分钟</span>
-                </div> -->
+              <!-- 字段：remark,房间备注。roomStatus是使用中(5)，房间暂停(11)，已结账未离开(8)，需要打扫(9)时，如果有备注，需要显示，对于已结账未离开(8)和需要打扫(9)状态-->
+              <div class="content-bottom" v-if="item.roomStatus == 5 || item.roomStatus == 11">
+                <span v-if="item.remark">备注:{{item.remark}}</span>
               </div>
 
-              <div v-else class='list-item-content clearfix'>
-                <div class="kong-content clearfix">
-                  <div class="icon-box">
-                    <img src="agentStatic/img/icon-free.png" alt="">
-                  </div>
-                  <!-- 字段：seatNum，座位数，只有空闲中，需要打扫，已买单未离开状态才显示 -->
-                  <div class="kong-text" v-if="item.roomStatus == 2">
-                    空闲中({{item.seatNum}}座)
-                  </div>
-                  <div class="kong-text" v-if="item.roomStatus == 8">
-                    客人未离开({{item.seatNum}}座)
-                    <div v-if="item.remark" class="remark text-ellipsis2">
-                      备注:{{item.remark}}
-                    </div>
-                  </div>
-                  <div class="kong-text" v-if="item.roomStatus == 9">
-                    需要打扫({{item.seatNum}}座)
-                    <div v-if="item.remark" class="remark text-ellipsis2">
-                      备注：{{item.remark}}
-                    </div>
-                  </div>
-                  <div class="kong-text" v-if="item.roomStatus == 1">
-                    房间停用
+              <!-- 字段restMinute，所有技师均完成服务，客人休息分钟数遮层显示，如果字段restMinute有值，就显示该遮层，如果休息时间分钟数大于24小时，需要前端逻辑处理把分钟数改为天数 -->
+              <div class="mask" v-if="item.restMinute && item.roomStatus != 11">
+                <div class="mask-opacity"></div>
+                <span v-if="item.restDay" class="mask-text mask-text-text">{{item.restDay}}<span class="unit">天</span></span>
+                <span v-else class="mask-text mask-text-text">{{item.restMinute}}<span class="unit">分钟</span></span>
+              </div>
+
+              <div class="mask" v-if="item.roomStatus == '11'">
+                <div class="mask-opacity"></div>
+                <div class="mask-text">
+                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="texts">暂停使用</div>
+                </div>
+              </div>
+              <!-- <div class="mask">
+                <div class="mask-opacity"></div>
+                <span class='mask-text iconfont icon-huiyuan'></span>
+                <div class="mask-text">
+                  <div class="img-box"><img src="agentstatic/img/continueBtn.png" alt=""></div>
+                  <div class="texts">继续使用</div>
+                </div>
+                <div class="mask-text">
+                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="texts">暂停使用</div>
+                </div>
+                <span class="mask-text mask-text-text">48分钟</span>
+              </div> -->
+            </div>
+
+            <div v-else class='list-item-content clearfix'>
+              <div class="kong-content clearfix">
+                <div class="icon-box">
+                  <img src="agentStatic/img/icon-free.png" alt="">
+                </div>
+                <!-- 字段：seatNum，座位数，只有空闲中，需要打扫，已买单未离开状态才显示 -->
+                <div class="kong-text" v-if="item.roomStatus == 2">
+                  空闲中({{item.seatNum}}座)
+                </div>
+                <div class="kong-text" v-if="item.roomStatus == 8">
+                  客人未离开({{item.seatNum}}座)
+                  <div v-if="item.remark" class="remark text-ellipsis2">
+                    备注:{{item.remark}}
                   </div>
                 </div>
-                <div class="mask" v-if="item.roomStatus == '11'">
-                  <div class="mask-opacity"></div>
-                  <div class="mask-text">
-                    <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
-                    <div class="texts">暂停使用</div>
+                <div class="kong-text" v-if="item.roomStatus == 9">
+                  需要打扫({{item.seatNum}}座)
+                  <div v-if="item.remark" class="remark text-ellipsis2">
+                    备注：{{item.remark}}
                   </div>
+                </div>
+                <div class="kong-text" v-if="item.roomStatus == 1">
+                  房间停用
+                </div>
+              </div>
+              <div class="mask" v-if="item.roomStatus == '11'">
+                <div class="mask-opacity"></div>
+                <div class="mask-text">
+                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="texts">暂停使用</div>
                 </div>
               </div>
             </div>
@@ -121,6 +120,7 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
 
 </template>
@@ -200,7 +200,9 @@
         select1: '0',
         select2: '0',
 
-        listData: []
+        listData:[],
+
+        miniRefresh: null,
 
       }
     },
@@ -221,23 +223,24 @@
     },
     mounted(){
       let that = this;
-      var miniRefresh = new MiniRefresh({
+      this.miniRefresh = new MiniRefresh({
           container: '#minirefresh2',
           down: {
               callback: function() {
                 that.getRoomList();
                 setTimeout(()=>{
                   // 结束下拉刷新
-                  miniRefresh.endDownLoading();
+                  that.miniRefresh.endDownLoading();
                 },2000)
               }
           },
           up: {
               callback: function() {
-                miniRefresh.endUpLoading(true);
+                that.miniRefresh.endUpLoading(true);
               }
           }
       });
+
     },
     computed: mapState({
       // 名字
@@ -272,6 +275,9 @@
             this.allData = this.dealData(res.data);
             this.listData = comUtil.clone(this.allData)
           }
+          this.miniRefresh.endDownLoading();
+          this.select1 = '0';
+          this.select2 = '0';
         })
       },
       // 处理时间

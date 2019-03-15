@@ -28,6 +28,11 @@ export default {
     if (data != 0 && !data) return
     return parseFloat(Number(data).toFixed(2))
   },
-
+  // 格式化为百分比去掉无用的0
+  formatPercent (data) {
+    if (!data) return 0
+    // if (data > 1) return 1
+    return parseFloat((Number(data) * 100).toFixed(2))
+  },
 
 }

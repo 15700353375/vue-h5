@@ -61,7 +61,7 @@
 
       <div class="echarts-total">
         <div class="echarts-total-item">
-          <div class="item-label">今日营业</div>
+          <div class="item-label">营业额</div>
           <div class="item-value"> ￥{{parseInt(Number(customerData.paidMoney) + Number(customerData.notPaidMoney)) || 0}}</div>
         </div>
         <div class="echarts-total-item">
@@ -312,9 +312,9 @@
 
       dealTotalData(){
         let total = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
-        let paidMQty_percent = comUtil.formatNumber(this.customerData.paidMQty/total * 100) +'%';
-        let notPaidMQty_percent = comUtil.formatNumber(this.customerData.notPaidMQty/total * 100) +'%';
-        let waitMQty_percent = comUtil.formatNumber(this.customerData.waitMQty/total * 100) +'%';
+        let paidMQty_percent = comUtil.formatPercent(this.customerData.paidMQty/total) +'%';
+        let notPaidMQty_percent = comUtil.formatPercent(this.customerData.notPaidMQty/total) +'%';
+        let waitMQty_percent = comUtil.formatPercent(this.customerData.waitMQty/total) +'%';
 
         this.$set(this.customerData, 'customerDataTotal', total)
         this.$set(this.customerData, 'paidMQty_percent', paidMQty_percent)
@@ -357,7 +357,7 @@
         setTimeout(()=>{
           this.paymentMethods.forEach((item,index) => {
             let obj = this.paymentMethods[index]
-            obj['percent'] = (new Number(item.moneySum/this.paymentTotalMoney) * 100).toFixed(2)+ '%'
+            obj['percent'] = comUtil.formatPercent(item.moneySum/this.paymentTotalMoney) + '%'
             this.$set(this.paymentMethods, index, obj);
           })
         },60)
@@ -396,8 +396,8 @@
       dealMemberData(data){
         this.memberCardData = data;
         let total = data.firstCount+data.continuCount
-        let firstCount_percent = comUtil.formatNumber(data.firstCount/total * 100) +'%';
-        let continuCount_percent = comUtil.formatNumber(data.continuCount/total * 100) +'%';
+        let firstCount_percent = comUtil.formatPercent(data.firstCount/total) +'%';
+        let continuCount_percent = comUtil.formatPercent(data.continuCount/total) +'%';
         this.$set(this.memberCardData, 'total', total)
         this.$set(this.memberCardData, 'firstCount_percent', firstCount_percent)
         this.$set(this.memberCardData, 'continuCount_percent', continuCount_percent)
@@ -439,7 +439,7 @@
         setTimeout(()=>{
           this.collectionData.forEach((item,index) => {
             let obj = this.collectionData[index]
-            obj['percent'] = (item.moneySum/this.totalMoney).toFixed(4) * 100 + '%'
+            obj['percent'] = comUtil.formatPercent(item.moneySum/this.totalMoney) + '%'
             this.$set(this.collectionData, index, obj);
           })
         },60)
@@ -495,7 +495,7 @@
         if(!list || !list.length){
           breakageChartoption.series[0].data = [
             {
-              name: '今日营业',
+              name: '营业额',
               value: 0
             }
           ]

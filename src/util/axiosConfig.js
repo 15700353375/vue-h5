@@ -12,8 +12,8 @@ if (process.env.NODE_ENV == 'production') {
 
 }else{
   // 开发环境
-  // base_url = 'https://szy.kiloxy.com';
-  base_url = '/api';
+  base_url = 'https://szy.kiloxy.com';
+  // base_url = '/api';
 }
 
 

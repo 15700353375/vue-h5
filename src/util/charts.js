@@ -14,7 +14,7 @@ window.echarts = echarts;
 export const pieOptions = {
     tooltip: {
         trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
+        formatter: "{a} <br/>{b}: ￥{c} ({d}%)"
     },
     legend: {
       show: false,
@@ -41,7 +41,7 @@ export const pieOptions = {
           label: {
               normal: {
                   position: 'center',
-                  formatter: '{b}\n{per|{c}}',
+                  formatter: '{b}\n{per|￥{c}}',
                   color: '#fff',
                   rich: {
                     per: {
@@ -58,7 +58,7 @@ export const pieOptions = {
               }
           },
           data:[
-              {value:0, name:'今日营业'}
+              {value:0, name:'营业额'}
           ]
         },
         {
@@ -103,7 +103,7 @@ export const pieOptions = {
 export const pieOptions2 = {
   tooltip: {
       trigger: 'item',
-      formatter: "{a} <br/>{b}: {c} ({d}%)"
+      formatter: "{a} <br/>{b}: ￥{c} ({d}%)"
   },
   legend: {
     show: false,
@@ -132,7 +132,7 @@ export const pieOptions2 = {
         label: {
             normal: {
                 position: 'center',
-                formatter: '{b}\n{per|{c}}',
+                formatter: '{b}\n{per|￥{c}}',
                 color: '#8392A7',
                 rich: {
                   per: {
@@ -144,9 +144,9 @@ export const pieOptions2 = {
             }
         },
         labelLine: {
-            normal: {
-                show: false
-            }
+          normal: {
+            show: false
+          }
         },
         data:[
             {value:0, name:'卡余额'}
@@ -167,7 +167,7 @@ export const pieOptions2 = {
           label: {
             normal: {
               // formatter: '{b}: {per|{d}%}',
-              formatter: '{b}: {c} ({per|{d}%)}',
+              formatter: '{b}: ￥{c} ({per|{d}%)}',
               rich: {
                 b: {
                   fontSize: 12,
@@ -181,70 +181,3 @@ export const pieOptions2 = {
   ]
 }
 
-
-export const funnelOption = {
-  title: {
-    show: false,
-    text: '漏斗图',
-    subtext: '纯属虚构'
-  },
-  tooltip: {
-    trigger: 'item',
-    formatter: "{a} <br/>{b} : {c}%"
-  },
-  // toolbox: {
-  //     feature: {
-  //         dataView: {readOnly: false},
-  //         restore: {},
-  //         saveAsImage: {}
-  //     }
-  // },
-  legend: {
-    orient: 'vertical',
-    data: ['订单','咨询','访问']
-  },
-  calculable: true,
-  series: [
-      {
-          name:'漏斗图',
-          type:'funnel',
-          left: '10%',
-          top: 60,
-          //x2: 80,
-          bottom: 60,
-          width: '80%',
-          // height: {totalHeight} - y - y2,
-          min: 50,
-          max: 50,
-          minSize: '0%',
-          maxSize: '100%',
-          sort: 'descending',
-          gap: 2,
-          label: {
-              show: true,
-              position: 'inside'
-          },
-          labelLine: {
-              // length: 10,
-              lineStyle: {
-                  width: 0,
-                  type: 'solid'
-              }
-          },
-          itemStyle: {
-              borderColor: '#fff',
-              borderWidth: 0
-          },
-          emphasis: {
-              label: {
-                  fontSize: 12
-              }
-          },
-          data: [
-              {value: 60, name: '访问'},
-              {value: 40, name: '咨询'},
-              {value: 20, name: '订单'}
-          ]
-      }
-  ]
-};

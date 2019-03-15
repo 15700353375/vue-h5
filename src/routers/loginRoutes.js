@@ -1,12 +1,11 @@
 /**
- * @Author:       changh  
+ * @Author:       changh
  * @DateTime:    2018
  * @Description: 登录路由
  */
 
 const statistical = r => require.ensure( [], () => r(require('@Src/view/list/statistical')), 'statistical');
 const report = r => require.ensure( [], () => r(require('@Src/view/list/report')), 'report');
-const manager = r => require.ensure( [], () => r(require('@Src/view/list/manager')), 'manager');
 const myself = r => require.ensure( [], () => r(require('@Src/view/list/myself')), 'myself');
 
 export default [
@@ -32,14 +31,6 @@ export default [
     component: report,
     meta: {
       title: '报表决策'
-    }
-  },
-  {
-    path: '/manager',
-    name: 'manager',
-    component: manager,
-    meta: {
-      title: '经营管理'
     }
   },
   {
