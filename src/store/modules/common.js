@@ -7,29 +7,27 @@ const state = {
   activeTab: 'staffSaleStatist',
   // 区域option
   regionOptions: []
-};
+}
 
-const getters = {};
-
+const getters = {}
 
 const mutations = {
-  setBread(state,bread) {
+  setBread (state, bread) {
     // 变更状态
-    state.bread = bread;
+    state.bread = bread
   },
-  setActiveLi(state,activeLi) {
+  setActiveLi (state, activeLi) {
     // 变更状态
-    state.activeLi = activeLi;
+    state.activeLi = activeLi
   },
-  setActiveTab(state,activeTab) {
+  setActiveTab (state, activeTab) {
     // 变更状态
-    state.activeTab = activeTab;
+    state.activeTab = activeTab
   },
-  setRegionOptions(state,regionOptions) {
-    state.regionOptions = regionOptions;
+  setRegionOptions (state, regionOptions) {
+    state.regionOptions = regionOptions
   }
-};
-
+}
 
 export default {
   common: {
@@ -39,5 +37,4 @@ export default {
     mutations
   }
 }
-
 

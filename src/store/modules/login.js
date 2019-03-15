@@ -1,17 +1,15 @@
 const state = {
   userInfo: {}
-};
+}
 
-const getters = {};
-
+const getters = {}
 
 const mutations = {
-  setUserInfo (state,userInfo) {
+  setUserInfo (state, userInfo) {
     // 变更状态
-    state.userInfo = userInfo;
-  },
-};
-
+    state.userInfo = userInfo
+  }
+}
 
 export default {
   login: {
@@ -21,5 +19,4 @@ export default {
     mutations
   }
 }
-
 

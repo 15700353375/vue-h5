@@ -4,23 +4,23 @@
  * @Description: 公共方法
  */
 
-import _ from 'lodash';
+// import _ from 'lodash'
 
 export default {
   // 克隆
-  clone(obj){
-    return JSON.parse(JSON.stringify(obj));
+  clone (obj) {
+    return JSON.parse(JSON.stringify(obj))
   },
 
   // 格式化时间
-  formatTime(time, type){
-    let typeFin =  type ? type : 'YYYY-MM-DD HH:mm:ss';
-    return Moment(time*1000).format(typeFin);
+  formatTime (time, type) {
+    let typeFin = type || 'YYYY-MM-DD HH:mm:ss'
+    return Moment(time * 1000).format(typeFin)
   },
 
   // 格式化金额
-  formatMoney(money){
-    return new Number(money).toFixed(2);
+  formatMoney (money) {
+    return Number(money).toFixed(2)
   },
 
   // 格式化为数字去掉无用的0
@@ -33,6 +33,6 @@ export default {
     if (!data) return 0
     // if (data > 1) return 1
     return parseFloat((Number(data) * 100).toFixed(2))
-  },
+  }
 
 }

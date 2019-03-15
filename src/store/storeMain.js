@@ -1,5 +1,5 @@
-import login from '@Src/store/modules/login';
+import login from '@Src/store/modules/login'
 
-import common from '@Src/store/modules/common';
+import common from '@Src/store/modules/common'
 
-export default  Object.assign(login,common);
+export default Object.assign(login, common)

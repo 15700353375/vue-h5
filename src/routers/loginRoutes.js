@@ -4,9 +4,9 @@
  * @Description: 登录路由
  */
 
-const statistical = r => require.ensure( [], () => r(require('@Src/view/list/statistical')), 'statistical');
-const report = r => require.ensure( [], () => r(require('@Src/view/list/report')), 'report');
-const myself = r => require.ensure( [], () => r(require('@Src/view/list/myself')), 'myself');
+const statistical = r => require.ensure([], () => r(require('@Src/view/list/statistical')), 'statistical')
+const report = r => require.ensure([], () => r(require('@Src/view/list/report')), 'report')
+const myself = r => require.ensure([], () => r(require('@Src/view/list/myself')), 'myself')
 
 export default [
   {
@@ -40,5 +40,5 @@ export default [
     meta: {
       title: '我的'
     }
-  },
+  }
 ]

@@ -58,7 +58,6 @@
   import room from '@Components/room'
   import technician from '@Components/technician'
 
-
   export default {
     data(){
       return{
@@ -99,8 +98,6 @@
         },
       })
 
-
-
     },
     methods: {
 
@@ -108,8 +105,6 @@
         this.mySwiper.slideTo(e,1000,false);
         this.currentData = e;
       },
-
-
 
     },
     components:{

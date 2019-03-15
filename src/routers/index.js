@@ -7,6 +7,5 @@
 import loginRoutes from './loginRoutes'
 // import agentRoutes from './agentRoutes'
 
-
 // export default  [...loginRoutes, ...agentRoutes];
-export default  [...loginRoutes];
+export default [...loginRoutes]

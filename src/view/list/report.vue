@@ -129,7 +129,6 @@
     data(){
       return{
 
-
       }
     },
     mounted(){
@@ -138,8 +137,6 @@
 
     },
     methods: {
-
-
 
     },
     components:{
