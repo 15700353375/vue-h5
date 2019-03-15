@@ -225,7 +225,6 @@
         paymentMethods: [],
         paymentTotalMoney: 0,
 
-
         // 会员卡信息
         memberCardData: {},
 
@@ -291,7 +290,6 @@
         // 收款合计信息
         this.getCollectionData()
       },
-
 
       // 统计数据
       getData(){
@@ -446,8 +444,6 @@
 
       },
 
-
-
       // 获取charts图一
       getChartList(){
 
@@ -529,14 +525,10 @@
 
       },
 
-
     },
     components: {
-
     }
   }
 
 </script>
-
-
 

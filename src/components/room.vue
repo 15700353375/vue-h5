@@ -138,8 +138,6 @@
   import { mapState } from 'vuex';
   import comUtil from '@Util/comUtil';
   import { pieOptions } from '@Util/charts';
-  import countDown from '@Components/countDown'
-  import countAdd from '@Components/countAdd'
   import {urls} from '@Util/axiosConfig';
   import MiniRefreshTools from 'minirefresh';
   export default {
@@ -331,16 +329,11 @@
         return color;
       }
 
-
-
     },
     components: {
-      countDown,
-      countAdd
+
     }
   }
 
 </script>
-
-
 

@@ -102,13 +102,11 @@
       // 名字
       username: state => state.login.userInfo.username,
 
-
     }),
     methods: {
       goPage(url){
         this.$router.push({name: url})
       }
-
 
     },
     components: {
@@ -117,6 +115,4 @@
   }
 
 </script>
-
-
 
