@@ -4,7 +4,8 @@
  * @Description: 请求路径
  */
 
-let base_url = 'http://qsyfw.gnway.cc:12345'
+// let base_url = 'http://qsyfw.gnway.cc:12345'
+let base_url = 'https://szy.kiloxy.com'
 
 if (process.env.NODE_ENV == 'production') {
   // 测试部使用的生产环境，上线时改为发布环境
@@ -27,6 +28,9 @@ export const urls = {
   LOGIN: 'user-api/mlogin',
 
   // 获取客流量等统计数据
+  GETBUSINESSDATEINFO: base_url + '/wechatMini/getBusinessDateInfo',
+
+  // 获取客流量等统计数据
   GETBUSINESSBASEINFO: base_url + '/wechatMini/getBusinessBaseInfo',
 
   // 获取支付方式饼图数据  饼图一
@@ -43,6 +47,7 @@ export const urls = {
 
   // 房间状态信息
   GETROOMSTATUSINFO: base_url + '/wechatMini/getRoomStatusInfo',
+
   GETROOMINFO: base_url + '/wechatMini/getRoomInfo',
 
   // 技师状态

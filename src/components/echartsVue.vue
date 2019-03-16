@@ -15,9 +15,9 @@
         <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">近一月</a>
         <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">自定义</a>
         <div class="custom" v-if="searchCurrent == 4">
-          <input id='datePicker' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
-          <input id='datePicker2' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
-          <button>确定</button>
+          <input id='datePicker' readOnly='readOnly' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
+          <input id='datePicker2' readOnly='readOnly' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
+          <button @click="sureSearch">确定</button>
         </div>
       </div>
       <div class="statistical-title">
@@ -246,6 +246,10 @@
 
         searchCurrent: null,
 
+        // 控制可选时间
+        startDate: null,
+        endDate: null,
+
         startTime: '',
         endTime: ''
 
@@ -294,6 +298,8 @@
     },
     methods: {
       refresh(){
+        this.getTimer()
+  
         this.getData();
 
         this.getCollection()
@@ -314,15 +320,15 @@
         let that = this;
         // 示例1：
         this.$weui.datePicker({
-            start: 1990,
-            end: 2000,
-            defaultValue: [1991, 6, 9],
+            start: this.startDate,
+            end: this.endDate,
+            defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
             onChange: function(result){
                 console.log(result);
             },
             onConfirm: function(result){
 
-                that.startTime = result[0].label+result[1].label+result[2].label
+                that.startTime = `${result[0].value}-${result[1].value}-${result[2].value}`
                 console.log(that.startTime);
 
             },
@@ -333,18 +339,46 @@
         let that = this;
         // 示例1：
         this.$weui.datePicker({
-            start: 1990,
-            end: 2000,
-            defaultValue: [1991, 6, 9],
+            start: this.startDate,
+            end: this.endDate,
+            defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
             onChange: function(result){
                 console.log(result);
             },
             onConfirm: function(result){
                 console.log(result);
-                that.endTime = result[0].label+result[1].label+result[2].label
+                that.endTime =`${result[0].value}-${result[1].value}-${result[2].value}`
             },
             id: 'datePicker2'
         });
+      },
+
+      getTimer(){
+        this.startDate ='2019-01-01'
+        this.endDate ='2019-03-16'
+        // let params = {
+        //   holderId: this.currentInfo.holderId,
+        //   holderType: this.currentInfo.holderType,
+        //   holderGroup: this.currentInfo.holdGroup,
+        // }
+        // this.$ajaxPost(urls.GETBUSINESSDATEINFO, params).then(res => {
+        //   if(res){
+  
+        //   }
+        // })
+      },
+
+      // 搜索
+      sureSearch(){
+  
+        if(new Date(this.startTime).getTime() < new Date(this.endTime).getTime()){
+          // this.refresh()
+          app.Toast.text('成功')
+        }else{
+          app.Toast.text('开始时间不能大于结束时间')
+          return
+        }
+  
       },
 
       // 统计数据
