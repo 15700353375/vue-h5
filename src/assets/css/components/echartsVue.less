@@ -253,9 +253,17 @@
 
 .filterMain{
   // height: 100px;
-  padding: 10px 0;
+  padding: 16px 0;
   background: #fff;
   margin-bottom: 20px;
+
+  .filterMain_a{
+    display: block;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+  }
   a{
     padding: 4px 8px;
     border-radius: 16px;
@@ -263,18 +271,30 @@
     color: #489ef9;
     font-size: 24px;
     margin-left: 10px;
+    line-height: 32px;
+    float: left;
     &.active{
       color: #fff;
       background: #489ef9;
     }
+    &.float_right{
+      float: right;
+    }
   }
 
   .custom{
-    margin-top: 10px;
     padding: 0 15px;
+    padding-top: 15px;
     box-sizing: border-box;
+    display:flex;/*设为伸缩容器*/
+    flex-flow:row;/*伸缩项目单行排列*/
+
+    .custom_input{
+      flex: 1;
+      position: relative;
+    }
     input{
-      width: 40%;
+      width: 46%;
       height: 50px;
       border: none;
       border: 1px solid #dcdee2;
@@ -283,16 +303,14 @@
       padding-left: 10px;
       box-sizing: border-box;
       margin: 0 1%;
-      // &:first-child{
-      //   margin-right: 2%;
-      //   margin-left: 1%;
-      // }
-      // &:last-child{
-      //   margin-right: 1%;
-      // }
+      font-size: 26px;
+      box-shadow: none;
+      -webkit-appearance: none;
     }
 
     button{
+      width: 100px;
+      float: right;
       vertical-align: middle;
       line-height: 1.5;
       padding: 4px 15px;
@@ -304,4 +322,16 @@
       border-color: #2d8cf0;
     }
   }
+}
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease-out;
+  // transition: height 0.3s ease-out;
+
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  // height: 0;
 }

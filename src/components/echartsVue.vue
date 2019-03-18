@@ -10,15 +10,24 @@
     <div class="echarts-container">
 
       <div class="clearfix filterMain">
-        <a :class="{'active' : searchCurrent == 1}" @click="searchTab(1)">今天</a>
-        <a :class="{'active' : searchCurrent == 2}" @click="searchTab(2)">最近一周</a>
-        <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">近一月</a>
-        <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">自定义</a>
-        <div class="custom" v-if="searchCurrent == 4">
-          <input id='datePicker' readOnly='readOnly' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
-          <input id='datePicker2' readOnly='readOnly' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
-          <button @click="sureSearch">确定</button>
+        <div class="clearfix filterMain_a">
+          <a :class="{'active' : searchCurrent == 2}" @click="searchTab(2)">昨日</a>
+          <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">最近一周</a>
+          <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">近一月</a>
+          <a :class="{'active' : searchCurrent == 5}" @click="searchTab(5)">自定义</a>
+          <a class="float_right" :class="{'active' : searchCurrent == 1}" @click="searchTab(1)">今日</a>
         </div>
+        <transition name="fade">
+           <!-- v-if="searchCurrent == 5" -->
+          <div class="custom" v-if="searchCurrent == 5">
+            <div class="custom_input">
+              <input id='datePicker' readOnly='readOnly' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
+              <input id='datePicker2' readOnly='readOnly' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
+            </div>
+            <button @click="sureSearch">确定</button>
+          </div>
+        </transition>
+
       </div>
       <div class="statistical-title">
         <span class='text-title'>营业信息</span>
@@ -244,7 +253,7 @@
         collectionData: [],
         totalMoney: 0,
 
-        searchCurrent: null,
+        searchCurrent: 1,
 
         // 控制可选时间
         startDate: null,
@@ -262,6 +271,7 @@
     watch:{
       currentData(newVal,oldVal){
         if(newVal == 0){
+          this.searchCurrent = 1
           this.refresh();
         }
       }
@@ -298,22 +308,43 @@
     },
     methods: {
       refresh(){
+        let start = null
+        let end = null
+        switch(this.searchCurrent){
+          case 1:  break;
+          case 2: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(1, 'days').format("YYYY-MM-DD HH:mm"); break;
+          case 3: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(7, 'days').format("YYYY-MM-DD HH:mm"); break;
+          case 4: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(1, 'months').format("YYYY-MM-DD HH:mm"); break;
+          case 5: start= `${this.startTime} ${Moment().format("HH:mm")}`; end=`${this.endTime} ${Moment().format("HH:mm")}`; break;
+          default: start = null;end = null;
+        }
+
         this.getTimer()
-  
-        this.getData();
 
-        this.getCollection()
+        this.getData(start, end);
 
-        this.getChartList()
+        this.getCollection(start, end);
 
-        this.getMemberCard()
+        this.getChartList(start, end);
+
+        this.getMemberCard(start, end);
 
         // 收款合计信息
-        this.getCollectionData()
+        this.getCollectionData(start, end);
+
       },
 
       searchTab(tab){
         this.searchCurrent = tab;
+
+        if(this.searchCurrent == 5){
+          return
+        }
+        app.Loading.start()
+        this.refresh()
+        setTimeout(()=>{
+          app.Loading.end()
+        },1000)
       },
 
       startTimeClick(){
@@ -354,39 +385,41 @@
       },
 
       getTimer(){
-        this.startDate ='2019-01-01'
-        this.endDate ='2019-03-16'
-        // let params = {
-        //   holderId: this.currentInfo.holderId,
-        //   holderType: this.currentInfo.holderType,
-        //   holderGroup: this.currentInfo.holdGroup,
-        // }
-        // this.$ajaxPost(urls.GETBUSINESSDATEINFO, params).then(res => {
-        //   if(res){
-  
-        //   }
-        // })
+        let params = {
+          holderId: this.currentInfo.holderId
+        }
+        this.$ajaxPost(urls.GETBUSINESSDATEINFO, params).then(res => {
+          if(res){
+            this.startDate = res.data.start
+            this.endDate = res.data.end
+          }
+        })
       },
 
       // 搜索
       sureSearch(){
-  
-        if(new Date(this.startTime).getTime() < new Date(this.endTime).getTime()){
-          // this.refresh()
-          app.Toast.text('成功')
-        }else{
+        let startTime = new Date(Date.parse(this.startTime.replace(/-/g, "/")))
+        let endTime = new Date(Date.parse(this.endTime.replace(/-/g, "/")))
+        if((endTime - startTime)<0){
           app.Toast.text('开始时间不能大于结束时间')
           return
+        }else{
+          app.Loading.start()
+          this.refresh()
+          setTimeout(()=>{
+            app.Loading.end()
+          },1000)
         }
-  
       },
 
       // 统计数据
-      getData(){
+      getData(start,end){
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
           holderGroup: this.currentInfo.holdGroup,
+          start: start,
+          end: end
         }
         this.$ajaxPost(urls.GETBUSINESSBASEINFO, params).then(res => {
           if(res){
@@ -411,11 +444,13 @@
       },
 
       // 获取收款方式
-      getCollection(){
+      getCollection(start,end){
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
           holderGroup: this.currentInfo.holdGroup,
+          start: start,
+          end: end
         }
         this.$ajaxPost(urls.GETBILLINFOWITHFREE, params).then(res => {
           if(res){
@@ -453,11 +488,13 @@
       },
 
       // 获取会员卡信息 饼图 统计
-      getMemberCard(){
+      getMemberCard(start,end){
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
           holderGroup: this.currentInfo.holdGroup,
+          start: start,
+          end: end
         }
         this.$ajaxPost(urls.GETRECHARGESUMINFO, params).then(res => {
           if(res){
@@ -492,11 +529,13 @@
       },
 
       // 收款合计
-      getCollectionData(){
+      getCollectionData(start,end){
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
           holderGroup: this.currentInfo.holdGroup,
+          start: start,
+          end: end
         }
         this.$ajaxPost(urls.GETCASHFLOWSUMINFO, params).then(res => {
           if(res){
@@ -535,12 +574,14 @@
       },
 
       // 获取charts图一
-      getChartList(){
+      getChartList(start,end){
 
         let params = {
           holderId: this.currentInfo.holderId,
           holderType: this.currentInfo.holderType,
           holderGroup: this.currentInfo.holdGroup,
+          start: start,
+          end: end
         }
 
         this.$ajaxPost(urls.GETBILLINFOWITHOUTFREE, params).then(res => {

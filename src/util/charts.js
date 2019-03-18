@@ -47,6 +47,7 @@ export const pieOptions = {
             per: {
               color: '#fff',
               fontSize: 16,
+              lineHeight: 30,
               padding: [10, 0, 0, 0]
             }
           }
@@ -58,7 +59,7 @@ export const pieOptions = {
         }
       },
       data: [
-              {value: 0, name: '营业额'}
+        {value: 0, name: '营业额'}
       ]
     },
     {
@@ -153,7 +154,7 @@ export const pieOptions2 = {
       ]
     },
     {
-      name: '会员课信息',
+      name: '会员卡信息',
       type: 'pie',
       radius: ['30%', '43%'],
       avoidLabelOverlap: false,
@@ -166,8 +167,7 @@ export const pieOptions2 = {
       },
       label: {
         normal: {
-              // formatter: '{b}: {per|{d}%}',
-          formatter: '{b}: ￥{c} ({per|{d}%)}',
+          formatter: '{b}: ￥{c}\n({per|{d}%)}',
           rich: {
             b: {
               fontSize: 12,

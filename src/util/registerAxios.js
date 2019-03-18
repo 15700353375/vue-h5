@@ -76,6 +76,7 @@ let post = function (url, params, btn) {
     params = {...params, sessionId: sessionId}
     let requestData = params || {}
     // qs.stringify(requestData)
+
     return axios.post(url, requestData)
                 .then((res) => {
                   return resolveSuccessRes(res)
@@ -101,7 +102,7 @@ let get = function (url, params, btn) {
                 })
   // }else{
   //   // 权限不足，跳转至登录页面
-  //   this.$router.push({name: 'login'});
+  //   app.$router.push({name: 'login'});
   // }
 }
 

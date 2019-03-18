@@ -34,6 +34,7 @@ const store = new Vuex.Store({
   modules: storeMain
 })
 
+
 // 引入路由
 const router = new VueRouter({
   linkActiveClass: 'red',
@@ -49,6 +50,20 @@ const app = new Vue({
   },
   template: '<App/>'
 })
+
+Vue.prototype.Loading = {
+  start () {
+    app.loading = app.$weui.loading('loading', {
+      className: 'custom-classname',
+      content: '加载中...'
+    });
+  },
+  end(){
+    app.loading.hide();
+  }
+}
+
+
 
 // 设置全局变量
 window.$ = $

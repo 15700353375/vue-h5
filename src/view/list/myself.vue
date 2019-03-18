@@ -10,10 +10,10 @@
         <div class='personal-container'>
           <div class='personal-info'>
             <div class='personal-img-box'>
-              <img :src="userInfo.avatarUrl" alt="">
+              <img v-if="userInfo && userInfo.avatarUrl" :src="userInfo.avatarUrl" alt="">
             </div>
             <div class='personal-content'>
-              <div class='personal-name'>{{userInfo.nickName}}</div>
+              <div v-if="userInfo && userInfo.nickName" class='personal-name'>{{userInfo.nickName}}</div>
               <div class='personal-desc'>您的付费体验还剩下 <span>0</span> 天</div>
               <div class='personal-type'>管理者</div>
               <div class='personal-btn' type="default">续费</div>
