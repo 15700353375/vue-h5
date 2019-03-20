@@ -14,13 +14,13 @@
             </div>
             <div class='personal-content'>
               <div v-if="userInfo && userInfo.nickName" class='personal-name'>{{userInfo.nickName}}</div>
-              <div class='personal-desc'>您的付费体验还剩下 <span>0</span> 天</div>
+              <!-- <div class='personal-desc'>您的付费体验还剩下 <span>0</span> 天</div> -->
               <div class='personal-type'>管理者</div>
-              <div class='personal-btn' type="default">续费</div>
+              <!-- <div class='personal-btn' type="default">续费</div> -->
             </div>
           </div>
 
-          <div class='funciton-content'>
+          <!-- <div class='funciton-content'>
             <div class='function-item'>
               消息列表
               <span class='right-vision'>0元</span>
@@ -40,13 +40,13 @@
               涨钟宝报警
               <span class='iconfont icon-jiantou'></span>
             </div>
-          </div>
+          </div> -->
 
           <div class='funciton-content'>
-            <div class='function-item'>
+            <!-- <div class='function-item'>
               有效期至
               <span class='right-vision'>2019.12.12</span>
-            </div>
+            </div> -->
             <div class='function-item'>
               当前版本
               <span class='right-vision'>v1.0.0</span>
@@ -82,7 +82,7 @@
   export default {
     data(){
       return{
-        userInfo: null
+        userInfo: null,
 
       }
     },

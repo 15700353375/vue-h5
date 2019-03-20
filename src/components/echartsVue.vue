@@ -9,38 +9,39 @@
   <div class="minirefresh-scroll">
     <div class="echarts-container">
 
+      <!-- 顶部筛选条件 -->
       <div class="clearfix filterMain">
         <div class="clearfix filterMain_a">
           <a :class="{'active' : searchCurrent == 2}" @click="searchTab(2)">昨日</a>
-          <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">最近一周</a>
-          <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">近一月</a>
-          <a :class="{'active' : searchCurrent == 5}" @click="searchTab(5)">自定义</a>
+          <a :class="{'active' : searchCurrent == 3}" @click="searchTab(3)">近1周</a>
+          <a :class="{'active' : searchCurrent == 4}" @click="searchTab(4)">近2周</a>
+          <a :class="{'active' : searchCurrent == 5}" @click="searchTab(5)">近1月</a>
+          <a :class="{'active' : searchCurrent == 6}" @click="searchTab(6)">自定义</a>
           <a class="float_right" :class="{'active' : searchCurrent == 1}" @click="searchTab(1)">今日</a>
         </div>
         <transition name="fade">
-           <!-- v-if="searchCurrent == 5" -->
-          <div class="custom" v-if="searchCurrent == 5">
+           <!-- v-if="searchCurrent == 6" -->
+          <div class="custom" v-if="searchCurrent == 6">
             <div class="custom_input">
-              <input id='datePicker' readOnly='readOnly' @click="startTimeClick" v-model="startTime" placeholder="开始时间"/>
-              <input id='datePicker2' readOnly='readOnly' @click="endTimeClick" v-model="endTime" placeholder="结束时间"/>
+              <div class="simulate_input" id='datePicker' @click="startTimeClick">{{startTime}}</div>
+              <div class="simulate_input" id='datePicker2' @click="endTimeClick">{{endTime}}</div>
             </div>
             <button @click="sureSearch">确定</button>
           </div>
         </transition>
-
       </div>
       <div class="statistical-title">
         <span class='text-title'>营业信息</span>
         <span class='text-right'>{{today}} 统计</span>
       </div>
+
+      <!-- echats图一  模块一 -->
       <div class='echarts-main clearfix'>
         <div class="echarts-content">
           <div id="inventoryChart" style="width: 100%;height: 100%;" />
         </div>
-
-        <!-- 浴足 -->
+        <!-- 右侧浴足 -->
         <div class="show-total clearfix">
-
           <div class="show-content clearfix">
             <div class="show-content-item">
               <span class="show-label color-success"></span>
@@ -75,11 +76,10 @@
                 </div>
             </div>
           </div>
-
           <div class="total-title">浴足{{parseInt(customerData.customerDataTotal) || 0}}人</div>
         </div>
       </div>
-
+      <!-- 营业额 -->
       <div class="echarts-total">
         <div class="echarts-total-item">
           <div class="item-label">营业额</div>
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-
+      <!-- 收款方式  模块二 -->
       <div class="statistical-title marginT-20">
         <span class='text-title'>收款方式</span>
       </div>
@@ -122,6 +122,8 @@
         <div class="noData">暂无数据</div>
       </div>
 
+
+      <!-- 会员卡信息  模块三 -->
       <div class='statistical-title'>
         <span class='text-title'>会员卡信息</span>
       </div>
@@ -155,7 +157,6 @@
                 </div>
             </div>
           </div>
-
           <div class="total-title">新增/续费</div>
         </div>
 
@@ -164,6 +165,7 @@
         </div>
       </div>
 
+      <!-- 收款合计 模块四 -->
       <div class='statistical-title'>
         <span class='text-title'>收款合计</span>
       </div>
@@ -201,13 +203,11 @@
 
 <script>
   //加载相关依赖
-  import { mapState } from 'vuex';
   import axios from 'axios'
   import comUtil from '@Util/comUtil';
   import {urls} from '@Util/axiosConfig';
   import { pieOptions, pieOptions2 } from '@Util/charts';
   import MiniRefreshTools from 'minirefresh';
-// import { setTimeout } from 'timers';
   export default {
     props: ['currentData'],
     data() {
@@ -256,18 +256,14 @@
         searchCurrent: 1,
 
         // 控制可选时间
-        startDate: null,
-        endDate: null,
-
+        startDate: Moment().subtract(60, 'days').format('YYYY-MM-DD'),
+        endDate: Moment().format('YYYY-MM-DD'),
+        // 时间筛选
         startTime: '',
         endTime: ''
 
       }
     },
-    computed: mapState({
-      // 名字
-      username: state => state.login.userInfo.username,
-    }),
     watch:{
       currentData(newVal,oldVal){
         if(newVal == 0){
@@ -292,6 +288,7 @@
           container: '#minirefresh1',
           down: {
               callback: function() {
+                that.searchCurrent = 1;
                 that.refresh();
                 setTimeout(()=>{
                   // 结束下拉刷新
@@ -312,10 +309,11 @@
         let end = null
         switch(this.searchCurrent){
           case 1:  break;
-          case 2: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(1, 'days').format("YYYY-MM-DD HH:mm"); break;
-          case 3: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(7, 'days').format("YYYY-MM-DD HH:mm"); break;
-          case 4: start = Moment().format("YYYY-MM-DD HH:mm");end = Moment().subtract(1, 'months').format("YYYY-MM-DD HH:mm"); break;
-          case 5: start= `${this.startTime} ${Moment().format("HH:mm")}`; end=`${this.endTime} ${Moment().format("HH:mm")}`; break;
+          case 2: end = Moment().format("YYYY-MM-DD HH:mm");start = Moment().subtract(1, 'days').format("YYYY-MM-DD HH:mm"); break;
+          case 3: end = Moment().format("YYYY-MM-DD HH:mm");start = Moment().subtract(7, 'days').format("YYYY-MM-DD HH:mm"); break;
+          case 4: end = Moment().format("YYYY-MM-DD HH:mm");start = Moment().subtract(14, 'days').format("YYYY-MM-DD HH:mm"); break;
+          case 5: end = Moment().format("YYYY-MM-DD HH:mm");start = Moment().subtract(1, 'months').format("YYYY-MM-DD HH:mm"); break;
+          case 6: start= `${this.startTime} ${Moment().format("HH:mm")}`; end=`${this.endTime} ${Moment().format("HH:mm")}`; break;
           default: start = null;end = null;
         }
 
@@ -334,10 +332,11 @@
 
       },
 
+      // 搜索框切换
       searchTab(tab){
         this.searchCurrent = tab;
 
-        if(this.searchCurrent == 5){
+        if(this.searchCurrent == 6){
           return
         }
         app.Loading.start()
@@ -346,7 +345,7 @@
           app.Loading.end()
         },1000)
       },
-
+      // 开始时间
       startTimeClick(){
         let that = this;
         // 示例1：
@@ -354,18 +353,13 @@
             start: this.startDate,
             end: this.endDate,
             defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
-            onChange: function(result){
-                console.log(result);
-            },
             onConfirm: function(result){
-
-                that.startTime = `${result[0].value}-${result[1].value}-${result[2].value}`
-                console.log(that.startTime);
-
+              that.startTime = `${result[0].value}-${result[1].value}-${result[2].value}`
             },
             id: 'datePicker'
         });
       },
+      // 结束时间
       endTimeClick(){
         let that = this;
         // 示例1：
@@ -373,25 +367,25 @@
             start: this.startDate,
             end: this.endDate,
             defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
-            onChange: function(result){
-                console.log(result);
-            },
             onConfirm: function(result){
-                console.log(result);
                 that.endTime =`${result[0].value}-${result[1].value}-${result[2].value}`
             },
             id: 'datePicker2'
         });
       },
 
+      // 获取可选时间
       getTimer(){
         let params = {
           holderId: this.currentInfo.holderId
         }
         this.$ajaxPost(urls.GETBUSINESSDATEINFO, params).then(res => {
           if(res){
-            this.startDate = res.data.start
-            this.endDate = res.data.end
+            // 需求： 结束时间用获取到的开始时间 开始时间在结束时间前60天  默认显示结束时间前三天
+            this.endDate = res.data.start
+            this.startDate = Moment(res.data.start).subtract(60, 'days').format('YYYY-MM-DD')
+            this.endTime = Moment(res.data.start).format('YYYY-MM-DD')
+            this.startTime = Moment(res.data.start).subtract(3, 'days').format('YYYY-MM-DD')
           }
         })
       },
@@ -597,13 +591,15 @@
 
       dealChartData1(data){
         if(!data || !data.length){
-          return
+          return []
         }
+        let total = _.sumBy(data, 'n');
         let list = [];
         data.forEach(item => {
           list.push({
             name: item.payName,
-            value: item.moneySum
+            value: item.moneySum,
+            percent: comUtil.formatPercent(item.moneySum/total) +'%'
           })
         });
 
@@ -626,6 +622,7 @@
               value: 0
             }
           ]
+          breakageChartoption.series[1].data = []
         }else{
           breakageChartoption.series[0].data = [];
           breakageChartoption.series[1].data = list

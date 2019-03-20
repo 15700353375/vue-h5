@@ -66,7 +66,7 @@ export const pieOptions = {
       name: '营业信息',
       type: 'pie',
       radius: ['30%', '43%'],
-      minAngle: 5,
+      // minAngle: 5,
             // 是否启用防止标签重叠策略，默认开启
       avoidLabelOverlap: true,
             // 是否开启动画

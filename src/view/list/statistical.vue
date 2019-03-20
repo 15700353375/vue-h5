@@ -69,14 +69,14 @@
 
     },
     created() {
-      // let current = this.$route.query.current;
-      // let userInfo = this.$route.query.userInfo;
+      let current = this.$route.query.current;
+      let userInfo = this.$route.query.userInfo;
 
-      let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"78e305cda6d24150b9c849361c64e29a"}
-      let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
-      console.log(current,userInfo)
-      current = JSON.stringify(current)
-      userInfo = JSON.stringify(userInfo)
+      // let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"1f99839c1be544d7b4faca3bcc571f11"}
+      // let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
+      // console.log(current,userInfo)
+      // current = JSON.stringify(current)
+      // userInfo = JSON.stringify(userInfo)
       if(current && userInfo){
         localStorage.setItem('currentInfo', current)
         localStorage.setItem('userInfo', userInfo)

@@ -13,9 +13,9 @@ import routes from '@Src/routers'
 import App from '@Src/App'
 import moment from 'moment'
 import $ from 'jquery'
+import _ from 'lodash';
 /* eslint-disable */
 import registerAxios from '@Util/registerAxios'
-
 import 'we-vue/lib/style.css'
 import { Toast } from 'we-vue'
 
@@ -69,6 +69,7 @@ Vue.prototype.Loading = {
 window.$ = $
 window.Moment = moment
 window.app = app
+window._ = _;
 
 // 路由跳转之前，检测是否有token
 router.beforeEach((to, from, next) => {

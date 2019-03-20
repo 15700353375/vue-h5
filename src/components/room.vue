@@ -8,19 +8,23 @@
 
 <div class='room-container'>
   <div class='clearfix select-main'>
-    <select name="select1" v-model="select1" @change="changeSelect()">
-      <option v-for="(item,index) in selectArray" :key='index' :value="item.value">{{item.label}}</option>
-    </select>
-    <select name="select1" v-model="select2" @change="changeSelect()">
-      <option v-for="(item,index) in selectArray2" :key='index' :value="item.value">{{item.label}}</option>
-    </select>
+    <div class="custom_input">
+      <div class="simulate_input" id='singleLinePicker' @click="selectClick1">
+        {{selectValue1}}
+        <span class='iconfont icon-xiala'></span>
+      </div>
+      <div class="simulate_input" id='singleLinePicker2' @click="selectClick2">
+        {{selectValue2}}
+        <span class='iconfont icon-xiala'></span>
+      </div>
+    </div>
   </div>
 
   <div class="room-container_main">
     <div id="minirefresh2" class="minirefresh-wrap">
       <div class="minirefresh-scroll">
 
-        <div class='clearfix list-main'>
+        <div class='clearfix list-main' v-if="listData && listData.length">
           <div class='list-item' v-for='(item,index) in listData' :key='index'>
 
             <!-- 顶部 -->
@@ -118,6 +122,9 @@
             </div>
           </div>
         </div>
+        <div class='clearfix list-main' v-else>
+          <img class="noDate_img" src="agentstatic/img/wushuju.png" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -135,9 +142,7 @@
 
 <script>
   //加载相关依赖
-  import { mapState } from 'vuex';
   import comUtil from '@Util/comUtil';
-  import { pieOptions } from '@Util/charts';
   import {urls} from '@Util/axiosConfig';
   import MiniRefreshTools from 'minirefresh';
   export default {
@@ -204,6 +209,19 @@
 
       }
     },
+    computed: {
+
+      selectValue1(){
+        return this.selectArray[Number(this.select1)].label
+      },
+
+      selectValue2(){
+        let select2 = this.select2
+        let obj = _.find(this.selectArray2, function(o) { return o.value == select2 })
+        return obj.label
+      }
+
+    },
     watch:{
       currentData(newVal,oldVal){
         if(newVal == 1){
@@ -220,6 +238,8 @@
       this.getRoomList();
     },
     mounted(){
+
+      // 下拉刷新
       let that = this;
       this.miniRefresh = new MiniRefresh({
           container: '#minirefresh2',
@@ -240,11 +260,6 @@
       });
 
     },
-    computed: mapState({
-      // 名字
-      username: state => state.login.userInfo.username,
-
-    }),
     methods: {
       // 筛选
       changeSelect(){
@@ -261,6 +276,36 @@
         }
       },
 
+      // 下拉筛选
+      selectClick1(){
+        // 单列picker
+        let that = this
+        this.$weui.picker(this.selectArray, {
+          className: 'custom-classname',
+          container: 'body',
+          // defaultValue: [3],
+          onConfirm: function (result) {
+              that.select1 = result[0].value
+              that.changeSelect()
+          },
+          id: 'singleLinePicker'
+        });
+      },
+      selectClick2(){
+        // 单列picker
+        let that = this
+        this.$weui.picker(this.selectArray2, {
+          className: 'custom-classname',
+          container: 'body',
+          // defaultValue: [3],
+          onConfirm: function (result) {
+              that.select2 = result[0].value
+              that.changeSelect()
+          },
+          id: 'singleLinePicker2'
+        });
+      },
+
       // 获取技师列表
       getRoomList(){
         let params = {
@@ -273,11 +318,13 @@
             this.allData = this.dealData(res.data);
             this.listData = comUtil.clone(this.allData)
           }
+          // 重置
           this.miniRefresh.endDownLoading();
           this.select1 = '0';
           this.select2 = '0';
         })
       },
+
       // 处理时间
       dealData(list){
         if(!list || !list.length) return;
@@ -294,7 +341,6 @@
         }else{
           newTime = null
         }
-
         return newTime;
       },
 

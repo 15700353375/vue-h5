@@ -65,6 +65,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "echarts": "^4.2.0-rc.2",
+    "iosselect": "^1.1.5",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "minirefresh": "^2.0.2",
@@ -72,6 +73,7 @@
     "pace": "0.0.4",
     "qs": "^6.5.0",
     "vue": "2.5.16",
+    "vue-datepicker": "^1.3.0",
     "vue-multiple-message": "^1.0.0",
     "vue-router": "^2.7.0",
     "vuex": "^2.3.1",

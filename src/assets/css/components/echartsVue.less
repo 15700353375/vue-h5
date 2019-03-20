@@ -265,7 +265,7 @@
     padding: 0 16px;
   }
   a{
-    padding: 4px 8px;
+    padding: 4px 0px;
     border-radius: 16px;
     border: 1px solid #489ef9;
     color: #489ef9;
@@ -273,6 +273,9 @@
     margin-left: 10px;
     line-height: 32px;
     float: left;
+    width: 80px;
+    display: inline-block;
+    text-align: center;
     &.active{
       color: #fff;
       background: #489ef9;
@@ -293,7 +296,7 @@
       flex: 1;
       position: relative;
     }
-    input{
+    .simulate_input{
       width: 46%;
       height: 50px;
       border: none;
@@ -302,8 +305,9 @@
       line-height: 50px;
       padding-left: 10px;
       box-sizing: border-box;
-      margin: 0 1%;
+      margin: 0 2%;
       font-size: 26px;
+      float: left;
       box-shadow: none;
       -webkit-appearance: none;
     }
