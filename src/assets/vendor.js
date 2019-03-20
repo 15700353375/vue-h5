@@ -5,7 +5,6 @@
 
 // font样式
 import './fonts/iconfont.css'
-import './addFonts/css/font-awesome.css'
 
 // // 引入自定义文件
 import 'minirefresh/dist/debug/minirefresh.css'

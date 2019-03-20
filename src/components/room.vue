@@ -132,13 +132,6 @@
 
 </template>
 
-<style lang="less" scoped>
-
-
-
-</style>
-
-
 
 <script>
   //加载相关依赖

@@ -316,8 +316,9 @@
           case 6: start= `${this.startTime} ${Moment().format("HH:mm")}`; end=`${this.endTime} ${Moment().format("HH:mm")}`; break;
           default: start = null;end = null;
         }
-
-        this.getTimer()
+        if(!this.searchCurrent || this.searchCurrent == 1){
+          this.getTimer()
+        }
 
         this.getData(start, end);
 
@@ -340,10 +341,11 @@
           return
         }
         app.Loading.start()
-        this.refresh()
         setTimeout(()=>{
           app.Loading.end()
         },1000)
+        this.refresh()
+
       },
       // 开始时间
       startTimeClick(){
@@ -399,10 +401,10 @@
           return
         }else{
           app.Loading.start()
-          this.refresh()
           setTimeout(()=>{
             app.Loading.end()
           },1000)
+          this.refresh()
         }
       },
 
@@ -457,9 +459,7 @@
       },
       dealCollectionData(){
         this.paymentTotalMoney = 0;
-        this.paymentMethods.forEach(item => {
-          this.paymentTotalMoney += Number(item.moneySum)
-        })
+        this.paymentTotalMoney = _.sumBy(this.paymentMethods, 'moneySum');
         let remainder = this.paymentMethods.length % 4;
         let num = remainder ?  4 - remainder : 0;
         if (num) {
@@ -542,9 +542,7 @@
       },
       dealCollectionData2(){
         this.totalMoney = 0;
-        this.collectionData.forEach(item => {
-          this.totalMoney += Number(item.moneySum)
-        })
+        this.totalMoney = _.sumBy(this.collectionData, 'moneySum');
 
         let remainder = this.collectionData.length % 4;
         let num = remainder ?  4 - remainder : 0;
@@ -593,13 +591,12 @@
         if(!data || !data.length){
           return []
         }
-        let total = _.sumBy(data, 'n');
+
         let list = [];
         data.forEach(item => {
           list.push({
             name: item.payName,
-            value: item.moneySum,
-            percent: comUtil.formatPercent(item.moneySum/total) +'%'
+            value: item.moneySum
           })
         });
 
