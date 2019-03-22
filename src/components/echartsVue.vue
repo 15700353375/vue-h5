@@ -215,7 +215,7 @@
         comUtil: comUtil,
         currentInfo: {},
         echartsArr: [],
-        pieOptions1: comUtil.clone(pieOptions),
+        pieOptions1: pieOptions,
         pieOptions2: pieOptions2,
 
         today: null,
@@ -351,7 +351,7 @@
       startTimeClick(){
         let that = this;
         // 示例1：
-        this.$weui.datePicker({
+        weui.datePicker({
             start: this.startDate,
             end: this.endDate,
             defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
@@ -365,7 +365,7 @@
       endTimeClick(){
         let that = this;
         // 示例1：
-        this.$weui.datePicker({
+        weui.datePicker({
             start: this.startDate,
             end: this.endDate,
             defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
@@ -384,10 +384,12 @@
         this.$ajaxPost(urls.GETBUSINESSDATEINFO, params).then(res => {
           if(res){
             // 需求： 结束时间用获取到的开始时间 开始时间在结束时间前60天  默认显示结束时间前三天
-            this.endDate = res.data.start
-            this.startDate = Moment(res.data.start).subtract(60, 'days').format('YYYY-MM-DD')
-            this.endTime = Moment(res.data.start).format('YYYY-MM-DD')
-            this.startTime = Moment(res.data.start).subtract(3, 'days').format('YYYY-MM-DD')
+            // 格式化时间，处理后台返回时间不合理问题
+            let start = new Date(res.data.start.replace(/-/g, '/'))
+            this.endDate = Moment(start).format('YYYY-MM-DD')
+            this.startDate = Moment(start).subtract(60, 'days').format('YYYY-MM-DD')
+            this.endTime = Moment(start).format('YYYY-MM-DD')
+            this.startTime = Moment(start).subtract(3, 'days').format('YYYY-MM-DD')
           }
         })
       },
@@ -496,11 +498,13 @@
             let list = [
               {
                 name: '今日卡消',
-                value: comUtil.formatNumber(data.consumedTotal)
+                // value: comUtil.formatNumber(data.consumedTotal)
+                value: 300
               },
               {
                 name: '今日充卡',
-                value: comUtil.formatNumber(data.rechargeMoneySum)
+                // value: comUtil.formatNumber(data.rechargeMoneySum)
+                value: 256
               }
             ]
 

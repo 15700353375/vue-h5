@@ -16,13 +16,12 @@ import $ from 'jquery'
 import _ from 'lodash';
 /* eslint-disable */
 import registerAxios from '@Util/registerAxios'
-import 'we-vue/lib/style.css'
 import { Toast } from 'we-vue'
 
-import weui from 'weui.js'
-import 'weui'
+// import weui from 'weui.js'
+// import 'weui'
 
-Vue.prototype.$weui = weui
+// Vue.prototype.$weui = weui
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -51,9 +50,16 @@ const app = new Vue({
   template: '<App/>'
 })
 
+
+// 设置全局变量
+window.$ = $
+window.Moment = moment
+window.app = app
+window._ = _;
+
 Vue.prototype.Loading = {
   start () {
-    app.loading = app.$weui.loading('loading', {
+    app.loading = weui.loading('loading', {
       className: 'custom-classname',
       content: '加载中...'
     });
@@ -62,14 +68,6 @@ Vue.prototype.Loading = {
     app.loading.hide();
   }
 }
-
-
-
-// 设置全局变量
-window.$ = $
-window.Moment = moment
-window.app = app
-window._ = _;
 
 // 路由跳转之前，检测是否有token
 router.beforeEach((to, from, next) => {

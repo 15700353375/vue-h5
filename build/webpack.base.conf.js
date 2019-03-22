@@ -75,6 +75,11 @@ module.exports = {
       '@View': path.join(SRC_PATH, 'view')
     }
   },
+  // 高德地图
+  externals: {
+    'weui': 'weui',
+    'weui.js': 'weui.js'
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: ROOT_PATH + '/index.html',

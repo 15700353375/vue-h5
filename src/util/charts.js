@@ -14,7 +14,10 @@ window.echarts = echarts
 export const pieOptions = {
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b}: ￥{c} ({d}%)'
+    // formatter: '{a} <br/>{b}: ￥{c} ({d}%)'
+    formatter: function (data) {
+      return `${data.name}<br/>￥${data.value} (${Math.round(data.percent)}%)`
+    }
   },
   legend: {
     show: false,
@@ -79,9 +82,11 @@ export const pieOptions = {
       },
       label: {
         normal: {
-                // formatter: '{b}\n{per|{d}%}',
-                // formatter: '{b}： \n{c} \n {per|{d}%}',
-          formatter: '{b}: {per|{d}%}',
+          // formatter: '{b}： \n{c} \n {per|{d}%}',
+          // formatter: '{b}: {per|{d}%}',
+          formatter: function (data) {
+            return `${data.name}: ${Math.round(data.percent)}%`
+          },
           rich: {
             b: {
               fontSize: 12,
@@ -104,7 +109,10 @@ export const pieOptions = {
 export const pieOptions2 = {
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b}: ￥{c} ({d}%)'
+    // formatter: '{a} <br/>{b}: ￥{c} ({d}%)',
+    formatter: function (data) {
+      return `${data.name}<br/>￥${data.value} (${Math.round(data.percent)}%)`
+    }
   },
   legend: {
     show: false,
@@ -167,7 +175,13 @@ export const pieOptions2 = {
       },
       label: {
         normal: {
-          formatter: '{b}: ￥{c}\n({per|{d}%)}',
+          // formatter: '{b}\n￥{c}\n({per|{d}%)}',
+          formatter: function (data) {
+            return `${data.name}\n￥${data.value}\n${Math.round(data.percent)}%`
+          },
+          // formatter: function (b) {
+          //   return b.name.split('-').join('\n') + '(' + b.percent + '%)'
+          // },
           rich: {
             b: {
               fontSize: 12,

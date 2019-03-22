@@ -68,7 +68,7 @@
               <div class="mask" v-if="item.roomStatus == '11'">
                 <div class="mask-opacity"></div>
                 <div class="mask-text">
-                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="img-box"><img src="agentStatic/img/pauseBtn.png" alt=""></div>
                   <div class="texts">暂停使用</div>
                 </div>
               </div>
@@ -76,11 +76,11 @@
                 <div class="mask-opacity"></div>
                 <span class='mask-text iconfont icon-huiyuan'></span>
                 <div class="mask-text">
-                  <div class="img-box"><img src="agentstatic/img/continueBtn.png" alt=""></div>
+                  <div class="img-box"><img src="agentStatic/img/continueBtn.png" alt=""></div>
                   <div class="texts">继续使用</div>
                 </div>
                 <div class="mask-text">
-                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="img-box"><img src="agentStatic/img/pauseBtn.png" alt=""></div>
                   <div class="texts">暂停使用</div>
                 </div>
                 <span class="mask-text mask-text-text">48分钟</span>
@@ -115,7 +115,7 @@
               <div class="mask" v-if="item.roomStatus == '11'">
                 <div class="mask-opacity"></div>
                 <div class="mask-text">
-                  <div class="img-box"><img src="agentstatic/img/pauseBtn.png" alt=""></div>
+                  <div class="img-box"><img src="agentStatic/img/pauseBtn.png" alt=""></div>
                   <div class="texts">暂停使用</div>
                 </div>
               </div>
@@ -123,7 +123,7 @@
           </div>
         </div>
         <div class='clearfix list-main' v-else>
-          <img class="noDate_img" src="agentstatic/img/wushuju.png" alt="">
+          <img class="noDate_img" src="agentStatic/img/wushuju.png" alt="">
         </div>
       </div>
     </div>
@@ -273,7 +273,7 @@
       selectClick1(){
         // 单列picker
         let that = this
-        this.$weui.picker(this.selectArray, {
+        weui.picker(this.selectArray, {
           className: 'custom-classname',
           container: 'body',
           // defaultValue: [3],
@@ -287,7 +287,7 @@
       selectClick2(){
         // 单列picker
         let that = this
-        this.$weui.picker(this.selectArray2, {
+        weui.picker(this.selectArray2, {
           className: 'custom-classname',
           container: 'body',
           // defaultValue: [3],
