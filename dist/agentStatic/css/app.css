@@ -1321,6 +1321,9 @@ select {
 .technician-container {
   height: 100%;
   width: 100%;
+  display: block;
+  box-sizing: border-box;
+  padding-top: 1px;
   background: #f1f1f1;
 }
 .technician-container .tec-main {

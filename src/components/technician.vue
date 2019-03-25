@@ -14,7 +14,7 @@
           <div class='tec-title'>
             <span>{{bigItem.depart.dName}}（总计：{{bigItem.depart.totalPersonNum || 0}}人）</span>
           </div>
-          <div class='tec-content clearfix'>
+          <div class='tec-content clearfix' v-if="bigItem.all_queue && bigItem.all_queue.length">
             <div class='tec-item' v-for="(item,index) in bigItem.all_queue" :key='index'
             :class="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4) ? 'item-bg5' : item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
               <div class="item-top">
@@ -54,6 +54,9 @@
               </div>
             </div>
           </div>
+          <div class='tec-content clearfix' v-else>
+            <div class="noData">暂无数据</div>
+          </div>
           <div class='tec-footer'>空闲：{{bigItem.depart.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{bigItem.depart.workingPersonNum}}人</div>
         </div>
       </div>
@@ -86,21 +89,7 @@
 
         currentInfo: {},
 
-        dataInfo1:{
-          totalPersonNum: 0,
-          freePersonNum: 0,
-          workingPersonNum: 0
-        },
-
         listData: [],
-
-        dataInfo2:{
-          totalPersonNum: 0,
-          freePersonNum: 0,
-          workingPersonNum: 0
-        },
-
-        listData2: []
 
       }
     },
@@ -149,10 +138,6 @@
         this.$ajaxPost(urls.GETTECHNICIANQUEUE, params).then(res => {
           if(res){
             this.listData = res.data
-            // this.dataInfo1 = res.data[0].depart;
-            // this.listData = res.data[0].all_queue
-            // this.dataInfo2 = res.data[1].depart;
-            // this.listData2 = res.data[1].all_queue
           }
         })
       },

@@ -25,8 +25,10 @@
   background: #fff;
   box-sizing: border-box;
   border-top: 1px solid #ddd;
+  display: flex;
   .bottom-tabs-item{
-    width: 33.33%;
+    // width: 33.33%;
+    flex: 1;
     height: 100%;
     text-align: center;
     float: left;
@@ -71,12 +73,12 @@
             url: 'statistical',
             id: 1
           },
-          {
-            icon: 'icon-laoban',
-            name: '报表决策',
-            url: 'report',
-            id: 2
-          },
+          // {
+          //   icon: 'icon-laoban',
+          //   name: '报表决策',
+          //   url: 'report',
+          //   id: 2
+          // },
           // {
           //   icon: 'icon-guanli',
           //   name: '经营管理',
