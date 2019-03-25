@@ -69,26 +69,24 @@
 
     },
     created() {
-      let current = this.$route.query.current;
-      let userInfo = this.$route.query.userInfo;
+      // let current = this.$route.query.current;
+      // let userInfo = this.$route.query.userInfo;
 
-      // let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"bc17c81e151e43b99c58d6c798433c6c"}
-      // let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
-      // console.log(current,userInfo)
-      // current = JSON.stringify(current)
-      // userInfo = JSON.stringify(userInfo)
+      let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"22a86bd475d44d4d85dc9878375a845b"}
+      let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
+      console.log(current,userInfo)
+      current = JSON.stringify(current)
+      userInfo = JSON.stringify(userInfo)
       if(current && userInfo){
         localStorage.setItem('currentInfo', current)
         localStorage.setItem('userInfo', userInfo)
       }
-      // current = {"holderId":'100',"wxRoleType":'1',"storeName":"千思","holderType":'1',"holdGroup":'2',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"d54e6848fccb449a9d4fc2c07633b0c6"}
-      // current = JSON.stringify(current)
 
     },
     mounted(){
       let that = this;
       this.mySwiper = new Swiper ('.swiper-container', {
-        initialSlide: 0,
+        initialSlide: 2,
         direction: 'horizontal', // 垂直切换选项
         loop: false, // 循环模式选项
         on: {

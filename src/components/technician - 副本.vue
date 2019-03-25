@@ -8,14 +8,61 @@
   <div id="minirefresh3" class="minirefresh-wrap">
     <div class="minirefresh-scroll">
 
-      <div class='technician-container' v-if="listData && listData.length">
-
-        <div class='tec-main clearfix' v-for="(bigItem, index) in listData" :key="index">
+      <div class='technician-container'>
+        <div class='tec-main clearfix'>
           <div class='tec-title'>
-            <span>{{bigItem.depart.dName}}（总计：{{bigItem.depart.totalPersonNum || 0}}人）</span>
+            <span>保健师（总计：{{dataInfo1.totalPersonNum || 0}}人）</span>
           </div>
           <div class='tec-content clearfix'>
-            <div class='tec-item' v-for="(item,index) in bigItem.all_queue" :key='index'
+            <div class='tec-item' v-for="(item,index) in listData" :key='index'
+            :class="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4) ? 'item-bg5' : item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
+            <!-- 下钟后暂停会多一个暂停标记,字段finishWorkWillPauseFlag:1 -->
+              <div class="item-top">
+                <div class="item-top-left">
+                  {{item.sex == 1 ? '女' : '男'}}
+                </div>
+                <div class="item-top-center">
+                  {{item.workFlag == 3 ? '加' : item.sortsName}}
+                </div>
+                <div class="item-top-right">
+                  <!-- <span v-if="item.finishWorkWillPauseFlag == 0" class='iconfont icon-gengduomore12'></span> -->
+                  <span v-if="item.finishWorkWillPauseFlag == 1" class='iconfont icon-tianchongxing-'></span>
+                </div>
+              </div>
+              <div class="item-center">
+                {{item.number}}
+                <!-- 当workFlag =2 并且statusFlag = 3 or 4   下班 -->
+                <div class="noWork" v-if="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4)">
+                 <span>下</span>
+                 <span>班</span>
+                </div>
+              </div>
+
+              <div class="item-bottom">
+                <div class="item-bottom-left">
+                  {{item.paizhong}}
+                </div>
+                <div class="item-bottom-center">
+                  <!-- 非上钟 -->
+                  <span v-if="item.statusFlag != 3" class="item-bottom-center-span">{{dealStatus(item.statusFlag)}}</span>
+                  <!-- 上钟  1:排钟，2:选钟，3:加钟，4:点钟-->
+                  <span v-else class="item-bottom-center-span">{{dealOper(item.oper)}}</span>
+                </div>
+                <div class="item-bottom-right">
+                  {{item.dianzhong}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='tec-footer'>空闲：{{dataInfo1.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo1.workingPersonNum}}人</div>
+        </div>
+
+        <div class='tec-main clearfix'>
+          <div class='tec-title'>
+            <span>足疗师（总计：{{dataInfo2.totalPersonNum || 0}}人）</span>
+          </div>
+          <div class='tec-content clearfix'>
+            <div class='tec-item' v-for="(item,index) in listData2" :key='index'
             :class="item.workFlag == 2 && (item.statusFlag == 3 || item.statusFlag == 4) ? 'item-bg5' : item.finishWorkWillPauseFlag == 1 ? 'item-bg5' : 'item-bg'+item.statusFlag">
               <div class="item-top">
                 <div class="item-top-left">
@@ -54,11 +101,8 @@
               </div>
             </div>
           </div>
-          <div class='tec-footer'>空闲：{{bigItem.depart.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{bigItem.depart.workingPersonNum}}人</div>
+          <div class='tec-footer'>空闲：{{dataInfo2.freePersonNum}}人&nbsp;&nbsp;/&nbsp;&nbsp;忙碌：{{dataInfo2.workingPersonNum}}人</div>
         </div>
-      </div>
-      <div class='technician-container' v-else>
-        <img class="noDate_img" src="agentStatic/img/wushuju.png" alt="">
       </div>
 
     </div>
@@ -148,11 +192,10 @@
         }
         this.$ajaxPost(urls.GETTECHNICIANQUEUE, params).then(res => {
           if(res){
-            this.listData = res.data
-            // this.dataInfo1 = res.data[0].depart;
-            // this.listData = res.data[0].all_queue
-            // this.dataInfo2 = res.data[1].depart;
-            // this.listData2 = res.data[1].all_queue
+            this.dataInfo1 = res.data[0].depart;
+            this.listData = res.data[0].all_queue
+            this.dataInfo2 = res.data[1].depart;
+            this.listData2 = res.data[1].all_queue
           }
         })
       },
