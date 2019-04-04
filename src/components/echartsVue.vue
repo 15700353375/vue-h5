@@ -91,8 +91,22 @@
         </div>
         <div class="echarts-total-item">
           <div class="item-label">未买单</div>
-          <div class="item-value item-value-warning"> ￥{{parseInt(customerData.notPaidMoney) || 0}}</div>
+          <div class="item-value item-value-warning" v-if="isToday"> ￥{{parseInt(customerData.notPaidMoney) || 0}}</div>
+          <div class="item-value item-value-warning" v-else> - </div>
         </div>
+      </div>
+
+
+      <!-- 挂单（24小时以上未结账） 模块二 -->
+      <div class="statistical-title marginT-20">
+        <span class='text-title'>挂单预估（24小时以上未结账单）</span>
+      </div>
+
+      <div v-if="customerData.notPaidMoneyMoreThan24H != null" class='list-block-main clearfix'>
+        <div class='list-block-total'> 总计： <span class='total-value'>￥{{parseInt(customerData.notPaidMoneyMoreThan24H)}}</span> </div>
+      </div>
+      <div v-else class='list-block-main clearfix'>
+        <div class="noData">暂无数据</div>
       </div>
 
       <!-- 收款方式  模块二 -->
@@ -167,7 +181,7 @@
 
       <!-- 收款合计 模块四 -->
       <div class='statistical-title'>
-        <span class='text-title'>收款合计</span>
+        <span class='text-title'>现金流</span>
       </div>
       <div class='oper-block-box clearfix'>
         <div v-if="collectionData && collectionData.length" class='list-block-main clearfix'>
@@ -186,7 +200,7 @@
                 </div>
             </div>
           </div>
-          <div class='list-block-total'> 收款合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
+          <div class='list-block-total'> 现金流合计： <span class='total-value'>￥{{totalMoney}}</span> </div>
         </div>
         <div v-else class='list-block-main clearfix'>
           <div class="noData">暂无数据</div>
@@ -239,8 +253,11 @@
           waitTQty: 0,
           // 支付
           paidMoney: 0,
-          notPaidMoney: 0
+          notPaidMoney: 0,
+          notPaidMoneyMoreThan24H: null,
         },
+
+        isToday: true,
 
         // 收款方式汇总
         paymentMethods: [],
@@ -430,6 +447,12 @@
       },
 
       dealTotalData(){
+        if(this.searchCurrent != 1){
+          this.customerData.notPaidMoney = 0
+          this.isToday = false
+        }else{
+          this.isToday = true
+        }
         let total = this.customerData.paidMQty+this.customerData.notPaidMQty+this.customerData.waitMQty
         let paidMQty_percent = comUtil.formatPercent(this.customerData.paidMQty/total) +'%';
         let notPaidMQty_percent = comUtil.formatPercent(this.customerData.notPaidMQty/total) +'%';
@@ -644,8 +667,9 @@
         let inventoryChart = echarts.init(document.querySelector('#inventoryChart2'));
 
         let breakageChartoption = this.pieOptions2
-        let cardLeftTotal = parseInt(this.memberCardData.cardLeftTotal) || 0
-        breakageChartoption.series[0].data = [{value: cardLeftTotal, name:'卡余额'}]
+        // let cardLeftTotal = parseInt(this.memberCardData.cardLeftTotal) || 0
+        // breakageChartoption.series[0].data = [{value: cardLeftTotal, name:'卡余额'}]
+        breakageChartoption.series[0].data = []
         breakageChartoption.series[1].data = list
 
         inventoryChart.setOption(breakageChartoption)

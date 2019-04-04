@@ -9,8 +9,8 @@ let base_url = 'https://szy.kiloxy.com'
 
 if (process.env.NODE_ENV == 'production') {
   // 测试部使用的生产环境，上线时改为发布环境
-  // base_url = 'http://qsyfw.gnway.cc:12345';
-  base_url = 'https://szy.kiloxy.com'
+  base_url = 'http://qsyfw.gnway.cc:12345'
+  // base_url = 'https://szy.kiloxy.com'
 } else {
   // 开发环境
   // base_url = 'https://szy.kiloxy.com';

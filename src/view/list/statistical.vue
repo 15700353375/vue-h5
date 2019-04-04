@@ -72,7 +72,7 @@
       let current = this.$route.query.current;
       let userInfo = this.$route.query.userInfo;
 
-      // let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"a004a1f2081c470c9047e255c474cab0"}
+      // let current = {"holderId":"1","wxRoleType":"1","storeName":"千思","holderType":"1","holdGroup":'1',"address":"成都市武侯区复城国际T4#1603","fphone":"","sessionId":"4f95743984c2447aa691d92b3a1ca238"}
       // let userInfo = {"nickName":"午後’品茶","gender":2,"language":"zh_CN","city":"Florida","province":"Sichuan","country":"China","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/nGTVF9QVb73vkuLaiak0ib4ZdIqqfcOlb26tgwKcOAQhkiaKj5kBNGhmZR522I4BYP9iaH5RJod9GPBcrul8eAHnlg/132"}
       // console.log(current,userInfo)
       // current = JSON.stringify(current)
