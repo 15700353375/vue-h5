@@ -1,14 +1,6 @@
-// const charts = require('echarts/lib/echarts');
-// require('echarts/lib/chart/bar');
-// require('echarts/lib/chart/pie');
-// require('echarts/lib/chart/line');
-// require('echarts/lib/component/legend');
-// require('echarts/lib/component/tooltip');
-// require('echarts/lib/component/title');
+// echarts基本配置
 import echarts from 'echarts'
 window.echarts = echarts
-
-// export const echarts = charts;
 
 // 饼状图的基本配置项
 export const pieOptions = {

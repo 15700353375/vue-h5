@@ -47,11 +47,6 @@
 </style>
 
 <script>
-  import {
-          urls,
-          baseUrl} from '@Util/axiosConfig';
-  import comUtil from '@Util/comUtil';
-  import { pieOptions } from '@Util/charts';
   import TopbarVue from '@Components/TopbarVue'
   import bottomBar from '@Components/bottomBar'
   import echartsVue from '@Components/echartsVue'

@@ -18,11 +18,8 @@ import _ from 'lodash';
 import registerAxios from '@Util/registerAxios'
 import { Toast } from 'we-vue'
 
-// import weui from 'weui.js'
-// import 'weui'
-
-// Vue.prototype.$weui = weui
-
+// toast提示使用的是we-vue 的ui组件
+// 加载中、时间筛选、select等 使用的是we-ui组件
 Vue.use(Vuex)
 Vue.use(VueRouter)
 
@@ -57,6 +54,7 @@ window.Moment = moment
 window.app = app
 window._ = _;
 
+// 封装loading
 Vue.prototype.Loading = {
   start () {
     app.loading = weui.loading('loading', {
@@ -69,7 +67,7 @@ Vue.prototype.Loading = {
   }
 }
 
-// 路由跳转之前，检测是否有token
+// 路由跳转顶部title设置
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title

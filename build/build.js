@@ -11,8 +11,6 @@ var config = require('../config');
 var rm = require('rimraf');
 //解析模块的时候，nodejs出现的loadding，只有Mac ok
 var ora = require('ora');
-//输出文字颜色控制
-var chalk = require('chalk');
 
 var spinner = ora('building for production...');
 spinner.start();

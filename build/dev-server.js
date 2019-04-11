@@ -9,10 +9,6 @@ var opn = require('opn');
 
 var compiler = webpack(webpackConfig);
 
-
-
-
-// var uri = 'http://localhost:' + port;
 var uri = 'http://localhost:' + config.dev.port;
 
 var server = new webpackDevServer(compiler,{
@@ -32,8 +28,6 @@ var server = new webpackDevServer(compiler,{
   // 注意：使用代理服务器的时候内部的请求就直接使用/api/+接口地址
   proxy: {
     '/api': {
-      // target: 'http://192.168.0.16:80',
-      // target: "http://192.168.0.98:8003",
       // target: 'http://qsyfw.gnway.cc:12345/',
       target: 'https://szy.kiloxy.com',
       changeOrigin: true,

@@ -6,7 +6,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 //路径为文件夹，自动引入index文件
 var config = require('../config');
 var utils = require('./utils')
-// const vuxLoader = require('vux-loader')
 
 //设置变量
 var ROOT_PATH = path.resolve(__dirname,'../');
@@ -92,7 +91,3 @@ module.exports = {
     })
   ]
 }
-
-// module.exports = vuxLoader.merge(webpackConfig, {
-//   plugins: ['vux-ui']
-// })

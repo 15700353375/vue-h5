@@ -5,12 +5,7 @@
  */
 
 import Vue from 'vue'
-// import qs from 'qs'
 import axios from 'axios'
-// import {
-//   urls,
-//   noTokenReq
-// } from '@Util/axiosConfig'
 
 // 强制退出的操作
 function getOut () {
@@ -64,7 +59,7 @@ function resolveFailRes (status) {
 }
 
 // post请求
-let post = function (url, params, btn) {
+let post = function (url, params) {
   let currentInfo = localStorage.getItem('currentInfo')
   currentInfo = JSON.parse(currentInfo)
   let sessionId = null
@@ -75,7 +70,6 @@ let post = function (url, params, btn) {
   if (sessionId) {
     params = {...params, sessionId: sessionId}
     let requestData = params || {}
-    // qs.stringify(requestData)
 
     return axios.post(url, requestData)
                 .then((res) => {
@@ -89,31 +83,10 @@ let post = function (url, params, btn) {
   }
 }
 
-// get请求
-let get = function (url, params, btn) {
-  let requestData = params || {}
-  // 验证权限
-  // if(validatePower(url)){
-  return axios.get(url, {params: requestData})
-                .then((res) => {
-                  return resolveSuccessRes(res)
-                }).catch(() => {
-                  // resolveFailRes(error.response.status);
-                })
-  // }else{
-  //   // 权限不足，跳转至登录页面
-  //   app.$router.push({name: 'login'});
-  // }
-}
-
 // 初始化axios
-// axios.defaults.baseURL = urls.BASE_URL;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'json'
 axios.defaults.timeout = 60000
 
 // ajax请求,挂在到Vue中
 Vue.prototype.$ajaxPost = post
-Vue.prototype.$ajaxGet = get
 

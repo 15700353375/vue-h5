@@ -4,7 +4,7 @@
  * @Description: 请求路径
  */
 
-// let base_url = 'http://qsyfw.gnway.cc:12345'
+// 默认地址
 let base_url = 'https://szy.kiloxy.com'
 
 if (process.env.NODE_ENV == 'production') {

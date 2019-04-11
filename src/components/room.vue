@@ -72,19 +72,6 @@
                   <div class="texts">暂停使用</div>
                 </div>
               </div>
-              <!-- <div class="mask">
-                <div class="mask-opacity"></div>
-                <span class='mask-text iconfont icon-huiyuan'></span>
-                <div class="mask-text">
-                  <div class="img-box"><img src="agentStatic/img/continueBtn.png" alt=""></div>
-                  <div class="texts">继续使用</div>
-                </div>
-                <div class="mask-text">
-                  <div class="img-box"><img src="agentStatic/img/pauseBtn.png" alt=""></div>
-                  <div class="texts">暂停使用</div>
-                </div>
-                <span class="mask-text mask-text-text">48分钟</span>
-              </div> -->
             </div>
 
             <div v-else class='list-item-content clearfix'>

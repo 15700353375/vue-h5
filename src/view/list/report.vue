@@ -120,10 +120,6 @@
 </style>
 
 <script>
-  import {
-          urls,
-          baseUrl} from '@Util/axiosConfig';
-  import comUtil from '@Util/comUtil';
   import bottomBar from '@Components/bottomBar'
   export default {
     data(){
